@@ -1,1653 +1,267 @@
 <!DOCTYPE html>
-<html lang="my"><head><script>(function(firebaseConfig, initialAuthToken, appId) {
-        window.__firebase_config = firebaseConfig;
-        window.__initial_auth_token = initialAuthToken;
-        window.__app_id = appId;
-            })("\n{\n  \"apiKey\": \"AIzaSyCqyCcs2R2e7AegGjvFAwG98wlamtbHvZY\",\n  \"authDomain\": \"bard-frontend.firebaseapp.com\",\n  \"projectId\": \"bard-frontend\",\n  \"storageBucket\": \"bard-frontend.firebasestorage.app\",\n  \"messagingSenderId\": \"175205271074\",\n  \"appId\": \"1:175205271074:web:2b7bd4d34d33bf38e6ec7b\"\n}\n","eyJhbGciOiJSUzI1NiIsImtpZCI6IjBmNWQ0MDUwMTk3Y2VjYTZlNzQ4NWJlZmE4OTk2ZGQ3OTJlYTVkMDkiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0BiYXJkLWZyb250ZW5kLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIwMTYzNjYwMTcxODUzMzg2NTU5MyIsImlzcyI6ImZpcmViYXNlLWFkbWluc2RrLWZic3ZjQGJhcmQtZnJvbnRlbmQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJjbGFpbXMiOnsiYXBwSWQiOiJjX2RjNTYzYzEwNWI0OGRiMDJfaW5kZXguaHRtbC00OTUifSwiZXhwIjoxNzgwMDc2MDIzLCJpYXQiOjE3ODAwNzI0MjMsImFsZyI6IlJTMjU2In0.JZTN1YN9R-6PQPULY65KDulrv9Ay27qAjrtqu_Rm_k2xT4cea89gkvU1IbLviJPG21YecbxIpj_sNEuWQ4af6i4FIptfWeKkhIl2qR0MKCOWf9vBFSrzfQEpMYCbC_1avUOMYoKcY6CA5ld5mxBt1t4k8brUWYA1qrCUxpTOmI4xQ1ky_RRxPRUqdHrGH39YVvOYKpsuuV-05gQaUUQ3C1JQV3tQOc-4ljg3NZAgCjZSoi7LwQQl4eESHmkyk-cKyJb5uymtcJzbyFa926XipcXM8AdoyjMQh6U0q5HHSQb7yXulsHjwrcvrq2a7rQgRLyPKjhTDyOeBIyWAqSaLUg","c_dc563c105b48db02_index.html-495")</script><script>(function(){'use strict';var h=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,d){if(a==Array.prototype||a==Object.prototype)return a;a[b]=d.value;return a};function l(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var d=a[b];if(d&&d.Math==Math)return d}throw Error("Cannot find global object");}var n=l(this);
-function p(a,b){if(b)a:{var d=n;a=a.split(".");for(var c=0;c<a.length-1;c++){var e=a[c];if(!(e in d))break a;d=d[e]}a=a[a.length-1];c=d[a];b=b(c);b!=c&&b!=null&&h(d,a,{configurable:!0,writable:!0,value:b})}}function r(a){function b(c){return a.next(c)}function d(c){return a.throw(c)}return new Promise(function(c,e){function f(g){g.done?c(g.value):Promise.resolve(g.value).then(b,d).then(f,e)}f(a.next())})}function t(a){return r(a())}
-p("Object.values",function(a){return a?a:function(b){var d=[],c;for(c in b)Object.prototype.hasOwnProperty.call(b,c)&&d.push(b[c]);return d}});p("Array.prototype.includes",function(a){return a?a:function(b,d){var c=this;c instanceof String&&(c=String(c));var e=c.length;d=d||0;for(d<0&&(d=Math.max(d+e,0));d<e;d++){var f=c[d];if(f===b||Object.is(f,b))return!0}return!1}});/*
-
- MIT License
-
- Copyright (c) 2017-2023 W.Y.
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
-
-*/
-function u(a,b){var d=a.style;b.backgroundColor&&(d.backgroundColor=b.backgroundColor);b.width&&(d.width=`${b.width}px`);b.height&&(d.height=`${b.height}px`);var c=b.style;c!=null&&Object.keys(c).forEach(e=>{d[e]=c[e]})};var v=(()=>{var a=0;return()=>{a+=1;return`u${`0000${(Math.random()*1679616<<0).toString(36)}`.slice(-4)}${a}`}})();function w(a){var b=[];for(let d=0,c=a.length;d<c;d++)b.push(a[d]);return b}let x=null;function y(a={}){return x?x:a.l?x=a.l:x=w(window.getComputedStyle(document.documentElement))}function z(a,b){return(a=(a.ownerDocument.defaultView||window).getComputedStyle(a).getPropertyValue(b))?parseFloat(a.replace("px","")):0}
-function A(a,b={}){var d;if(!(d=b.width)){d=z(a,"border-left-width");var c=z(a,"border-right-width");d=a.clientWidth+d+c}(b=b.height)||(b=z(a,"border-top-width"),c=z(a,"border-bottom-width"),b=a.clientHeight+b+c);return{width:d,height:b}}function B(a){return new Promise((b,d)=>{var c=new Image;c.onload=()=>{c.decode().then(()=>{requestAnimationFrame(()=>b(c))})};c.onerror=d;c.crossOrigin="anonymous";c.decoding="async";c.src=a})}
-function C(a){return t(function*(){return Promise.resolve().then(()=>(new XMLSerializer).serializeToString(a)).then(encodeURIComponent).then(b=>`data:image/svg+xml;charset=utf-8,${b}`)})}
-function D(a,b,d){return t(function*(){var c=document.createElementNS("http://www.w3.org/2000/svg","svg"),e=document.createElementNS("http://www.w3.org/2000/svg","foreignObject");c.setAttribute("width",`${b}`);c.setAttribute("height",`${d}`);c.setAttribute("viewBox",`0 0 ${b} ${d}`);e.setAttribute("width","100%");e.setAttribute("height","100%");e.setAttribute("x","0");e.setAttribute("y","0");e.setAttribute("externalResourcesRequired","true");c.appendChild(e);e.appendChild(a);return C(c)})}
-var E=(a,b)=>{if(a instanceof b)return!0;a=Object.getPrototypeOf(a);return a===null?!1:a.constructor.name===b.name||E(a,b)};function F(a,b){return y(b).map(d=>{var c=a.getPropertyValue(d),e=a.getPropertyPriority(d);return`${d}: ${c}${e?" !important":""};`}).join(" ")}
-function G(a,b,d,c){a=window.getComputedStyle(a,d);var e=a.getPropertyValue("content");if(e!==""&&e!=="none"){var f=v();try{b.className=`${b.className} ${f}`}catch(k){return}e=document.createElement("style");var g=e.appendChild;d=`.${f}:${d}`;a.cssText?(c=a.getPropertyValue("content"),c=`${a.cssText} content: '${c.replace(/'|"/g,"")}';`):c=F(a,c);g.call(e,document.createTextNode(`${d}{${c}}`));b.appendChild(e)}};function H(a){return a.search(/^(data:)/)!==-1}function I(a,b,d){return t(function*(){var c=yield fetch(a,b);if(c.status===404)throw Error(`Resource "${c.url}" not found`);var e=yield c.blob();return new Promise((f,g)=>{var k=new FileReader;k.onerror=g;k.onloadend=()=>{try{f(d({o:c,result:k.result}))}catch(m){g(m)}};k.readAsDataURL(e)})})}const J={};function K(a,b,d){var c=a.replace(/\?.*/,"");d&&(c=a);/ttf|otf|eot|woff2?/i.test(c)&&(c=c.replace(/.*\//,""));return b?`[${b}]${c}`:c}
-function L(a,b,d){return t(function*(){var c=K(a,b,d.C);if(J[c]!=null)return J[c];d.u&&(a+=(/\?/.test(a)?"&":"?")+(new Date).getTime());try{let f=yield I(a,d.i,({o:g,result:k})=>{b||(b=g.headers.get("Content-Type")||"");return k.split(/,/)[1]});var e=`data:${b};base64,${f}`}catch(f){e=d.B||""}return J[c]=e})};const M={P:"application/font-woff",R:"application/font-woff",N:"application/font-truetype",v:"application/vnd.ms-fontobject",H:"image/png",F:"image/jpeg",D:"image/jpeg",A:"image/gif",M:"image/tiff",L:"image/svg+xml",O:"image/webp"};function N(a){return(a=/\.([^./]*?)$/g.exec(a))?a[1]:""};function O(a){return t(function*(){var b=a.toDataURL();return b==="data:,"?a.cloneNode(!1):B(b)})}function aa(a,b){return t(function*(){if(a.currentSrc){var d=document.createElement("canvas");let c=d.getContext("2d");d.width=a.clientWidth;d.height=a.clientHeight;c==null||c.drawImage(a,0,0,d.width,d.height);d=d.toDataURL();return B(d)}d=a.poster;d=yield L(d,M[N(d).toLowerCase()]||"",b);return B(d)})}
-function ba(a,b){return t(function*(){try{let d;if(a==null?0:(d=a.contentDocument)==null?0:d.body)return yield P(a.contentDocument.body,b,!0)}catch(d){}return a.cloneNode(!1)})}function ca(a,b){return t(function*(){return E(a,HTMLCanvasElement)?O(a):E(a,HTMLVideoElement)?aa(a,b):E(a,HTMLIFrameElement)?ba(a,b):a.cloneNode(a.tagName!=null&&a.tagName.toUpperCase()==="SVG")})}
-function da(a,b,d){return t(function*(){if(b.tagName!=null&&b.tagName.toUpperCase()==="SVG")return b;var c=[];if(a.tagName!=null&&a.tagName.toUpperCase()==="SLOT"&&a.assignedNodes)c=w(a.assignedNodes());else{let e;if(E(a,HTMLIFrameElement)&&((e=a.contentDocument)==null?0:e.body))c=w(a.contentDocument.body.childNodes);else{let f;c=w(((f=a.shadowRoot)!=null?f:a).childNodes)}}if(c.length===0||E(a,HTMLVideoElement))return b;yield c.reduce((e,f)=>e.then(()=>P(f,d)).then(g=>{g&&b.appendChild(g)}),Promise.resolve());
-return b})}function ea(a,b,d){var c=b.style;if(c){var e=window.getComputedStyle(a);e.cssText?(c.cssText=e.cssText,c.transformOrigin=e.transformOrigin):y(d).forEach(f=>{var g=e.getPropertyValue(f);f==="font-size"&&g.endsWith("px")&&(g=`${Math.floor(parseFloat(g.substring(0,g.length-2)))-.1}px`);E(a,HTMLIFrameElement)&&f==="display"&&g==="inline"&&(g="block");f==="d"&&b.getAttribute("d")&&(g=`path(${b.getAttribute("d")})`);c.setProperty(f,g,e.getPropertyPriority(f))})}}
-function fa(a,b){E(a,HTMLSelectElement)&&(b=Array.from(b.children).find(d=>a.value===d.getAttribute("value")))&&b.setAttribute("selected","")}
-function ha(a,b){return t(function*(){var d=a.querySelectorAll?a.querySelectorAll("use"):[];if(d.length===0)return a;var c={};for(var e=0;e<d.length;e++){var f=d[e].getAttribute("xlink:href");if(f){let g=document.querySelector(f);a.querySelector(f)||!g||c[f]||(c[f]=yield P(g,b,!0))}}d=Object.values(c);if(d.length){c=document.createElementNS("http://www.w3.org/1999/xhtml","svg");c.setAttribute("xmlns","http://www.w3.org/1999/xhtml");c.style.position="absolute";c.style.width="0";c.style.height="0";
-c.style.overflow="hidden";c.style.display="none";e=document.createElementNS("http://www.w3.org/1999/xhtml","defs");c.appendChild(e);for(f=0;f<d.length;f++)e.appendChild(d[f]);a.appendChild(c)}return a})}
-function P(a,b,d){return t(function*(){return d||!b.filter||b.filter(a)?Promise.resolve(a).then(c=>ca(c,b)).then(c=>da(a,c,b)).then(c=>{E(c,Element)&&(ea(a,c,b),G(a,c,":before",b),G(a,c,":after",b),E(a,HTMLTextAreaElement)&&(c.textContent=a.value),E(a,HTMLInputElement)&&c.setAttribute("value",a.value),fa(a,c));return c}).then(c=>ha(c,b)):null})};const Q=/url\((['"]?)([^'"]+?)\1\)/g,ia=/url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g,ja=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ka(a){var b=[];a.replace(Q,(d,c,e)=>{b.push(e);return d});return b.filter(d=>!H(d))}
-function la(a,b,d,c){return t(function*(){try{let e=d?(new URL(b,d||void 0)).toString():b,f;f=yield L(e,M[N(b).toLowerCase()]||"",c);return a.replace(new RegExp(`(url\\(['"]?)(${b.replace(/([.*+?^${}()|\[\]\/\\])/g,"\\$1")})(['"]?\\))`,"g"),`$1${f}$3`)}catch(e){}return a})}function ma(a,{I:b}){return b?a.replace(ja,d=>{for(;;){let [c,,e]=ia.exec(d)||[];if(!e)return"";if(e===b)return`src: ${c};`}}):a}
-function R(a,b,d){return t(function*(){if(a.search(Q)===-1)return a;var c=ma(a,d);return ka(c).reduce((e,f)=>e.then(g=>la(g,f,b,d)),Promise.resolve(c))})};function S(a,b,d){return t(function*(){var c,e=(c=b.style)==null?void 0:c.getPropertyValue(a);return e?(c=yield R(e,null,d),b.style.setProperty(a,c,b.style.getPropertyPriority(a)),!0):!1})}function na(a,b){return t(function*(){(yield S("background",a,b))||(yield S("background-image",a,b));(yield S("mask",a,b))||(yield S("-webkit-mask",a,b))||(yield S("mask-image",a,b))||(yield S("-webkit-mask-image",a,b))})}
-function oa(a,b){return t(function*(){var d=E(a,HTMLImageElement);if(d&&!H(a.src)||E(a,SVGImageElement)&&!H(a.href.baseVal)){var c=d?a.src:a.href.baseVal,e=yield L(c,M[N(c).toLowerCase()]||"",b);yield new Promise((f,g)=>{a.onload=f;a.onerror=b.m?(...k)=>{try{f(b.m(...k))}catch(m){g(m)}}:g;a.decode&&(a.decode=f);a.loading==="lazy"&&(a.loading="eager");d?(a.srcset="",a.src=e):a.href.baseVal=e})}})}
-function pa(a,b){return t(function*(){var d=w(a.childNodes).map(c=>T(c,b));yield Promise.all(d).then(()=>a)})}function T(a,b){return t(function*(){E(a,Element)&&(yield na(a,b),yield oa(a,b),yield pa(a,b))})};const U={};function V(a){return t(function*(){var b=U[a];if(b!=null)return b;b=yield(yield fetch(a)).text();b={url:a,cssText:b};return U[a]=b})}function W(a,b){return t(function*(){var d=a.cssText,c=/url\(["']?([^"')]+)["']?\)/g,e=(d.match(/url\([^)]+\)/g)||[]).map(f=>t(function*(){var g=f.replace(c,"$1");g.startsWith("https://")||(g=(new URL(g,a.url)).href);return I(g,b.i,({result:k})=>{d=d.replace(f,`url(${k})`);return[f,k]})}));return Promise.all(e).then(()=>d)})}
-function X(a){if(a==null)return[];var b=[];a=a.replace(/(\/\*[\s\S]*?\*\/)/gi,"");for(var d=RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})","gi");;){var c=d.exec(a);if(c===null)break;b.push(c[0])}a=a.replace(d,"");d=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi;for(c=RegExp("((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})","gi");;){let e=d.exec(a);if(e===null)if(e=c.exec(a),e===null)break;else d.lastIndex=c.lastIndex;else c.lastIndex=
-d.lastIndex;b.push(e[0])}return b}
-function qa(a,b){return t(function*(){var d=[],c=[];a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach((f,g)=>{if(f.type===CSSRule.IMPORT_RULE){let k=g+1;f=V(f.href).then(m=>W(m,b)).then(m=>X(m).forEach(q=>{try{e.insertRule(q,q.startsWith("@import")?k+=1:e.cssRules.length)}catch(Da){}})).catch(()=>{});c.push(f)}})}catch(f){let g=a.find(k=>k.href==null)||document.styleSheets[0];e.href!=null&&c.push(V(e.href).then(k=>W(k,b)).then(k=>X(k).forEach(m=>{g.insertRule(m,g.cssRules.length)})).catch(()=>
-{}))}});return Promise.all(c).then(()=>{a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach(f=>{d.push(f)})}catch(f){}});return d})})}function ra(a){return a.filter(b=>b.type===CSSRule.FONT_FACE_RULE).filter(b=>b.style.getPropertyValue("src").search(Q)!==-1)}function sa(a,b){return t(function*(){if(a.ownerDocument==null)throw Error("Provided element is not within a Document");var d=w(a.ownerDocument.styleSheets);d=yield qa(d,b);return ra(d)})}
-function ta(a){function b(c){(c.style.fontFamily||getComputedStyle(c).fontFamily).split(",").forEach(e=>{d.add(e.trim().replace(/["']/g,""))});Array.from(c.children).forEach(e=>{e instanceof HTMLElement&&b(e)})}var d=new Set;b(a);return d}function ua(a,b){return t(function*(){var d=yield sa(a,b),c=ta(a);return(yield Promise.all(d.filter(e=>c.has(e.style.fontFamily.trim().replace(/["']/g,""))).map(e=>R(e.cssText,e.parentStyleSheet?e.parentStyleSheet.href:null,b)))).join("\n")})}
-function va(a,b){return t(function*(){var d=b.j!=null?b.j:b.K?null:yield ua(a,b);if(d){let c=document.createElement("style");c.appendChild(document.createTextNode(d));a.firstChild?a.insertBefore(c,a.firstChild):a.appendChild(c)}})};function wa(a,b={}){return t(function*(){var {width:d,height:c}=A(a,b),e=yield P(a,b,!0);yield va(e,b);yield T(e,b);u(e,b);return yield D(e,d,c)})}
-function xa(a,b={}){return t(function*(){var {width:d,height:c}=A(a,b),e=yield wa(a,b);e=yield B(e);var f=document.createElement("canvas"),g=f.getContext("2d"),k=b.G||window.devicePixelRatio||1,m=b.h||d,q=b.g||c;f.width=m*k;f.height=q*k;!b.J&&(f.width>16384||f.height>16384)&&(f.width>16384&&f.height>16384?f.width>f.height?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384):f.width>16384?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384));
-f.style.width=`${m}`;f.style.height=`${q}`;b.backgroundColor&&(g.fillStyle=b.backgroundColor,g.fillRect(0,0,f.width,f.height));g.drawImage(e,0,0,f.width,f.height);return f})}function ya(a,b={}){return t(function*(){return(yield xa(a,b)).toDataURL()})};const za=["gemini.google.com","corp.google.com","proxy.googlers.com"];function Y(){return document.body.querySelectorAll('[class*="animate"]').length>0}function Z(a){return t(function*(){try{return yield ya(a,{h:a.offsetWidth,g:a.offsetHeight})}catch(d){var b=a.offsetHeight;let c=document.createElement("canvas");c.width=a.offsetWidth;c.height=b;return c.toDataURL("image/png")}})}
-function Aa(){return t(function*(){var a=document.body.offsetWidth,b=document.body.offsetHeight,d=document.body.cloneNode(!0);d.querySelectorAll('[class*="animate"]').forEach(c=>{c.classList.remove(...Array.from(c.classList).filter(e=>e.startsWith("animate")))});d.style.width=`${a}px`;d.style.height=`${b}px`;return d})}
-function Ba(a){return t(function*(){var b=document.body;if(Y()){var d=yield Aa();b=d;document.body.appendChild(d)}d=yield Z(b);Y()&&document.body.removeChild(b);window.parent.postMessage({type:"SEND_SCREENSHOT",image:d,topOffset:document.documentElement.scrollTop},a.origin)})}function Ca(a){return t(function*(){var b={type:"SEND_SCREENSHOT_FOR_DATA_VISUALIZATION",image:yield Z(document.body),topOffset:0};window.parent.postMessage(b,a.origin)})}
-window.addEventListener("message",a=>t(function*(){if(za.some(d=>a.origin.includes(d))){var b=a.data;b&&(b.type==="MAKE_SCREENSHOT"&&(yield Ba(a)),b.type==="MAKE_SCREENSHOT_FOR_DATA_VISUALIZATION"&&(yield Ca(a)))}}));
-})();</script><script>(function() {
-  // Ensure this script is executed only once
-  if (window.firebaseAuthBridgeScriptLoaded) {
-    return;
-  }
-  window.firebaseAuthBridgeScriptLoaded = true;
-
-  let nextTokenPromiseId = 0;
-
-  // Stores { resolve, reject } for ongoing token requests
-  const pendingTokenPromises = {};
-
-  // Listen for messages from the Host Application
-  window.addEventListener('message', function(event) {
-
-    const messageData = event.data;
-
-  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
-      const { success, token, error, promiseId } = messageData ?? {};
-      if (pendingTokenPromises[promiseId]) {
-        if (success) {
-          pendingTokenPromises[promiseId].resolve(token);
-        } else {
-          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
-        }
-        delete pendingTokenPromises[promiseId];
-      }
-    }
-  });
-
-  // Expose a function for the Generated App to request a new Firebase token
-  window.requestNewFirebaseToken = function() {
-    const currentPromiseId = nextTokenPromiseId++;
-    const promise = new Promise((resolve, reject) => {
-      pendingTokenPromises[currentPromiseId] = { resolve, reject };
-    });
-    if (window.parent && window.parent !== window) {
-      window.parent.postMessage({
-        type: 'REQUEST_NEW_FIREBASE_TOKEN',
-        promiseId: currentPromiseId
-      }, '*');
-    } else {
-      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
-      delete pendingTokenPromises[currentPromiseId];
-    }
-    return promise;
-  };
-})();</script><script>
-let realOriginalGetUserMedia = null;
-if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
-}
-
-(function() {
-  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
-    try {
-      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
-        get: function() {
-          return undefined; // Or throw an error
-        },
-        configurable: false
-      });
-    } catch (error) {
-      console.error("Error defining prototype getter:", error);
-    }
-  }
-})();
-
-(function() {
-  const pendingMediaResolvers = {};
-  let nextMediaPromiseId = 0;
-
-  function requestMediaPermissions(constraints) {
-    const mediaPromiseId = nextMediaPromiseId++;
-    const promise = new Promise((resolve, reject) => {
-      pendingMediaResolvers[mediaPromiseId] = (granted) => {
-        delete pendingMediaResolvers[mediaPromiseId];
-        resolve(granted);
-      };
-    });
-
-    window.parent.postMessage({
-      type: 'requestMediaPermission',
-      constraints: constraints,
-      promiseId: mediaPromiseId,
-    }, '*');
-
-    return promise;
-  }
-
-  let originalGetUserMedia = realOriginalGetUserMedia;
-
-  function interceptGetUserMedia() {
-    if (navigator.mediaDevices) {
-      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
-        value: function(constraints) {
-          return requestMediaPermissions(constraints).then((granted) => {
-            if (granted) {
-              if (originalGetUserMedia) {
-                return originalGetUserMedia(constraints);
-              } else {
-                throw new Error("Original getUserMedia not available.");
-              }
-            } else {
-              throw new DOMException('Permission denied', 'NotAllowedError');
-            }
-          });
-        },
-        writable: false,
-        configurable: false
-      });
-    }
-  }
-
-  interceptGetUserMedia();
-
-  const observer = new MutationObserver(function(mutationsList, observer) {
-    for (const mutation of mutationsList) {
-      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
-        interceptGetUserMedia();
-      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
-        interceptGetUserMedia();
-      } else if (mutation.type === 'childList' && mutation.addedNodes) {
-        mutation.addedNodes.forEach(node => {
-          if (node === navigator.mediaDevices) {
-            interceptGetUserMedia();
-          }
-        });
-      }
-    }
-  });
-
-  function interceptSpeechRecognition() {
-    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
-      return;
-    }
-
-    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    const SpeechRecognitionWrapper = function(...args) {
-      const recognizer = new OriginalSpeechRecognition(...args);
-      const originalStart = recognizer.start.bind(recognizer);
-
-      recognizer.start = function() {
-        requestMediaPermissions({ audio: true }).then(granted => {
-          if (granted) {
-            originalStart();
-          } else {
-            const errorEvent = new SpeechRecognitionErrorEvent('error');
-            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
-            recognizer.dispatchEvent(errorEvent);
-          }
-        });
-      };
-
-      return recognizer;
-    };
-
-    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
-    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
-
-    if (window.SpeechRecognition) {
-      window.SpeechRecognition = SpeechRecognitionWrapper;
-    }
-    if (window.webkitSpeechRecognition) {
-      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
-    }
-  }
-
-  interceptSpeechRecognition();
-
-  window.addEventListener('message', function(event) {
-    if (event.data) {
-      if (event.data.type === 'resolveMediaPermission') {
-        const { promiseId, granted } = event.data;
-        if (pendingMediaResolvers[promiseId]) {
-          pendingMediaResolvers[promiseId](granted);
-        }
-      }
-    }
-  });
-
-})();</script><script ws-interception-config="{&quot;parentOrigin&quot;:&quot;https://gemini.google.com&quot;,&quot;proxiedDomains&quot;:[]}">(function(){'use strict';var u=typeof Object.defineProperties=="function"?Object.defineProperty:function(b,d,e){if(b==Array.prototype||b==Object.prototype)return b;b[d]=e.value;return b};function v(b){b=["object"==typeof globalThis&&globalThis,b,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var d=0;d<b.length;++d){var e=b[d];if(e&&e.Math==Math)return e}throw Error("Cannot find global object");}var w=v(this);
-function y(b,d){if(d)a:{var e=w;b=b.split(".");for(var h=0;h<b.length-1;h++){var k=b[h];if(!(k in e))break a;e=e[k]}b=b[b.length-1];h=e[b];d=d(h);d!=h&&d!=null&&u(e,b,{configurable:!0,writable:!0,value:d})}}function z(b){function d(h){return b.next(h)}function e(h){return b.throw(h)}return new Promise(function(h,k){function m(n){n.done?h(n.value):Promise.resolve(n.value).then(d,e).then(m,k)}m(b.next())})}y("globalThis",function(b){return b||w});/*
-
- Copyright The Closure Library Authors.
- SPDX-License-Identifier: Apache-2.0
-*/
-function A(b,d){function e(){}e.prototype=d.prototype;b.i=d.prototype;b.prototype=new e;b.prototype.constructor=b;b.g=function(h,k,m){for(var n=Array(arguments.length-2),p=2;p<arguments.length;p++)n[p-2]=arguments[p];return d.prototype[k].apply(h,n)}};function B(b,d,e="*"){function h(a){if(typeof a==="string")return F.encode(a).buffer;if(a instanceof ArrayBuffer)return a.slice(0);if(ArrayBuffer.isView(a))return a.buffer.slice(a.byteOffset,a.byteOffset+a.byteLength);throw Error("Invalid data type");}function k(a){a=h(a);var f={type:"send",data:new Uint8Array(a)},g;(g=r)==null||g.postMessage(f,[a])}function m(){if(!r)throw Error("Data port not captured yet.");r.onmessage=a=>{if(a.data.type==="message"){a=new MessageEvent("message",{data:G.decode(a.data.data)});
-let f;(f=c.onmessage)==null||f.call(c,a);c.dispatchEvent(a)}}}function n(){if(!t)throw Error("Control port not captured yet.");t.onmessage=a=>{switch(a.data.type){case "open":l=1;var f=new Event("open"),g;(g=c.onopen)==null||g.call(c,f);c.dispatchEvent(f);q.forEach(H=>{k(H)});q=[];break;case "close":g=a.data;l=3;g=new CloseEvent("close",{code:g.code,reason:g.reason,wasClean:g.wasClean});(f=c.onclose)==null||f.call(c,g);c.dispatchEvent(g);break;case "error":l=3;f=new Event("error");let x;(x=c.onerror)==
-null||x.call(c,f);c.dispatchEvent(f)}}}function p(a){return z(function*(){var f=new MessageChannel;t=f.port1;var g=new MessageChannel;r=g.port1;n();m();window.parent.postMessage({type:"websocket_open",portOrdering:["control","data"],url:b,protocols:a||[],connectionId:I},e,[f.port2,g.port2])}())}var c=Reflect.construct(EventTarget,[],new.target);c.CONNECTING=0;c.OPEN=1;c.CLOSING=2;c.CLOSED=3;c.url=b;c.binaryType="arraybuffer";c.protocol="";c.h="";var l=0,t=null,r=null,q=[],F=new TextEncoder,G=new TextDecoder;
-c.onopen=null;c.onmessage=null;c.onclose=null;c.onerror=null;Object.defineProperty(c,"readyState",{get:()=>l,enumerable:!0,configurable:!0});Object.defineProperty(c,"bufferedAmount",{get:()=>{var a=0;q.forEach(f=>{a+=typeof f==="string"?f.length:f.byteLength});return a},enumerable:!0,configurable:!0});var I=function(){var a;return((a=globalThis.crypto)==null?0:a.randomUUID)?globalThis.crypto.randomUUID():"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,f=>{var g=Math.random()*16|0;return(f===
-"x"?g:g&3|8).toString(16)})}();c.send=a=>{if(l===1)a instanceof Blob?a.arrayBuffer().then(f=>{k(f)}):k(a);else if(l===0)if(typeof a==="string")q.push(a);else if(a instanceof ArrayBuffer||ArrayBuffer.isView(a))q.push(h(a));else throw Error("Sending Blob is not supported before the connection is open.");else console.debug("WebSocket send called in CLOSING or CLOSED state; ignored.")};c.close=(a=1E3,f="")=>{if(l!==2&&l!==3){l=2;a={type:"close",code:a,reason:f,wasClean:a===1E3};var g;(g=t)==null||g.postMessage(a)}};
-Promise.resolve().then(()=>p(d));return c}A(B,EventTarget);var C=document.currentScript,D=C==null?void 0:C.getAttribute("ws-interception-config");if(!D)throw Error("WebSocket Interceptor: Missing ws-interception-config attribute in the script tag.");var E=JSON.parse(D);if(!E.parentOrigin||typeof E.parentOrigin!=="string")throw Error("WebSocket Interceptor: Invalid parentOrigin in ws-interception-config");
-(function(b){var d=Object.getOwnPropertyDescriptor(window,"WebSocket");if(!d||d.writable||d.configurable)d=Object.assign(function(e,h){try{let k=(new URL(e)).hostname;if(b.proxiedDomains.some(m=>k===m||k.endsWith(`.${m}`)))return new B(e,h,b.parentOrigin)}catch(k){throw window.parent.postMessage({type:"websocket_blocked",url:e,reason:"blocked_invalid_url"},b.parentOrigin),new DOMException(`WebSocket connection to '${e}' is not allowed in Canvas.`,"SecurityError");}window.parent.postMessage({type:"websocket_blocked",
-url:e,reason:"blocked_domain_not_allowlisted"},b.parentOrigin);throw new DOMException(`WebSocket connection to '${e}' is not allowed in Canvas.`,"SecurityError");},{CONNECTING:0,OPEN:1,CLOSING:2,CLOSED:3}),Object.defineProperty(window,"WebSocket",{value:d,writable:!1,configurable:!1})})({proxiedDomains:E.proxiedDomains||[],parentOrigin:E.parentOrigin});}).call(this);
-</script><script>((function(modelInformation) {
-  const originalFetch = window.fetch;
-  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
-  let googleLlmBaseApiUrls = [
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageTransformModelName + ':generateContent',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
-  ];
-  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
-    googleLlmBaseApiUrls.push(
-      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
-      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
-    );
-  });
-  modelInformation.deprecatedImageModelNames.forEach((modelName) => {
-    googleLlmBaseApiUrls.push(
-      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predict',
-      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predictLongRunning',
-      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
-      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
-    );
-  });
-  modelInformation.deprecatedGenerateImageModelNames.forEach((modelName) => {
-    googleLlmBaseApiUrls.push(
-      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
-      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
-    );
-  });
-
-  const pendingFetchResolvers = {};
-  let nextPromiseId = 0;
-
-  function handleStringInput(input, optionsArgument) {
-    const actualUrl = input;
-    const fetchCallArgs = [actualUrl, optionsArgument];
-    const effectiveOptions = optionsArgument || {};
-    const bodyForApiKeyCheck = effectiveOptions.body;
-    const bodyForPostMessage = effectiveOptions.body;
-    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
-  }
-
-  function handleRequestInput(input, optionsArgument) {
-    const actualUrl = input.url;
-    const fetchCallArgs = [input, optionsArgument];
-    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
-    let bodyForApiKeyCheck;
-    let bodyForPostMessage;
-
-    if (optionsArgument) {
-      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
-      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
-      if ('body' in optionsArgument) {
-        bodyForApiKeyCheck = optionsArgument.body;
-        bodyForPostMessage = optionsArgument.body;
-      } else {
-        bodyForApiKeyCheck = undefined;
-        bodyForPostMessage = input.body;
-      }
-    } else {
-      bodyForApiKeyCheck = undefined;
-      bodyForPostMessage = input.body;
-    }
-    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
-  }
-
-  window.fetch = function(input, optionsArgument) {
-    let actualUrl;
-    let fetchCallArgs;
-    let effectiveOptions = {};
-    let bodyForApiKeyCheck;
-    let bodyForPostMessage;
-
-    if (typeof input === 'string') {
-      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
-    } else if (input instanceof Request) {
-      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
-    } else {
-      return originalFetch.apply(window, [input, optionsArgument]);
-    }
-
-    effectiveOptions.method = effectiveOptions.method || 'GET';
-    if (!effectiveOptions.headers) {
-      effectiveOptions.headers = new Headers();
-    }
-
-
-    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
-      let apiKeyIsNull = true;
-
-      const regex = new RegExp("models/([^:]+)");
-      const modelNameMatch = actualUrl.match(regex);
-      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
-
-
-      try {
-        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
-        const apiKeyParam = urlObject.searchParams.get('key');
-        if (apiKeyParam) {
-          apiKeyIsNull = false;
-        }
-      } catch (e) {
-        // Continue checks even if URL parsing fails
-      }
-
-      if (apiKeyIsNull && effectiveOptions.headers) {
-        const h = new Headers(effectiveOptions.headers);
-        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
-        if (apiKeyHeaderValue) {
-          apiKeyIsNull = false;
-          return originalFetch.apply(window, fetchCallArgs);
-        }
-      }
-
-      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
-        try {
-          const bodyData = JSON.parse(bodyForApiKeyCheck);
-          if (bodyData && bodyData.apiKey) {
-            apiKeyIsNull = false;
-            return originalFetch.apply(window, fetchCallArgs);
-          }
-        } catch (e) {
-          // Ignore JSON parsing errors
-        }
-      }
-
-      if(apiKeyIsNull) {
-        const promiseId = nextPromiseId++;
-        const promise = new Promise((resolve) => {
-          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
-            delete pendingFetchResolvers[promiseId];
-            resolve(resolvedResponse);
-          };
-        });
-
-        let serializedBodyForPostMessage;
-        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
-            serializedBodyForPostMessage = bodyForPostMessage;
-        } else if (bodyForPostMessage instanceof ReadableStream) {
-            serializedBodyForPostMessage = null;
-        } else {
-            try {
-                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
-            } catch (e) {
-                serializedBodyForPostMessage = null;
-            }
-        }
-
-        const messageOptions = {
-            method: effectiveOptions.method,
-            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
-            body: serializedBodyForPostMessage
-        };
-
-        window.parent.postMessage({
-          type: 'requestFetch',
-          url: actualUrl,
-          modelName: modelName,
-          options: messageOptions,
-          promiseId: promiseId,
-        }, '*');
-
-        return promise;
-      }
-      return originalFetch.apply(window, fetchCallArgs);
-    }
-    return originalFetch.apply(window, fetchCallArgs);
-  };
-
-  window.addEventListener('message', function(event) {
-    if (event.data && event.data.type === 'resolveFetch') {
-      const { promiseId, response } = event.data;
-      if (pendingFetchResolvers[promiseId]) {
-        try {
-          const reconstructedResponse = new Response(response.body, {
-            status: response.status,
-            statusText: response.statusText,
-            headers: new Headers(response.headers),
-          });
-          pendingFetchResolvers[promiseId](reconstructedResponse);
-        } catch (error) {
-          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
-        }
-      }
-    }
-  });
-
-}))({"textModelName":"gemini-3-flash-preview","imageModelName":"imagen-4.0-generate-001","imageEditModelName":"gemini-3.1-flash-image-preview","imageTransformModelName":"gemini-3-pro-image-preview-11-2025","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash","gemini-2.5-flash-preview-04-17","gemini-2.5-flash-preview-05-20","gemini-2.5-flash-preview-09-2025"],"deprecatedImageModelNames":["imagen-3.0-generate-001","imagen-3.0-generate-002"],"deprecatedGenerateImageModelNames":["gemini-2.5-flash-image-preview","gemini-2.5-flash-image"]})</script><script>(function(){'use strict';function a(){window.parent.postMessage({type:"interaction"},"*")}window.addEventListener("click",a,{capture:!0,passive:!0});window.addEventListener("touchstart",a,{capture:!0,passive:!0});window.addEventListener("keydown",a,{capture:!0,passive:!0});}).call(this);
-</script><script>(function() {
-  const originalConsoleLog = console.log;
-  const originalConsoleError = console.error;
-
-    /**
-   * Normalizes an error event or a promise rejection reason into a structured error object.
-   * @param {*} errorEventOrReason The error object or reason.
-   * @return {object} Structured error data { message, name, stack }.
-   */
-  function getErrorObject(errorEventOrReason) {
-    if (errorEventOrReason instanceof Error) {
-      return {
-        message: errorEventOrReason.message,
-        name: errorEventOrReason.name,
-        stack: errorEventOrReason.stack,
-      };
-    }
-    // Fallback for non-Error objects.
-    try {
-      return {
-        message: JSON.stringify(errorEventOrReason),
-        name: 'UnknownErrorType',
-        stack: null,
-      };
-    } catch (e) {
-      return {
-        message: String(errorEventOrReason),
-        name: 'UnknownErrorTypeNonStringifiable',
-        stack: null,
-      };
-    }
-  }
-
-  /**
-   * Converts an array of arguments (from log/error) into a single string.
-   * Handles Error objects specially to include their message and stack.
-   * @param {Array<*>} args - Arguments passed to console methods.
-   * @return {string} A string representation of the arguments.
-   */
-  function stringifyArgs(args) {
-    return args
-      .map((arg) => {
-        if (arg instanceof Error) {
-          const {message, stack} = arg;
-          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
-        }
-        if (typeof arg === 'object' && arg !== null) {
-          try {
-            return JSON.stringify(arg);
-          } catch (error) {
-            return '[Circular Object]';
-          }
-        } else {
-          return String(arg);
-        }
-      })
-      .join(' ');
-  }
-
-  console.log = function(...args) {
-    const logString = stringifyArgs(args);
-    window.parent.postMessage({ type: 'log', message: logString }, '*');
-    originalConsoleLog.apply(console, args);
-  };
-
-  console.error = function(...args) {
-    let errorData;
-    if (args.length > 0 && args[0] instanceof Error) {
-      const err = args[0];
-      // If the first arg is an Error, capture its details.
-      errorData = {
-        type: 'error',
-        source: 'CONSOLE_ERROR',
-        ...getErrorObject(err),
-        rawArgsString: stringifyArgs(args.slice(1)),
-        timestamp: new Date().toISOString(),
-      };
-    } else {
-      // If not an Error object, treat all args as a general error message.
-      errorData = {
-        type: 'error',
-        source: 'CONSOLE_ERROR',
-        message: stringifyArgs(args),
-        name: 'ConsoleLoggedError',
-        stack: null,
-        timestamp: new Date().toISOString(),
-      };
-    }
-    window.parent.postMessage(errorData, '*');
-    originalConsoleError.apply(console, args);
-  };
-
-  // Listen for global unhandled synchronous errors.
-  window.addEventListener('error', function(event) {
-    const errorDetails = event.error ? getErrorObject(event.error) : {
-      message: event.message,
-      name: 'GlobalError',
-      stack: null,
-      filename: event.filename,
-      lineno: event.lineno,
-      colno: event.colno,
-    };
-
-    window.parent.postMessage({
-      type: 'error',
-      source: 'global',
-      ...errorDetails,
-      message: errorDetails.message || event.message,
-      timestamp: new Date().toISOString(),
-    }, '*');
-  });
-
-  // Listen for unhandled promise rejections (asynchronous errors).
-  window.addEventListener('unhandledrejection', function(event) {
-    const errorDetails = getErrorObject(event.reason);
-
-    window.parent.postMessage({
-      type: 'error',
-      source: 'unhandledrejection',
-      ...errorDetails,
-      message: errorDetails.message || 'Unhandled Promise Rejection',
-      timestamp: new Date().toISOString(),
-    }, '*');
-  });
-
-})();</script>
+<html lang="my">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lazada Consolidated Mega Store</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Thae Su Phoo Ko Online Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons for beautiful SVG icons -->
-    <script src="https://unpkg.com/lucide@latest" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pyidaungsu:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', 'Pyidaungsu', sans-serif;
-            background-color: #f4f5f6;
-        }
+        body { font-family: 'Padauk', 'Inter', sans-serif; background-color: #f8fafc; }
+        .lazada-orange { color: #f57224; }
+        .lazada-bg-orange { background-color: #f57224; }
+        .lazada-bg-blue { background-color: #1a274c; }
     </style>
-<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.inset-y-0{top:0px;bottom:0px}.-right-1{right:-0.25rem}.-right-2{right:-0.5rem}.-top-1{top:-0.25rem}.-top-2{top:-0.5rem}.bottom-6{bottom:1.5rem}.left-1\/2{left:50%}.right-0{right:0px}.right-3{right:0.75rem}.top-0{top:0px}.top-3{top:0.75rem}.left-2{left:0.5rem}.right-2{right:0.5rem}.top-2{top:0.5rem}.z-10{z-index:10}.z-40{z-index:40}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-12{margin-top:3rem;margin-bottom:3rem}.mb-1{margin-bottom:0.25rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.ml-1{margin-left:0.25rem}.mr-8{margin-right:2rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-3{margin-top:0.75rem}.mt-6{margin-top:1.5rem}.mb-3{margin-bottom:0.75rem}.mt-4{margin-top:1rem}.line-clamp-2{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.aspect-square{aspect-ratio:1 / 1}.h-10{height:2.5rem}.h-16{height:4rem}.h-32{height:8rem}.h-4{height:1rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-8{height:2rem}.h-12{height:3rem}.h-3\.5{height:0.875rem}.h-full{height:100%}.min-h-\[40px\]{min-height:40px}.w-10{width:2.5rem}.w-16{width:4rem}.w-32{width:8rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-8{width:2rem}.w-full{width:100%}.w-12{width:3rem}.w-3\.5{width:0.875rem}.max-w-7xl{max-width:80rem}.max-w-lg{max-width:32rem}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.translate-x-full{--tw-translate-x:100%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.rotate-12{--tw-rotate:12deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.scale-150{--tw-scale-x:1.5;--tw-scale-y:1.5;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.scale-95{--tw-scale-x:.95;--tw-scale-y:.95;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-pointer{cursor:pointer}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-1{gap:0.25rem}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.whitespace-nowrap{white-space:nowrap}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.rounded-l-lg{border-top-left-radius:0.5rem;border-bottom-left-radius:0.5rem}.rounded-r-lg{border-top-right-radius:0.5rem;border-bottom-right-radius:0.5rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249 / var(--tw-border-opacity, 1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240 / var(--tw-border-opacity, 1))}.border-transparent{border-color:transparent}.border-slate-50{--tw-border-opacity:1;border-color:rgb(248 250 252 / var(--tw-border-opacity, 1))}.bg-\[\#1a274c\]{--tw-bg-opacity:1;background-color:rgb(26 39 76 / var(--tw-bg-opacity, 1))}.bg-\[\#f57224\]{--tw-bg-opacity:1;background-color:rgb(245 114 36 / var(--tw-bg-opacity, 1))}.bg-black\/50{background-color:rgb(0 0 0 / 0.5)}.bg-black\/60{background-color:rgb(0 0 0 / 0.6)}.bg-green-100{--tw-bg-opacity:1;background-color:rgb(220 252 231 / var(--tw-bg-opacity, 1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-\[\#1a274c\]\/80{background-color:rgb(26 39 76 / 0.8)}.bg-red-100{--tw-bg-opacity:1;background-color:rgb(254 226 226 / var(--tw-bg-opacity, 1))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-\[\#ffeedd\]{--tw-gradient-from:#ffeedd var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 238 221 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-\[\#ffcca3\]{--tw-gradient-to:#ffcca3 var(--tw-gradient-to-position)}.fill-current{fill:currentColor}.object-cover{object-fit:cover}.p-1{padding:0.25rem}.p-12{padding:3rem}.p-2{padding:0.5rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-1\.5{padding:0.375rem}.p-3{padding:0.75rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.py-12{padding-top:3rem;padding-bottom:3rem}.pt-2{padding-top:0.5rem}.pt-4{padding-top:1rem}.pt-3{padding-top:0.75rem}.text-left{text-align:left}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-base{font-size:1rem;line-height:1.5rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-tight{line-height:1.25}.tracking-wider{letter-spacing:0.05em}.text-\[\#1a274c\]{--tw-text-opacity:1;color:rgb(26 39 76 / var(--tw-text-opacity, 1))}.text-\[\#f57224\]{--tw-text-opacity:1;color:rgb(245 114 36 / var(--tw-text-opacity, 1))}.text-green-600{--tw-text-opacity:1;color:rgb(22 163 74 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-red-600{--tw-text-opacity:1;color:rgb(220 38 38 / var(--tw-text-opacity, 1))}.line-through{-webkit-text-decoration-line:line-through;text-decoration-line:line-through}.opacity-0{opacity:0}.opacity-20{opacity:0.2}.opacity-50{opacity:0.5}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.outline-none{outline:2px solid transparent;outline-offset:2px}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.duration-150{transition-duration:150ms}.duration-200{transition-duration:200ms}.hover\:bg-\[\#25376b\]:hover{--tw-bg-opacity:1;background-color:rgb(37 55 107 / var(--tw-bg-opacity, 1))}.hover\:bg-\[\#d45d19\]:hover{--tw-bg-opacity:1;background-color:rgb(212 93 25 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-100:hover{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-200:hover{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-300:hover{--tw-bg-opacity:1;background-color:rgb(203 213 225 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-50:hover{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-800:hover{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.hover\:bg-red-200:hover{--tw-bg-opacity:1;background-color:rgb(254 202 202 / var(--tw-bg-opacity, 1))}.hover\:text-\[\#f57224\]:hover{--tw-text-opacity:1;color:rgb(245 114 36 / var(--tw-text-opacity, 1))}.hover\:text-slate-600:hover{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.hover\:shadow:hover{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.hover\:shadow-md:hover{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.focus\:border-\[\#f57224\]:focus{--tw-border-opacity:1;border-color:rgb(245 114 36 / var(--tw-border-opacity, 1))}.focus\:bg-white:focus{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.group:hover .group-hover\:scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:opacity-100{opacity:1}@media (min-width: 640px){.sm\:inline{display:inline}.sm\:w-auto{width:auto}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:gap-4{gap:1rem}.sm\:gap-6{gap:1.5rem}.sm\:p-10{padding:2.5rem}.sm\:p-4{padding:1rem}.sm\:text-4xl{font-size:2.25rem;line-height:2.5rem}.sm\:text-base{font-size:1rem;line-height:1.5rem}}@media (min-width: 768px){.md\:block{display:block}.md\:flex{display:flex}.md\:hidden{display:none}.md\:w-auto{width:auto}.md\:max-w-2xl{max-width:42rem}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:justify-start{justify-content:flex-start}.md\:text-left{text-align:left}}@media (min-width: 1024px){.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}}</style></head>
-<body class="text-slate-800">
-
-    <!-- Top Navigation Bar (အပေါ်ဘား) -->
-    <header class="sticky top-0 z-50 bg-white shadow-md">
-        <div class="bg-[#f57224] text-white text-xs py-1 px-4 hidden md:block">
-            <div class="max-w-7xl mx-auto flex justify-between items-center">
-                <span>မြန်မာနိုင်ငံ၏ အကြီးဆုံး Lazada စုစည်းမှု စတိုးဆိုင်ကြီးမှ ကြိုဆိုပါသည်</span>
-                <div class="flex gap-4">
-                    <a href="#" class="hover:underline">သုံးစွဲပုံအကူအညီ</a>
-                    <a href="#" class="hover:underline">Track my Order</a>
-                </div>
-            </div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row gap-4 items-center justify-between">
-            <!-- Logo (လိုဂို) -->
+</head>
+<body class="text-gray-800 antialiased">
+    <div class="lazada-bg-blue text-white text-xs py-2 px-4 text-center font-medium">
+        မြန်မာနိုင်ငံ၏ အကြီးဆုံး Multi-Platform Shopping Engine - ပစ္စည်းအားလုံး ၅၅% အထူးလျှော့ဈေး!
+    </div>
+    <header class="sticky top-0 z-40 bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center justify-between w-full md:w-auto">
                 <a href="#" class="flex items-center gap-2">
-                    <span class="text-3xl font-extrabold text-[#f57224] tracking-wider flex items-center">
-                        Lazada<span class="text-[#1a274c] text-xl ml-1 font-semibold">MegaStore</span>
-                    </span>
-                </a>
-                <!-- Mobile Cart & Menu Buttons -->
-                <div class="flex items-center gap-4 md:hidden">
-                    <button onclick="toggleCart()" class="relative p-2 text-slate-600 hover:text-[#f57224]">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-cart" aria-hidden="true" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-                        <span id="cart-count-mobile" class="absolute -top-1 -right-1 bg-[#f57224] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
-                    </button>
-                    <button onclick="toggleAdminModal()" class="p-2 text-slate-600 hover:text-[#f57224]">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus-circle" aria-hidden="true" class="lucide lucide-plus-circle"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path><path d="M12 8v8"></path></svg>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Search Bar (ပစ္စည်းရှာဖွေရန်) -->
-            <div class="w-full md:max-w-2xl flex">
-                <div class="relative w-full">
-                    <input type="text" id="search-input" oninput="filterProducts()" placeholder="Lazada ရှိသမျှ ပစ္စည်းအားလုံးကို ဤနေရာတွင် ရှာဖွေပါ..." class="w-full px-4 py-2.5 bg-slate-100 focus:bg-white border border-transparent focus:border-[#f57224] rounded-l-lg outline-none transition">
-                    <button onclick="clearSearch()" id="clear-search" class="absolute right-3 top-3 text-slate-400 hover:text-slate-600 hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" class="lucide lucide-x w-4 h-4"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-                    </button>
-                </div>
-                <button onclick="filterProducts()" class="bg-[#f57224] hover:bg-[#d45d19] text-white px-6 rounded-r-lg transition flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="search" aria-hidden="true" class="lucide lucide-search w-5 h-5"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
-                    <span class="hidden sm:inline">ရှာဖွေမည်</span>
-                </button>
-            </div>
-
-            <!-- Actions (လုပ်ဆောင်ချက်များ) -->
-            <div class="hidden md:flex items-center gap-6">
-                <!-- Add Product / Importer Button -->
-                <button onclick="toggleAdminModal()" class="flex items-center gap-2 text-slate-700 hover:text-[#f57224] font-medium transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus-circle" aria-hidden="true" class="lucide lucide-plus-circle text-[#f57224]"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path><path d="M12 8v8"></path></svg>
-                    <span>ပစ္စည်းအသစ်ထည့်ရန်</span>
-                </button>
-
-                <!-- Cart Button -->
-                <button onclick="toggleCart()" class="relative flex items-center gap-2 text-slate-700 hover:text-[#f57224] font-medium transition">
-                    <div class="relative">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-cart" aria-hidden="true" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-                        <span id="cart-count" class="absolute -top-2 -right-2 bg-[#f57224] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+                    <span class="lazada-bg-orange text-white p-2 rounded-lg font-bold text-xl tracking-wider">TSPK</span>
+                    <div>
+                        <h1 class="text-lg md:text-xl font-bold text-slate-900 leading-tight">Thae Su Phoo Ko</h1>
+                        <p class="text-xs text-gray-500 font-semibold">Online Store</p>
                     </div>
-                    <span>ခြင်းတောင်း</span>
+                </a>
+                <button onclick="toggleCart()" class="relative p-2 md:hidden text-slate-700 hover:text-orange-500 transition">
+                    <i data-lucide="shopping-cart"></i>
+                    <span id="cart-count-mobile" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
                 </button>
-
-                <!-- Download/Export Project for GitHub -->
-                <button onclick="downloadUpdatedCode()" class="bg-[#1a274c] hover:bg-[#25376b] text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="download" aria-hidden="true" class="lucide lucide-download w-4 h-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
-                    <span>GitHub Code ဒေါင်းရန်</span>
+            </div>
+            <div class="w-full md:max-w-xl flex-1">
+                <form onsubmit="handleSearch(event)" class="relative flex items-center">
+                    <input type="text" id="search-input" placeholder="ဘာရှာရှာအကုန်ရှိတယ်... (ဥပမာ - ဖုန်း၊ အင်္ကျီ၊ နာရီ၊ မိတ်ကပ်)" class="w-full pl-4 pr-12 py-2.5 rounded-l-full border-2 border-orange-500 focus:outline-none text-sm">
+                    <button type="submit" class="lazada-bg-orange hover:bg-orange-600 text-white px-6 py-3 rounded-r-full text-sm font-medium transition flex items-center gap-1">
+                        <i data-lucide="search" class="w-4 h-4"></i><span class="hidden sm:inline">ရှာဖွေရန်</span>
+                    </button>
+                </form>
+            </div>
+            <div class="hidden md:flex items-center gap-4">
+                <button onclick="downloadWebsite()" class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2.5 rounded-lg shadow transition"><i data-lucide="download" class="w-4 h-4"></i><span>ဒီ Website ဖိုင်ကိုဒေါင်းမည်</span></button>
+                <button onclick="toggleCart()" class="relative flex items-center gap-2 text-slate-700 hover:text-orange-500 font-medium transition border p-2 rounded-lg bg-gray-50">
+                    <i data-lucide="shopping-cart" class="w-5 h-5 lazada-orange"></i><span>ခြင်းတောင်း</span>
+                    <span id="cart-count-desktop" class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">0</span>
                 </button>
             </div>
         </div>
-
-        <!-- Categories Nav (အမျိုးအစား ခွဲခြားမှု) -->
-        <div class="border-t border-slate-100 bg-white shadow-sm overflow-x-auto">
-            <div class="max-w-7xl mx-auto px-4 flex gap-2 sm:gap-4 py-3 whitespace-nowrap scrollbar-none">
-                <button onclick="selectCategory('all')" id="cat-all" class="category-btn px-4 py-1.5 rounded-full text-sm font-medium bg-[#f57224] text-white transition">
-                    အားလုံးကြည့်ရန်
-                </button>
-                <button onclick="selectCategory('electronics')" id="cat-electronics" class="category-btn px-4 py-1.5 rounded-full text-sm font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
-                    လျှပ်စစ်ပစ္စည်းများ
-                </button>
-                <button onclick="selectCategory('fashion')" id="cat-fashion" class="category-btn px-4 py-1.5 rounded-full text-sm font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
-                    အဝတ်အထည်နှင့် ဖက်ရှင်
-                </button>
-                <button onclick="selectCategory('home')" id="cat-home" class="category-btn px-4 py-1.5 rounded-full text-sm font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
-                    အိမ်သုံးနှင့် လူနေမှုဘဝ
-                </button>
-                <button onclick="selectCategory('beauty')" id="cat-beauty" class="category-btn px-4 py-1.5 rounded-full text-sm font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
-                    အလှကုန်နှင့် ကျန်းမာရေး
-                </button>
+        <div class="bg-slate-100 border-t border-b border-gray-200 overflow-x-auto whitespace-nowrap">
+            <div class="container mx-auto px-4 flex gap-2 py-2">
+                <button onclick="filterPlatform('All')" id="btn-all" class="platform-tab px-4 py-1.5 rounded-full text-xs font-bold transition bg-orange-500 text-white shadow">အားလုံးကြည့်မည်</button>
+                <button onclick="filterPlatform('Lazada')" id="btn-lazada" class="platform-tab px-4 py-1.5 rounded-full text-xs font-bold transition bg-white text-slate-700 border hover:bg-orange-50">Lazada</button>
+                <button onclick="filterPlatform('Alibaba')" id="btn-alibaba" class="platform-tab px-4 py-1.5 rounded-full text-xs font-bold transition bg-white text-slate-700 border hover:bg-orange-50">Alibaba</button>
+                <button onclick="filterPlatform('Shop.com.mm')" id="btn-shop" class="platform-tab px-4 py-1.5 rounded-full text-xs font-bold transition bg-white text-slate-700 border hover:bg-orange-50">Shop.com.mm</button>
+                <button onclick="filterPlatform('Amazon')" id="btn-amazon" class="platform-tab px-4 py-1.5 rounded-full text-xs font-bold transition bg-white text-slate-700 border hover:bg-orange-50">Amazon</button>
             </div>
         </div>
     </header>
-
-    <!-- Main Body Container -->
-    <main class="max-w-7xl mx-auto px-4 py-6">
-        
-        <!-- Promotional Hero Banner (ပရိုမိုးရှင်း ကြော်ငြာဘန်နာ) -->
-        <div class="bg-gradient-to-r from-[#ffeedd] to-[#ffcca3] rounded-2xl p-6 sm:p-10 mb-8 flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden shadow-sm">
-            <div class="z-10 text-center md:text-left">
-                <span class="bg-[#f57224] text-white text-xs uppercase px-2.5 py-1 rounded-full font-bold">Lazada Super Mega Sale</span>
-                <h1 class="text-3xl sm:text-4xl font-extrabold text-[#1a274c] mt-3 leading-tight">
-                    Lazada ရှိသမျှဆိုင်များမှ ပစ္စည်းအားလုံးကို <br class="hidden sm:inline">တစ်နေရာတည်းတွင် စုစည်းဝယ်ယူပါ
-                </h1>
-                <p class="text-slate-600 mt-2 text-sm sm:text-base">ဆိုင်ပေါင်းစုံမှ ပစ္စည်းများကို ရှာဖွေပြီး အလွယ်တကူ မှာယူနိုင်မယ့် စနစ်သစ်</p>
-                <div class="mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
-                    <button onclick="scrollToProducts()" class="bg-[#f57224] hover:bg-[#d45d19] text-white font-bold px-6 py-3 rounded-lg transition shadow-md">
-                        အခုပဲ ဝယ်ယူမယ်
-                    </button>
-                    <button onclick="toggleAdminModal()" class="bg-white hover:bg-slate-50 text-slate-700 font-bold px-6 py-3 rounded-lg border border-slate-200 transition">
-                        ပစ္စည်းအသစ် တင်သွင်းရန်
-                    </button>
-                </div>
+    <main class="container mx-auto px-4 py-6">
+        <div class="mb-8 rounded-2xl lazada-bg-orange p-6 md:p-10 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg">
+            <div class="max-w-xl text-center md:text-left">
+                <span class="bg-amber-400 text-slate-900 text-xs font-extrabold uppercase px-3 py-1 rounded-full shadow-sm">Mega Promotion</span>
+                <h2 class="text-2xl md:text-4xl font-extrabold mt-3 leading-tight">၅၅% အလိုအလျောက်လျှော့ဈေးစနစ်</h2>
+                <p class="text-sm md:text-base mt-2 text-orange-100 font-medium">Lazada, Alibaba, Shop, Amazon တို့မှ ပစ္စည်းအားလုံး မူရင်းဈေးနှုန်း၏ ၄၅% သာ ကျသင့်ပါတော့မည်။</p>
             </div>
-            <!-- Decorative Icon -->
-            <div class="hidden md:block opacity-20 transform rotate-12 scale-150 text-[#f57224] mr-8">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-bag" aria-hidden="true" class="lucide lucide-shopping-bag w-32 h-32"><path d="M16 10a4 4 0 0 1-8 0"></path><path d="M3.103 6.034h17.794"></path><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"></path></svg>
+            <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 text-center min-w-[200px]">
+                <p class="text-xs uppercase font-bold tracking-wider text-orange-200">ယနေ့အထူးနှုန်း</p>
+                <p class="text-4xl font-black text-amber-300 my-1">45%</p>
+                <p class="text-xs font-medium text-white">တန်ဖိုးဖြင့်သာပေးချေရန်</p>
             </div>
         </div>
-
-        <!-- Content Area: Products Title & Filter Controls -->
-        <div id="product-section" class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <div class="flex items-center justify-between mb-6 border-b pb-3">
             <div>
-                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
-                    <span>ရရှိနိုင်သော ပစ္စည်းအားလုံး</span>
-                    <span id="product-count" class="bg-[#1a274c] text-white text-xs px-2.5 py-0.5 rounded-full">8 ခု</span>
-                </h2>
-                <p class="text-slate-500 text-sm mt-1">Lazada ရှိ ဆိုင်ခွဲအသီးသီးမှ စုစည်းဖော်ပြပေးထားပါသည်။</p>
+                <h3 id="section-title" class="text-lg font-bold text-slate-800 flex items-center gap-2"><i data-lucide="sparkles" class="lazada-orange"></i><span>လူကြိုက်အများဆုံး ပစ္စည်းများ</span></h3>
             </div>
-            <div class="flex gap-2 w-full sm:w-auto">
-                <select id="sort-select" onchange="filterProducts()" class="px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-600 focus:outline-none focus:border-[#f57224] w-full sm:w-auto">
-                    <option value="default">စီစဉ်မှုစနစ် - ပုံမှန်</option>
-                    <option value="price-low">ဈေးနှုန်း - အနည်းမှ အများ</option>
-                    <option value="price-high">ဈေးနှုန်း - အများမှ အနည်း</option>
-                    <option value="rating">သုံးစွဲသူအကြိုက်ဆုံး</option>
-                </select>
-            </div>
+            <span id="product-count" class="text-xs bg-slate-200 text-slate-700 px-2.5 py-1 rounded-full font-bold">၈ ခုတွေ့ရှိသည်</span>
         </div>
-
-        <!-- Empty State (ပစ္စည်းမတွေ့ရှိပါက ပြသရန်) -->
-        <div id="empty-state" class="hidden bg-white rounded-2xl p-12 text-center border border-slate-100 max-w-md mx-auto my-12">
-            <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400 mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="package-search" aria-hidden="true" class="lucide lucide-package-search w-8 h-8"><path d="M12 22V12"></path><path d="M20.27 18.27 22 20"></path><path d="M21 10.498V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.729l7 4a2 2 0 0 0 2 .001l.98-.559"></path><path d="M3.29 7 12 12l8.71-5"></path><path d="m7.5 4.27 8.997 5.148"></path><circle cx="18.5" cy="16.5" r="2.5"></circle></svg>
-            </div>
-            <h3 class="text-lg font-bold text-slate-800">ရှာဖွေမှု မတွေ့ရှိပါ</h3>
-            <p class="text-slate-500 text-sm mt-1">သင်ရှာဖွေနေသော ပစ္စည်း သို့မဟုတ် အမျိုးအစား မရှိသေးပါ။ ပစ္စည်းအသစ် ထည့်သွင်းခြင်း ပြုလုပ်နိုင်ပါသည်။</p>
-            <button onclick="resetAllFilters()" class="mt-6 bg-[#f57224] text-white font-bold px-4 py-2 rounded-lg text-sm hover:bg-[#d45d19] transition">
-                မူလအတိုင်း ပြန်လုပ်ရန်
-            </button>
-        </div>
-
-        <!-- Products Grid Container -->
-        <div id="products-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"><div class="bg-white rounded-xl shadow-sm hover:shadow-md border border-slate-100 overflow-hidden flex flex-col group transition duration-200">
-                    <div class="relative aspect-square overflow-hidden bg-slate-100">
-                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.0.3" alt="M3 Pro Ultra-Thin Smart Watch - သံလိုက်ကြိုးပါဝင်သည်" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&amp;auto=format&amp;fit=crop&amp;q=60'">
-                        <span class="absolute top-2 left-2 bg-[#1a274c]/80 text-white text-[10px] px-2 py-0.5 rounded font-medium">
-                            Lazada Smart Gear Store
-                        </span>
-                        <button onclick="toggleDeleteProduct(1, event)" class="absolute top-2 right-2 bg-red-100 hover:bg-red-200 text-red-600 p-1.5 rounded-full shadow transition opacity-0 group-hover:opacity-100" title="ပစ္စည်းဖျက်ရန်">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        </button>
-                    </div>
-                    <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">လျှပ်စစ်ပစ္စည်း</span>
-                            <h3 class="font-bold text-slate-800 text-sm sm:text-base line-clamp-2 mt-1 min-h-[40px] hover:text-[#f57224] transition duration-150 cursor-pointer" title="M3 Pro Ultra-Thin Smart Watch - သံလိုက်ကြိုးပါဝင်သည်">
-                                M3 Pro Ultra-Thin Smart Watch - သံလိုက်ကြိုးပါဝင်သည်
-                            </h3>
-                            <div class="flex items-center gap-1 mt-2">
-                                <div class="flex text-amber-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" aria-hidden="true" class="lucide lucide-star w-3.5 h-3.5 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
-                                </div>
-                                <span class="text-xs font-semibold text-slate-600">4.8</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-xs text-slate-400 line-through">၁၀၆,၂၅၀ Ks</span>
-                                <span class="text-base font-extrabold text-[#f57224]">၈၅,၀၀၀ Ks</span>
-                            </div>
-                            <button onclick="addToCart(1)" class="bg-[#f57224] hover:bg-[#d45d19] text-white p-2 rounded-lg transition shadow-sm hover:shadow" title="ခြင်းတောင်းထဲထည့်မည်">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-cart" aria-hidden="true" class="lucide lucide-shopping-cart w-5 h-5"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-                            </button>
-                        </div>
-                    </div>
-                </div><div class="bg-white rounded-xl shadow-sm hover:shadow-md border border-slate-100 overflow-hidden flex flex-col group transition duration-200">
-                    <div class="relative aspect-square overflow-hidden bg-slate-100">
-                        <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.0.3" alt="Premium Leather Casual Shoes - အမျိုးသားဝတ်သားရေဖိနပ်" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&amp;auto=format&amp;fit=crop&amp;q=60'">
-                        <span class="absolute top-2 left-2 bg-[#1a274c]/80 text-white text-[10px] px-2 py-0.5 rounded font-medium">
-                            Shoe Heaven Myanmar
-                        </span>
-                        <button onclick="toggleDeleteProduct(2, event)" class="absolute top-2 right-2 bg-red-100 hover:bg-red-200 text-red-600 p-1.5 rounded-full shadow transition opacity-0 group-hover:opacity-100" title="ပစ္စည်းဖျက်ရန်">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        </button>
-                    </div>
-                    <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">ဖက်ရှင်ဝတ်စုံ</span>
-                            <h3 class="font-bold text-slate-800 text-sm sm:text-base line-clamp-2 mt-1 min-h-[40px] hover:text-[#f57224] transition duration-150 cursor-pointer" title="Premium Leather Casual Shoes - အမျိုးသားဝတ်သားရေဖိနပ်">
-                                Premium Leather Casual Shoes - အမျိုးသားဝတ်သားရေဖိနပ်
-                            </h3>
-                            <div class="flex items-center gap-1 mt-2">
-                                <div class="flex text-amber-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" aria-hidden="true" class="lucide lucide-star w-3.5 h-3.5 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
-                                </div>
-                                <span class="text-xs font-semibold text-slate-600">4.7</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-xs text-slate-400 line-through">၁၅၀,၀၀၀ Ks</span>
-                                <span class="text-base font-extrabold text-[#f57224]">၁၂၀,၀၀၀ Ks</span>
-                            </div>
-                            <button onclick="addToCart(2)" class="bg-[#f57224] hover:bg-[#d45d19] text-white p-2 rounded-lg transition shadow-sm hover:shadow" title="ခြင်းတောင်းထဲထည့်မည်">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-cart" aria-hidden="true" class="lucide lucide-shopping-cart w-5 h-5"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-                            </button>
-                        </div>
-                    </div>
-                </div><div class="bg-white rounded-xl shadow-sm hover:shadow-md border border-slate-100 overflow-hidden flex flex-col group transition duration-200">
-                    <div class="relative aspect-square overflow-hidden bg-slate-100">
-                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.0.3" alt="Wireless ANC Headphone (ဆူညံသံကာကွယ်စနစ်ပါဝင်သည်)" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&amp;auto=format&amp;fit=crop&amp;q=60'">
-                        <span class="absolute top-2 left-2 bg-[#1a274c]/80 text-white text-[10px] px-2 py-0.5 rounded font-medium">
-                            Audio Sound Wave Store
-                        </span>
-                        <button onclick="toggleDeleteProduct(3, event)" class="absolute top-2 right-2 bg-red-100 hover:bg-red-200 text-red-600 p-1.5 rounded-full shadow transition opacity-0 group-hover:opacity-100" title="ပစ္စည်းဖျက်ရန်">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        </button>
-                    </div>
-                    <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">လျှပ်စစ်ပစ္စည်း</span>
-                            <h3 class="font-bold text-slate-800 text-sm sm:text-base line-clamp-2 mt-1 min-h-[40px] hover:text-[#f57224] transition duration-150 cursor-pointer" title="Wireless ANC Headphone (ဆူညံသံကာကွယ်စနစ်ပါဝင်သည်)">
-                                Wireless ANC Headphone (ဆူညံသံကာကွယ်စနစ်ပါဝင်သည်)
-                            </h3>
-                            <div class="flex items-center gap-1 mt-2">
-                                <div class="flex text-amber-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" aria-hidden="true" class="lucide lucide-star w-3.5 h-3.5 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
-                                </div>
-                                <span class="text-xs font-semibold text-slate-600">4.9</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-xs text-slate-400 line-through">၂၁၈,၇၅၀ Ks</span>
-                                <span class="text-base font-extrabold text-[#f57224]">၁၇၅,၀၀၀ Ks</span>
-                            </div>
-                            <button onclick="addToCart(3)" class="bg-[#f57224] hover:bg-[#d45d19] text-white p-2 rounded-lg transition shadow-sm hover:shadow" title="ခြင်းတောင်းထဲထည့်မည်">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-cart" aria-hidden="true" class="lucide lucide-shopping-cart w-5 h-5"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-                            </button>
-                        </div>
-                    </div>
-                </div><div class="bg-white rounded-xl shadow-sm hover:shadow-md border border-slate-100 overflow-hidden flex flex-col group transition duration-200">
-                    <div class="relative aspect-square overflow-hidden bg-slate-100">
-                        <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=500&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.0.3" alt="Nordic Minimalist Style Desk Lamp - အိပ်ခန်းသုံးမီးအိမ်" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&amp;auto=format&amp;fit=crop&amp;q=60'">
-                        <span class="absolute top-2 left-2 bg-[#1a274c]/80 text-white text-[10px] px-2 py-0.5 rounded font-medium">
-                            Cozy Home Decoration
-                        </span>
-                        <button onclick="toggleDeleteProduct(4, event)" class="absolute top-2 right-2 bg-red-100 hover:bg-red-200 text-red-600 p-1.5 rounded-full shadow transition opacity-0 group-hover:opacity-100" title="ပစ္စည်းဖျက်ရန်">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        </button>
-                    </div>
-                    <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">အိမ်သုံးပစ္စည်း</span>
-                            <h3 class="font-bold text-slate-800 text-sm sm:text-base line-clamp-2 mt-1 min-h-[40px] hover:text-[#f57224] transition duration-150 cursor-pointer" title="Nordic Minimalist Style Desk Lamp - အိပ်ခန်းသုံးမီးအိမ်">
-                                Nordic Minimalist Style Desk Lamp - အိပ်ခန်းသုံးမီးအိမ်
-                            </h3>
-                            <div class="flex items-center gap-1 mt-2">
-                                <div class="flex text-amber-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" aria-hidden="true" class="lucide lucide-star w-3.5 h-3.5 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
-                                </div>
-                                <span class="text-xs font-semibold text-slate-600">4.5</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-xs text-slate-400 line-through">၅၆,၂၅၀ Ks</span>
-                                <span class="text-base font-extrabold text-[#f57224]">၄၅,၀၀၀ Ks</span>
-                            </div>
-                            <button onclick="addToCart(4)" class="bg-[#f57224] hover:bg-[#d45d19] text-white p-2 rounded-lg transition shadow-sm hover:shadow" title="ခြင်းတောင်းထဲထည့်မည်">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-cart" aria-hidden="true" class="lucide lucide-shopping-cart w-5 h-5"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-                            </button>
-                        </div>
-                    </div>
-                </div><div class="bg-white rounded-xl shadow-sm hover:shadow-md border border-slate-100 overflow-hidden flex flex-col group transition duration-200">
-                    <div class="relative aspect-square overflow-hidden bg-slate-100">
-                        <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.0.3" alt="Organic Aloe Vera Soothing Gel (300ml) - ရှားစောင်းဂျယ်လ်" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&amp;auto=format&amp;fit=crop&amp;q=60'">
-                        <span class="absolute top-2 left-2 bg-[#1a274c]/80 text-white text-[10px] px-2 py-0.5 rounded font-medium">
-                            K-Beauty Official Direct
-                        </span>
-                        <button onclick="toggleDeleteProduct(5, event)" class="absolute top-2 right-2 bg-red-100 hover:bg-red-200 text-red-600 p-1.5 rounded-full shadow transition opacity-0 group-hover:opacity-100" title="ပစ္စည်းဖျက်ရန်">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        </button>
-                    </div>
-                    <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">အလှကုန်ပစ္စည်း</span>
-                            <h3 class="font-bold text-slate-800 text-sm sm:text-base line-clamp-2 mt-1 min-h-[40px] hover:text-[#f57224] transition duration-150 cursor-pointer" title="Organic Aloe Vera Soothing Gel (300ml) - ရှားစောင်းဂျယ်လ်">
-                                Organic Aloe Vera Soothing Gel (300ml) - ရှားစောင်းဂျယ်လ်
-                            </h3>
-                            <div class="flex items-center gap-1 mt-2">
-                                <div class="flex text-amber-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" aria-hidden="true" class="lucide lucide-star w-3.5 h-3.5 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
-                                </div>
-                                <span class="text-xs font-semibold text-slate-600">4.6</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-xs text-slate-400 line-through">၁၈,၇၅၀ Ks</span>
-                                <span class="text-base font-extrabold text-[#f57224]">၁၅,၀၀၀ Ks</span>
-                            </div>
-                            <button onclick="addToCart(5)" class="bg-[#f57224] hover:bg-[#d45d19] text-white p-2 rounded-lg transition shadow-sm hover:shadow" title="ခြင်းတောင်းထဲထည့်မည်">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-cart" aria-hidden="true" class="lucide lucide-shopping-cart w-5 h-5"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-                            </button>
-                        </div>
-                    </div>
-                </div><div class="bg-white rounded-xl shadow-sm hover:shadow-md border border-slate-100 overflow-hidden flex flex-col group transition duration-200">
-                    <div class="relative aspect-square overflow-hidden bg-slate-100">
-                        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.0.3" alt="Casual Travel Backpack with USB Port - ခရီးဆောင်လွယ်အိတ်" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&amp;auto=format&amp;fit=crop&amp;q=60'">
-                        <span class="absolute top-2 left-2 bg-[#1a274c]/80 text-white text-[10px] px-2 py-0.5 rounded font-medium">
-                            Bag &amp; Pack Expert
-                        </span>
-                        <button onclick="toggleDeleteProduct(6, event)" class="absolute top-2 right-2 bg-red-100 hover:bg-red-200 text-red-600 p-1.5 rounded-full shadow transition opacity-0 group-hover:opacity-100" title="ပစ္စည်းဖျက်ရန်">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        </button>
-                    </div>
-                    <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">ဖက်ရှင်ဝတ်စုံ</span>
-                            <h3 class="font-bold text-slate-800 text-sm sm:text-base line-clamp-2 mt-1 min-h-[40px] hover:text-[#f57224] transition duration-150 cursor-pointer" title="Casual Travel Backpack with USB Port - ခရီးဆောင်လွယ်အိတ်">
-                                Casual Travel Backpack with USB Port - ခရီးဆောင်လွယ်အိတ်
-                            </h3>
-                            <div class="flex items-center gap-1 mt-2">
-                                <div class="flex text-amber-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" aria-hidden="true" class="lucide lucide-star w-3.5 h-3.5 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
-                                </div>
-                                <span class="text-xs font-semibold text-slate-600">4.4</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-xs text-slate-400 line-through">၆၈,၇၅၀ Ks</span>
-                                <span class="text-base font-extrabold text-[#f57224]">၅၅,၀၀၀ Ks</span>
-                            </div>
-                            <button onclick="addToCart(6)" class="bg-[#f57224] hover:bg-[#d45d19] text-white p-2 rounded-lg transition shadow-sm hover:shadow" title="ခြင်းတောင်းထဲထည့်မည်">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-cart" aria-hidden="true" class="lucide lucide-shopping-cart w-5 h-5"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-                            </button>
-                        </div>
-                    </div>
-                </div><div class="bg-white rounded-xl shadow-sm hover:shadow-md border border-slate-100 overflow-hidden flex flex-col group transition duration-200">
-                    <div class="relative aspect-square overflow-hidden bg-slate-100">
-                        <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&amp;auto=format&amp;fit=crop&amp;q=60" alt="Portable Espresso Maker (Electric) - ခရီးဆောင်ကော်ဖီဖျော်စက်" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&amp;auto=format&amp;fit=crop&amp;q=60'">
-                        <span class="absolute top-2 left-2 bg-[#1a274c]/80 text-white text-[10px] px-2 py-0.5 rounded font-medium">
-                            Kitchen Magic Corner
-                        </span>
-                        <button onclick="toggleDeleteProduct(7, event)" class="absolute top-2 right-2 bg-red-100 hover:bg-red-200 text-red-600 p-1.5 rounded-full shadow transition opacity-0 group-hover:opacity-100" title="ပစ္စည်းဖျက်ရန်">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        </button>
-                    </div>
-                    <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">အိမ်သုံးပစ္စည်း</span>
-                            <h3 class="font-bold text-slate-800 text-sm sm:text-base line-clamp-2 mt-1 min-h-[40px] hover:text-[#f57224] transition duration-150 cursor-pointer" title="Portable Espresso Maker (Electric) - ခရီးဆောင်ကော်ဖီဖျော်စက်">
-                                Portable Espresso Maker (Electric) - ခရီးဆောင်ကော်ဖီဖျော်စက်
-                            </h3>
-                            <div class="flex items-center gap-1 mt-2">
-                                <div class="flex text-amber-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" aria-hidden="true" class="lucide lucide-star w-3.5 h-3.5 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
-                                </div>
-                                <span class="text-xs font-semibold text-slate-600">4.7</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-xs text-slate-400 line-through">၁၆၈,၇၅၀ Ks</span>
-                                <span class="text-base font-extrabold text-[#f57224]">၁၃၅,၀၀၀ Ks</span>
-                            </div>
-                            <button onclick="addToCart(7)" class="bg-[#f57224] hover:bg-[#d45d19] text-white p-2 rounded-lg transition shadow-sm hover:shadow" title="ခြင်းတောင်းထဲထည့်မည်">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-cart" aria-hidden="true" class="lucide lucide-shopping-cart w-5 h-5"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-                            </button>
-                        </div>
-                    </div>
-                </div><div class="bg-white rounded-xl shadow-sm hover:shadow-md border border-slate-100 overflow-hidden flex flex-col group transition duration-200">
-                    <div class="relative aspect-square overflow-hidden bg-slate-100">
-                        <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.0.3" alt="Premium Skin Serum - အမဲစက်ပျောက် မျက်နှာသစ်ရည်" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&amp;auto=format&amp;fit=crop&amp;q=60'">
-                        <span class="absolute top-2 left-2 bg-[#1a274c]/80 text-white text-[10px] px-2 py-0.5 rounded font-medium">
-                            Glow Skin Care Lab
-                        </span>
-                        <button onclick="toggleDeleteProduct(8, event)" class="absolute top-2 right-2 bg-red-100 hover:bg-red-200 text-red-600 p-1.5 rounded-full shadow transition opacity-0 group-hover:opacity-100" title="ပစ္စည်းဖျက်ရန်">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2 w-3.5 h-3.5"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        </button>
-                    </div>
-                    <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">အလှကုန်ပစ္စည်း</span>
-                            <h3 class="font-bold text-slate-800 text-sm sm:text-base line-clamp-2 mt-1 min-h-[40px] hover:text-[#f57224] transition duration-150 cursor-pointer" title="Premium Skin Serum - အမဲစက်ပျောက် မျက်နှာသစ်ရည်">
-                                Premium Skin Serum - အမဲစက်ပျောက် မျက်နှာသစ်ရည်
-                            </h3>
-                            <div class="flex items-center gap-1 mt-2">
-                                <div class="flex text-amber-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" aria-hidden="true" class="lucide lucide-star w-3.5 h-3.5 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
-                                </div>
-                                <span class="text-xs font-semibold text-slate-600">4.8</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-xs text-slate-400 line-through">၈၅,၀၀၀ Ks</span>
-                                <span class="text-base font-extrabold text-[#f57224]">၆၈,၀၀၀ Ks</span>
-                            </div>
-                            <button onclick="addToCart(8)" class="bg-[#f57224] hover:bg-[#d45d19] text-white p-2 rounded-lg transition shadow-sm hover:shadow" title="ခြင်းတောင်းထဲထည့်မည်">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-cart" aria-hidden="true" class="lucide lucide-shopping-cart w-5 h-5"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-                            </button>
-                        </div>
-                    </div>
-                </div></div>
-
+        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6"></div>
     </main>
-
-    <!-- Shopping Cart Sidebar Drawer (ခြင်းတောင်း Sidebar) -->
-    <div id="cart-drawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
-        <!-- Cart Header -->
-        <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-[#1a274c] text-white">
-            <div class="flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-basket" aria-hidden="true" class="lucide lucide-shopping-basket text-[#f57224]"><path d="m15 11-1 9"></path><path d="m19 11-4-7"></path><path d="M2 11h20"></path><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"></path><path d="M4.5 15.5h15"></path><path d="m5 11 4-7"></path><path d="m9 11 1 9"></path></svg>
-                <h3 class="text-lg font-bold">ရွေးချယ်ထားသော ပစ္စည်းများ</h3>
-            </div>
-            <button onclick="toggleCart()" class="p-1 hover:bg-slate-800 rounded transition">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" class="lucide lucide-x w-6 h-6"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-            </button>
-        </div>
-
-        <!-- Cart Items List -->
-        <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-4">
-                    <div class="text-center py-12 text-slate-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-cart" aria-hidden="true" class="lucide lucide-shopping-cart w-12 h-12 mx-auto mb-3 opacity-50"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-                        <p class="text-sm">ခြင်းတောင်းထဲတွင် ပစ္စည်းမရှိသေးပါ</p>
-                    </div>
+        <!-- Shopping Cart Sidebar -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="toggleCart()"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col">
+                <div class="p-4 bg-slate-900 text-white flex items-center justify-between">
+                    <h2 class="text-md font-bold flex items-center gap-2"><i data-lucide="shopping-bag" class="lazada-orange"></i>ဝယ်ယူမည့် ခြင်းတောင်း</h2>
+                    <button onclick="toggleCart()" class="p-1 hover:bg-slate-800 rounded"><i data-lucide="x" class="w-5 h-5"></i></button>
                 </div>
-
-        <!-- Cart Summary & Checkout -->
-        <div class="p-4 border-t border-slate-100 bg-slate-50">
-            <div class="space-y-2 mb-4">
-                <div class="flex justify-between text-slate-600 text-sm">
-                    <span>စုစုပေါင်း အရေအတွက်</span>
-                    <span id="cart-total-qty" class="font-semibold text-slate-800">0 ခု</span>
+                <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
+                <div class="border-t p-4 bg-slate-50 space-y-3">
+                    <div class="flex justify-between text-sm text-gray-500"><span>ပစ္စည်းစုစုပေါင်း</span><span id="cart-total-qty" class="font-bold text-slate-800">0 - ခု</span></div>
+                    <div class="flex justify-between items-baseline"><span class="text-sm font-bold text-slate-800">စုစုပေါင်းကျသင့်ငွေ</span><span id="cart-total-price" class="text-xl font-black text-orange-600">0 ကျပ်</span></div>
+                    <button onclick="openCheckoutModal()" class="w-full lazada-bg-orange hover:bg-orange-600 text-white font-bold py-3 rounded-xl shadow text-center text-sm">အော်ဒါတင်ရန် ရှေ့သို့သွားမည်</button>
                 </div>
-                <div class="flex justify-between text-slate-800 font-bold text-lg border-t border-slate-200 pt-2">
-                    <span>စုစုပေါင်း ဈေးနှုန်း</span>
-                    <span id="cart-total-price" class="text-[#f57224]">၀ Ks</span>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-                <button onclick="clearCart()" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 rounded-lg transition text-sm">
-                    ခြင်းတောင်းရှင်းမည်
-                </button>
-                <button onclick="openCheckoutModal()" class="w-full bg-[#f57224] hover:bg-[#d45d19] text-white font-bold py-3 rounded-lg transition text-sm shadow-md flex items-center justify-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="credit-card" aria-hidden="true" class="lucide lucide-credit-card w-4 h-4"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>
-                    <span>ဝယ်ယူမည်</span>
-                </button>
             </div>
         </div>
     </div>
-    <!-- Cart Backdrop (ခြင်းတောင်းဖွင့်ချိန် နောက်ခံမှောင်ရန်) -->
-    <div id="cart-backdrop" onclick="toggleCart()" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity"></div>
 
-    <!-- Add/Import Product Modal (ပစ္စည်းအသစ် တင်သွင်းရန် Dialog) -->
-    <div id="admin-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4">
-        <!-- Backdrop -->
-        <div class="absolute inset-0 bg-black/60" onclick="toggleAdminModal()"></div>
-        <!-- Modal Content -->
-        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full z-10 overflow-hidden relative transform scale-95 opacity-0 transition-all duration-300" id="admin-modal-content">
-            <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-[#1a274c] text-white">
-                <h3 class="text-xl font-bold flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus-circle" aria-hidden="true" class="lucide lucide-plus-circle text-[#f57224]"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path><path d="M12 8v8"></path></svg>
-                    <span>Lazada ပစ္စည်းအသစ် ထည့်သွင်းခြင်း</span>
-                </h3>
-                <button onclick="toggleAdminModal()" class="p-1 hover:bg-slate-800 rounded transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" class="lucide lucide-x w-6 h-6"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-                </button>
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div class="flex items-center justify-center min-h-screen px-4">
+            <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeCheckoutModal()"></div>
+            <div class="inline-block bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all my-8 align-middle max-w-md w-full z-10">
+                <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-2"><div class="bg-white text-blue-600 font-bold px-2 py-0.5 rounded text-xs">WavePay</div><h3 class="text-md font-bold">ငွေချေစနစ်နှင့် အချက်အလက်</h3></div>
+                    <button onclick="closeCheckoutModal()"><i data-lucide="x" class="w-5 h-5"></i></button>
+                </div>
+                <form onsubmit="submitOrderForm(event)" class="p-6 space-y-4">
+                    <div class="bg-amber-50 border border-amber-300 rounded-xl p-4">
+                        <p class="font-bold text-sm text-amber-800 mb-1">Wave Pay ဖြင့် ငွေလွှဲရန် အကောင့်</p>
+                        <p class="font-mono text-base font-bold text-slate-800 tracking-wide bg-white/80 px-2 py-1 rounded inline-block border">09 456 789 123</p>
+                        <p class="text-xs text-slate-700 mt-1">အမည်: <strong>Thae Su Phoo Ko</strong></p>
+                        <p class="text-red-600 text-[11px] mt-1 font-semibold">* ငွေလွှဲပြီး Screenshot ပုံတင်ပေးရပါမည်။</p>
+                    </div>
+                    <div class="space-y-3">
+                        <div><label class="block text-xs font-bold text-gray-700 mb-1">ဝယ်ယူသူအမည် *</label><input type="text" id="cust-name" required class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none"></div>
+                        <div><label class="block text-xs font-bold text-gray-700 mb-1">ဖုန်းနံပါတ် *</label><input type="tel" id="cust-phone" required class="w-full border rounded-lg px-3 py-2 text-sm font-mono focus:outline-none" placeholder="09xxxxxxxxx"></div>
+                        <div><label class="block text-xs font-bold text-gray-700 mb-1">ပို့ဆောင်ရမည့် လိပ်စာ *</label><textarea id="cust-address" rows="2" required class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none"></textarea></div>
+                    </div>
+                    <div class="border-t pt-3">
+                        <label class="block text-xs font-bold text-gray-700 mb-1">WavePay Screenshot တင်ရန် *</label>
+                        <div class="mt-1 flex justify-center px-6 pt-4 pb-4 border-2 border-gray-300 border-dashed rounded-xl bg-slate-50">
+                            <label for="receipt-upload" class="cursor-pointer font-bold text-orange-500 hover:text-orange-600 text-xs">
+                                <span>[ ပုံရွေးချယ်ရန် တင်မည် ]</span>
+                                <input id="receipt-upload" type="file" accept="image/*" required class="sr-only" onchange="previewScreenshot(event)">
+                            </label>
+                        </div>
+                        <div id="screenshot-preview-box" class="hidden mt-2 p-2 border rounded-lg bg-gray-50 flex items-center gap-3">
+                            <img id="screenshot-img" src="#" class="w-12 h-16 object-cover rounded shadow">
+                            <div class="flex-1 overflow-hidden"><p class="text-xs font-bold text-slate-700 truncate" id="screenshot-filename">receipt.jpg</p></div>
+                            <button type="button" onclick="removeScreenshot()" class="text-red-500 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                        </div>
+                    </div>
+                    <div class="bg-slate-100 rounded-lg p-3 flex justify-between items-center text-xs">
+                        <span class="font-bold text-slate-600">စုစုပေါင်းကျသင့်ငွေ:</span><span id="modal-checkout-total" class="text-base font-black text-orange-600">0 ကျပ်</span>
+                    </div>
+                    <button type="submit" class="w-full bg-orange-500 text-white font-bold py-3 rounded-xl hover:bg-orange-600 text-sm">ငွေလွှဲအတည်ပြုပြီး အော်ဒါတင်မည်</button>
+                </form>
             </div>
-            <form onsubmit="handleImportProduct(event)" class="p-6 space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">ပစ္စည်းအမည် (Product Name)</label>
-                    <input type="text" id="import-name" required="" placeholder="ဥပမာ - Redmi Note 13 Pro 5G" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#f57224] transition text-sm">
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">ဈေးနှုန်း (ကျပ်ငွေ - Ks)</label>
-                        <input type="number" id="import-price" required="" placeholder="ဥပမာ - 450000" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#f57224] transition text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">မူရင်းဆိုင်ခွဲအမည် (Store Name)</label>
-                        <input type="text" id="import-store" placeholder="ဥပမာ - Xiaomi Official Store" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#f57224] transition text-sm">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">အမျိုးအစား (Category)</label>
-                        <select id="import-category" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#f57224] transition text-sm bg-white">
-                            <option value="electronics">လျှပ်စစ်ပစ္စည်းများ</option>
-                            <option value="fashion">အဝတ်အထည်နှင့် ဖက်ရှင်</option>
-                            <option value="home">အိမ်သုံးနှင့် လူနေမှုဘဝ</option>
-                            <option value="beauty">အလှကုန်နှင့် ကျန်းမာရေး</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">အမှတ်ပေးအဆင့် (Rating - 1 to 5)</label>
-                        <input type="number" id="import-rating" min="1" max="5" step="0.1" value="4.5" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#f57224] transition text-sm">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">ပစ္စည်းပုံဖော်ပြရန် Link သို့မဟုတ် အမည်</label>
-                    <input type="text" id="import-image" placeholder="Image URL (ချန်ထားပါက ပုံသေပုံစံကိုသုံးပါမည်)" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#f57224] transition text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">ပစ္စည်းအကြောင်း အသေးစိတ်ဖော်ပြချက်</label>
-                    <textarea id="import-desc" rows="2" placeholder="ပစ္စည်း၏ အရည်အသွေးနှင့် အချက်အလက်များကို ဤနေရာတွင်ရေးပါ..." class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#f57224] transition text-sm"></textarea>
-                </div>
-                <div class="pt-4 flex gap-3 justify-end border-t border-slate-100">
-                    <button type="button" onclick="toggleAdminModal()" class="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition">မလုပ်တော့ပါ</button>
-                    <button type="submit" class="px-5 py-2 bg-[#f57224] text-white font-bold rounded-lg text-sm hover:bg-[#d45d19] transition shadow-md">ပစ္စည်းတင်သွင်းမည်</button>
-                </div>
-            </form>
         </div>
     </div>
 
-    <!-- Simulated Checkout Modal (ဝယ်ယူမှု အောင်မြင်သည့် Dialog) -->
-    <div id="checkout-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4">
-        <div class="absolute inset-0 bg-black/60" onclick="closeCheckoutModal()"></div>
-        <div class="bg-white rounded-2xl p-6 shadow-2xl max-w-sm w-full z-10 text-center relative">
-            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle w-10 h-10"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg>
-            </div>
-            <h3 class="text-xl font-bold text-slate-800">မှာယူမှု အောင်မြင်ပါသည်</h3>
-            <p class="text-slate-500 text-sm mt-2">Lazada Mega Store မှ ပစ္စည်းများကို အောင်မြင်စွာ မှာယူပြီးစီးပါပြီ။ အော်ဒါများကို ပြင်ဆင်ပြီး မကြာမီ ပို့ဆောင်ပေးပါမည်။</p>
-            <div class="mt-6 bg-slate-50 p-4 rounded-xl space-y-2 text-left text-xs text-slate-600">
-                <p><strong>ငွေတောင်းခံလွှာ နံပါတ်:</strong> <span id="bill-id">#LZD-993821</span></p>
-                <p><strong>စုစုပေါင်း ကျသင့်ငွေ:</strong> <span id="bill-amount" class="text-[#f57224] font-bold">0 Ks</span></p>
-            </div>
-            <button onclick="closeCheckoutModal()" class="w-full mt-6 bg-[#1a274c] hover:bg-[#25376b] text-white font-bold py-3 rounded-lg transition text-sm">
-                ကျေးဇူးတင်ပါသည်
-            </button>
+    <!-- Admin Chat Box -->
+    <div id="admin-chat-box" class="fixed bottom-4 right-4 z-50 w-80 md:w-96 bg-white rounded-2xl shadow-2xl border hidden flex flex-col overflow-hidden">
+        <div class="lazada-bg-blue text-white p-3 flex items-center justify-between">
+            <h4 class="text-xs font-bold">Thae Su Phoo Ko (Admin Chat)</h4>
+            <button onclick="toggleChatBox()"><i data-lucide="minus" class="w-4 h-4"></i></button>
         </div>
+        <div id="chat-messages" class="flex-1 h-64 overflow-y-auto p-4 space-y-3 bg-slate-50 text-xs">
+            <div class="flex gap-2">
+                <div class="bg-white border rounded-r-xl rounded-bl-xl p-2.5 max-w-[85%] text-slate-700">မင်္ဂလာပါရှင်။ အော်ဒါအချက်အလက်နှင့် ငွေလွှဲပြေစာကို လက်ခံရရှိပါပြီ။ ခေတ္တစောင့်ဆိုင်းပေးပါရှင်။</div>
+            </div>
+        </div>
+        <div class="p-2 border-t bg-white flex gap-1"><input type="text" id="chat-reply-input" placeholder="မက်ဆေ့ခ်ျရေးရန်..." class="flex-1 bg-slate-100 border rounded-lg px-3 py-2 text-xs focus:outline-none"><button onclick="sendChatMessage()" class="p-2 lazada-bg-orange text-white rounded-lg"><i data-lucide="send" class="w-4 h-4"></i></button></div>
     </div>
-
-    <!-- Notification Toast System (အချက်ပေးစနစ်) -->
-    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-xl shadow-2xl z-50 flex items-center gap-2 text-sm opacity-0 pointer-events-none transition-all duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="info" aria-hidden="true" class="lucide lucide-info text-[#f57224] w-4 h-4"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
-        <span id="toast-message">ခြင်းတောင်းထဲသို့ ထည့်သွင်းပြီးပါပြီ</span>
-    </div>
-
-    <!-- JS Main Application Codes -->
-    <script>
-        // Default Mock Products Database (မူလပါဝင်သော Lazada ပစ္စည်းများ စုစည်းမှု)
-        // ဆိုင်မျိုးစုံမှ ပစ္စည်းများအားလုံး တစ်နေရာတည်းတွင် စုစည်းထားခြင်းဖြစ်သည်
-        const defaultProducts = [
-    {
-        "id": 1,
-        "name": "M3 Pro Ultra-Thin Smart Watch - သံလိုက်ကြိုးပါဝင်သည်",
-        "category": "electronics",
-        "price": 85000,
-        "rating": 4.8,
-        "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-        "store": "Lazada Smart Gear Store",
-        "desc": "နှလုံးခုန်နှုန်းတိုင်းတာခြင်း၊ သွေးဖိအားတိုင်းတာခြင်းနှင့် အားကစားပြုလုပ်သူများအတွက် အကောင်းဆုံး Smart Watch ဖြစ်သည်။ Battery ကြာရှည်ခံသည်။"
-    },
-    {
-        "id": 2,
-        "name": "Premium Leather Casual Shoes - အမျိုးသားဝတ်သားရေဖိနပ်",
-        "category": "fashion",
-        "price": 120000,
-        "rating": 4.7,
-        "image": "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-        "store": "Shoe Heaven Myanmar",
-        "desc": "ပေါ့ပါးသွက်လက်ပြီး စီးရတာ သက်သောင့်သက်သာရှိစေမည့် စစ်မှန်သော သားရေဖိနပ်ဆန်း။ ပွဲတက်ရော နေ့စဉ်ဝတ်ပါ အဆင်ပြေသည်။"
-    },
-    {
-        "id": 3,
-        "name": "Wireless ANC Headphone (ဆူညံသံကာကွယ်စနစ်ပါဝင်သည်)",
-        "category": "electronics",
-        "price": 175000,
-        "rating": 4.9,
-        "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-        "store": "Audio Sound Wave Store",
-        "desc": "High-Fidelity Sound နှင့် Active Noise Cancellation ပါဝင်တာကြောင့် ပြင်ပဆူညံသံများမကြားရဘဲ သီချင်းကို ကောင်းမွန်စွာနားဆင်နိုင်သည်။"
-    },
-    {
-        "id": 4,
-        "name": "Nordic Minimalist Style Desk Lamp - အိပ်ခန်းသုံးမီးအိမ်",
-        "category": "home",
-        "price": 45000,
-        "rating": 4.5,
-        "image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-        "store": "Cozy Home Decoration",
-        "desc": "အလင်းအမှောင်ကို စိတ်ကြိုက်ပြောင်းလဲနိုင်ပြီး သင့်အိပ်ခန်း သို့မဟုတ် စာကြည့်စားပွဲအတွက် လှပသော ဥရောပဒီဇိုင်းပုံစံ မီးအိမ်လေး ဖြစ်သည်။"
-    },
-    {
-        "id": 5,
-        "name": "Organic Aloe Vera Soothing Gel (300ml) - ရှားစောင်းဂျယ်လ်",
-        "category": "beauty",
-        "price": 15000,
-        "rating": 4.6,
-        "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-        "store": "K-Beauty Official Direct",
-        "desc": "အသားအရေကို အေးမြစေပြီး စိုစွတ်စေသည်။ နေလောင်ဒဏ်နှင့် အသားပတ်ခြင်းများအတွက် အထူးသင့်လျော်သော သဘာဝ ရှားစောင်းဂျယ်လ်။"
-    },
-    {
-        "id": 6,
-        "name": "Casual Travel Backpack with USB Port - ခရီးဆောင်လွယ်အိတ်",
-        "category": "fashion",
-        "price": 55000,
-        "rating": 4.4,
-        "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-        "store": "Bag & Pack Expert",
-        "desc": "ရေစိုခံပြီး အားသွင်းပေါက်ပါဝင်သည်။ Laptop နှင့် အခြားပစ္စည်းများကို စနစ်တကျ ထည့်သွင်းသယ်ဆောင်သွားနိုင်မည့် ခရီးဆောင်လွယ်အိတ်။"
-    },
-    {
-        "id": 7,
-        "name": "Portable Espresso Maker (Electric) - ခရီးဆောင်ကော်ဖီဖျော်စက်",
-        "category": "home",
-        "price": 135000,
-        "rating": 4.7,
-        "image": "https://images.unsplash.com/photo-1517256064527-09c53b2d0bc6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-        "store": "Kitchen Magic Corner",
-        "desc": "မည်သည့်နေရာသို့မဆို သယ်ဆောင်သွားပြီး ကော်ဖီကောင်းကောင်းတစ်ခွက်ကို လွယ်ကူလျင်မြန်စွာ ဖျော်စပ်သောက်သုံးနိုင်မည့် လျှပ်စစ်ကော်ဖီဖျော်စက်။"
-    },
-    {
-        "id": 8,
-        "name": "Premium Skin Serum - အမဲစက်ပျောက် မျက်နှာသစ်ရည်",
-        "category": "beauty",
-        "price": 68000,
-        "rating": 4.8,
-        "image": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-        "store": "Glow Skin Care Lab",
-        "desc": "အမဲစက်နှင့် တင်းတိပ်များကို သိသာစွာ လျော့ပါးသက်သာစေပြီး အသားအရေကို ဖြူစင်ဝင်းပလာစေမည့် သိပ္ပံနည်းကျ စမ်းသပ်ထုတ်လုပ်ထားသော ဆီရမ်။"
-    }
-];
-
-        // State variables (လုပ်ဆောင်ချက် ယာယီသိမ်းဆည်းရာ)
-        let products = [];
-        let cart = [];
-        let selectedCategory = 'all';
-
-        // Initialization (ပထမဆုံး စတင်ချိန်တွင် လုပ်ဆောင်မည့်အရာများ)
-        window.onload = function() {
-            // LocalStorage မှ အရင်သိမ်းထားသည့် ပစ္စည်းများရှိမရှိစစ်ဆေးပြီး မရှိပါက မူရင်းများကို သုံးမည်
-            const storedProducts = localStorage.getItem('lazada_consolidated_products');
-            if (storedProducts) {
-                products = JSON.parse(storedProducts);
-            } else {
-                products = [...defaultProducts];
-                localStorage.setItem('lazada_consolidated_products', JSON.stringify(products));
-            }
-
-            // LocalStorage မှ ခြင်းတောင်းကိုလည်း ရယူပါမည်
-            const storedCart = localStorage.getItem('lazada_consolidated_cart');
-            if (storedCart) {
-                cart = JSON.parse(storedCart);
-            }
-
-            renderProducts();
-            updateCartUI();
-            lucide.createIcons();
+    <div id="toast-container" class="fixed bottom-6 left-6 z-50 space-y-2 pointer-events-none"></div>
+        <script>
+        const mockDatabase = {
+            phone: [{ title: "iPhone 15 Pro Max Premium Edition", basePrice: 4200000, img: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400" }, { title: "Samsung Galaxy S24 Ultra 5G AI Phone", basePrice: 3900000, img: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400" }],
+            shirt: [{ title: "Premium Men's Casual Slim-Fit Shirt", basePrice: 45000, img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400" }, { title: "Korean Over-Sized Denim Jacket Fashion", basePrice: 58000, img: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400" }],
+            watch: [{ title: "Luxury Mechanical Gold Skeleton Watch", basePrice: 280000, img: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400" }, { title: "Smart Sport Fitness Tracker Smartwatch", basePrice: 120000, img: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=400" }],
+            beauty: [{ title: "Organic Natural Hydration Skin Serum", basePrice: 65000, img: "https://images.unsplash.com/photo-1608248597481-496100c80836?w=400" }, { title: "Matte Velvet Waterproof Lip Tint", basePrice: 25000, img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400" }],
+            shoes: [{ title: "Ultra Lightweight Running Shoes", basePrice: 135000, img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400" }, { title: "Classic Leather Premium Gentleman Oxfords", basePrice: 240000, img: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=400" }]
         };
+        const platforms = ["Lazada", "Alibaba", "Shop.com.mm", "Amazon"];
+        const translationDictionary = { "ဖုန်း": "phone", "phone": "phone", "အင်္ကျီ": "shirt", "shirt": "shirt", "နာရီ": "watch", "watch": "watch", "မိတ်ကပ်": "beauty", "makeup": "beauty", "ဖိနပ်": "shoes", "shoes": "shoes" };
+        
+        let activePlatform = "All", currentSearchKeyword = "ဖုန်း", generatedProducts = [], shoppingCart = [], base64ReceiptData = null;
 
-        // Render Products List (ပစ္စည်းများ ပြသပေးခြင်း)
-        function renderProducts() {
-            const grid = document.getElementById('products-grid');
-            const emptyState = document.getElementById('empty-state');
-            const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
-            const sortVal = document.getElementById('sort-select').value;
+        window.addEventListener('DOMContentLoaded', () => { generateSmartProducts(currentSearchKeyword); renderProducts(); updateCartBadges(); lucide.createIcons(); });
 
-            // Search and Category Filtering (အမျိုးအစားနှင့် အမည်စစ်ထုတ်ခြင်း)
-            let filtered = products.filter(p => {
-                const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
-                const matchesSearch = p.name.toLowerCase().includes(searchVal) || 
-                                      p.store.toLowerCase().includes(searchVal) ||
-                                      (p.desc && p.desc.toLowerCase().includes(searchVal));
-                return matchesCategory && matchesSearch;
+        function generateSmartProducts(keyword) {
+            let targetCategory = "phone";
+            for (let keys in translationDictionary) { if (keyword.toLowerCase().includes(keys)) { targetCategory = translationDictionary[keys]; break; } }
+            const baseCollection = mockDatabase[targetCategory]; generatedProducts = [];
+            let itemCounter = 1;
+            platforms.forEach(platform => {
+                baseCollection.forEach(item => {
+                    const priceModifier = 0.9 + (Math.random() * 0.3);
+                    const origPrice = Math.round((item.basePrice * priceModifier) / 100) * 100;
+                    const sellPrice = Math.round((origPrice * 0.45) / 100) * 100;
+                    generatedProducts.push({ id: `P-${itemCounter}`, title: `[${platform}] ${item.title}`, originalPrice: origPrice, sellingPrice: sellPrice, discountPercentage: 55, image: item.img, platform: platform, rating: "4.8", reviewsCount: "120" });
+                    itemCounter++;
+                });
             });
+        }
 
-            // Sorting (ဈေးနှုန်း၊ Rating အလိုက် စီစဉ်ခြင်း)
-            if (sortVal === 'price-low') {
-                filtered.sort((a, b) => a.price - b.price);
-            } else if (sortVal === 'price-high') {
-                filtered.sort((a, b) => b.price - a.price);
-            } else if (sortVal === 'rating') {
-                filtered.sort((a, b) => b.rating - a.rating);
-            }
-
-            // Update Counter
-            document.getElementById('product-count').innerText = `${filtered.length} ခု`;
-
-            // Clear Grid
-            grid.innerHTML = '';
-
-            if (filtered.length === 0) {
-                grid.classList.add('hidden');
-                emptyState.classList.remove('hidden');
-                return;
-            }
-
-            grid.classList.remove('hidden');
-            emptyState.classList.add('hidden');
-
-            filtered.forEach(product => {
-                const isPlaceholderImg = !product.image || product.image.startsWith('http') === false;
-                const finalImg = isPlaceholderImg ? 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&auto=format&fit=crop&q=60' : product.image;
-
-                const card = document.createElement('div');
-                card.className = "bg-white rounded-xl shadow-sm hover:shadow-md border border-slate-100 overflow-hidden flex flex-col group transition duration-200";
-                card.innerHTML = `
-                    <div class="relative aspect-square overflow-hidden bg-slate-100">
-                        <img src="${finalImg}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&auto=format&fit=crop&q=60'">
-                        <span class="absolute top-2 left-2 bg-[#1a274c]/80 text-white text-[10px] px-2 py-0.5 rounded font-medium">
-                            ${product.store}
-                        </span>
-                        <button onclick="toggleDeleteProduct(${product.id}, event)" class="absolute top-2 right-2 bg-red-100 hover:bg-red-200 text-red-600 p-1.5 rounded-full shadow transition opacity-0 group-hover:opacity-100" title="ပစ္စည်းဖျက်ရန်">
-                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                        </button>
-                    </div>
-                    <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">${translateCategory(product.category)}</span>
-                            <h3 class="font-bold text-slate-800 text-sm sm:text-base line-clamp-2 mt-1 min-h-[40px] hover:text-[#f57224] transition duration-150 cursor-pointer" title="${product.name}">
-                                ${product.name}
-                            </h3>
-                            <div class="flex items-center gap-1 mt-2">
-                                <div class="flex text-amber-400">
-                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
-                                </div>
-                                <span class="text-xs font-semibold text-slate-600">${product.rating}</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-xs text-slate-400 line-through">${Math.round(product.price * 1.25).toLocaleString()} Ks</span>
-                                <span class="text-base font-extrabold text-[#f57224]">${product.price.toLocaleString()} Ks</span>
-                            </div>
-                            <button onclick="addToCart(${product.id})" class="bg-[#f57224] hover:bg-[#d45d19] text-white p-2 rounded-lg transition shadow-sm hover:shadow" title="ခြင်းတောင်းထဲထည့်မည်">
-                                <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
+        function renderProducts() {
+            const grid = document.getElementById('product-grid'); grid.innerHTML = '';
+            const filtered = activePlatform === "All" ? generatedProducts : generatedProducts.filter(p => p.platform === activePlatform);
+            document.getElementById('product-count').innerText = `${filtered.length} ခုတွေ့ရှိသည်`;
+            filtered.forEach(p => {
+                const card = document.createElement('div'); card.className = "bg-white border rounded-xl overflow-hidden p-3 flex flex-col justify-between relative shadow-xs";
+                card.innerHTML = `<div class="absolute top-2 left-2 bg-slate-900/80 text-white text-[10px] px-1.5 py-0.5 rounded">${p.platform}</div><div class="absolute top-2 right-2 bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded">-55%</div><img src="${p.image}" class="w-full aspect-square object-cover rounded-lg"><h4 class="text-xs font-semibold mt-2 line-clamp-2">${p.title}</h4><div class="mt-2"><div class="text-[11px] text-gray-400 line-through">${p.originalPrice.toLocaleString()} ကျပ်</div><div class="text-sm font-black text-orange-500">${p.sellingPrice.toLocaleString()} ကျပ်</div><button onclick="addToCart('${p.id}')" class="w-full mt-2 bg-orange-50 hover:bg-orange-500 text-orange-600 hover:text-white transition text-[11px] py-1.5 rounded-lg font-bold">ခြင်းတောင်းထဲထည့်မည်</button></div>`;
                 grid.appendChild(card);
             });
-
-            lucide.createIcons();
         }
 
-        // Translate Category Key to Burmese (အမျိုးအစားများကို မြန်မာလို ပြောင်းလဲခြင်း)
-        function translateCategory(key) {
-            switch(key) {
-                case 'electronics': return 'လျှပ်စစ်ပစ္စည်း';
-                case 'fashion': return 'ဖက်ရှင်ဝတ်စုံ';
-                case 'home': return 'အိမ်သုံးပစ္စည်း';
-                case 'beauty': return 'အလှကုန်ပစ္စည်း';
-                default: return 'အထွေထွေ';
-            }
+        function handleSearch(e) { e.preventDefault(); const val = document.getElementById('search-input').value; if (!val.trim()) return; currentSearchKeyword = val; generateSmartProducts(currentSearchKeyword); document.getElementById('section-title').innerText = `"${currentSearchKeyword}" ရှာဖွေမှုရလဒ်`; renderProducts(); }
+        function filterPlatform(pName) { activePlatform = pName; renderProducts(); }
+        function toggleCart() { const drawer = document.getElementById('cart-drawer'); drawer.classList.toggle('hidden'); if (!drawer.classList.contains('hidden')) renderCartDrawerList(); }
+        
+        function addToCart(pId) {
+            const match = generatedProducts.find(p => p.id === pId); if (!match) return;
+            const exist = shoppingCart.find(item => item.product.id === pId);
+            if (exist) { exist.quantity += 1; } else { shoppingCart.push({ product: match, quantity: 1 }); }
+            updateCartBadges(); showToast("ခြင်းတောင်းထဲ ထည့်ပြီးပါပြီ");
         }
 
-        // Category Filter Action (အမျိုးအစား ရွေးချယ်မှု ပြုလုပ်ခြင်း)
-        function selectCategory(cat) {
-            selectedCategory = cat;
-            
-            // Buttons UI reset
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('bg-[#f57224]', 'text-white');
-                btn.classList.add('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+        function updateCartQty(pId, delta) {
+            const idx = shoppingCart.findIndex(item => item.product.id === pId); if (idx === -1) return;
+            shoppingCart[idx].quantity += delta; if (shoppingCart[idx].quantity <= 0) shoppingCart.splice(idx, 1);
+            updateCartBadges(); renderCartDrawerList();
+        }
+
+        function updateCartBadges() { const count = shoppingCart.reduce((acc, item) => acc + item.quantity, 0); document.getElementById('cart-count-mobile').innerText = count; document.getElementById('cart-count-desktop').innerText = count; }
+
+        function renderCartDrawerList() {
+            const container = document.getElementById('cart-items-container'); container.innerHTML = '';
+            let totalQty = 0, totalPrice = 0;
+            shoppingCart.forEach(item => {
+                totalQty += item.quantity; totalPrice += (item.product.sellingPrice * item.quantity);
+                const div = document.createElement('div'); div.className = "flex items-center gap-3 bg-slate-50 border p-2 rounded-xl";
+                div.innerHTML = `<img src="${item.product.image}" class="w-10 h-10 object-cover rounded"><div class="flex-1 min-w-0"><h5 class="text-xs font-bold truncate">${item.product.title}</h5><p class="text-xs font-black text-orange-500">${item.product.sellingPrice.toLocaleString()} ကျပ်</p></div><div class="flex items-center border bg-white rounded"><button onclick="updateCartQty('${item.product.id}', -1)" class="px-2 text-xs font-bold">-</button><span class="px-1 text-xs font-bold">${item.quantity}</span><button onclick="updateCartQty('${item.product.id}', 1)" class="px-2 text-xs font-bold">+</button></div>`;
+                container.appendChild(div);
             });
-
-            // Set active class
-            const activeBtn = document.getElementById(`cat-${cat}`);
-            if (activeBtn) {
-                activeBtn.classList.remove('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
-                activeBtn.classList.add('bg-[#f57224]', 'text-white');
-            }
-
-            renderProducts();
+            document.getElementById('cart-total-qty').innerText = `${totalQty} ခု`; document.getElementById('cart-total-price').innerText = `${totalPrice.toLocaleString()} ကျပ်`;
         }
 
-        // Search Engine
-        function filterProducts() {
-            const searchInput = document.getElementById('search-input');
-            const clearBtn = document.getElementById('clear-search');
-            if (searchInput.value.trim().length > 0) {
-                clearBtn.classList.remove('hidden');
-            } else {
-                clearBtn.classList.add('hidden');
-            }
-            renderProducts();
+        function openCheckoutModal() { if (shoppingCart.length === 0) return; const totalVal = shoppingCart.reduce((acc, item) => acc + (item.product.sellingPrice * item.quantity), 0); document.getElementById('modal-checkout-total').innerText = `${totalVal.toLocaleString()} ကျပ်`; document.getElementById('checkout-modal').classList.remove('hidden'); }
+        function closeCheckoutModal() { document.getElementById('checkout-modal').classList.add('hidden'); }
+        function toggleChatBox() { document.getElementById('admin-chat-box').classList.toggle('hidden'); }
+
+        function previewScreenshot(e) {
+            const file = e.target.files[0]; if (!file) return;
+            document.getElementById('screenshot-filename').innerText = file.name;
+            const reader = new FileReader(); reader.onload = function(event) { base64ReceiptData = event.target.result; document.getElementById('screenshot-img').src = base64ReceiptData; document.getElementById('screenshot-preview-box').classList.remove('hidden'); };
+            reader.readAsDataURL(file);
         }
 
-        function clearSearch() {
-            document.getElementById('search-input').value = '';
-            document.getElementById('clear-search').add('hidden');
-            renderProducts();
-        }
+        function removeScreenshot() { base64ReceiptData = null; document.getElementById('screenshot-preview-box').classList.add('hidden'); }
 
-        function resetAllFilters() {
-            document.getElementById('search-input').value = '';
-            document.getElementById('sort-select').value = 'default';
-            selectCategory('all');
-        }
-
-        // Scroll helper
-        function scrollToProducts() {
-            document.getElementById('product-section').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Shopping Cart Drawer Controls (ခြင်းတောင်း အကူအညီများ)
-        function toggleCart() {
-            const drawer = document.getElementById('cart-drawer');
-            const backdrop = document.getElementById('cart-backdrop');
+        function submitOrderForm(e) {
+            e.preventDefault();
+            if (!base64ReceiptData) return;
+            const name = document.getElementById('cust-name').value, phone = document.getElementById('cust-phone').value, address = document.getElementById('cust-address').value;
+            let itemsStr = shoppingCart.map(item => `• ${item.product.title} (x${item.quantity})`).join('\n');
+            const totalVal = shoppingCart.reduce((acc, item) => acc + (item.product.sellingPrice * item.quantity), 0);
             
-            if (drawer.classList.contains('translate-x-full')) {
-                drawer.classList.remove('translate-x-full');
-                backdrop.classList.remove('hidden');
-            } else {
-                drawer.classList.add('translate-x-full');
-                backdrop.classList.add('hidden');
-            }
-        }
-
-        // Add to Cart Logic (ခြင်းတောင်းထဲ ပစ္စည်းထည့်ခြင်း)
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            if (!product) return;
-
-            const existing = cart.find(item => item.product.id === productId);
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                cart.push({ product, quantity: 1 });
-            }
-
-            localStorage.setItem('lazada_consolidated_cart', JSON.stringify(cart));
-            updateCartUI();
-            showToast(`"${product.name}" ကို ခြင်းတောင်းထဲ ထည့်လိုက်ပါပြီ`);
-        }
-
-        // Update Cart Interface
-        function updateCartUI() {
-            const cartItemsContainer = document.getElementById('cart-items');
-            cartItemsContainer.innerHTML = '';
-
-            let totalQty = 0;
-            let totalPrice = 0;
-
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = `
-                    <div class="text-center py-12 text-slate-400">
-                        <i data-lucide="shopping-cart" class="w-12 h-12 mx-auto mb-3 opacity-50"></i>
-                        <p class="text-sm">ခြင်းတောင်းထဲတွင် ပစ္စည်းမရှိသေးပါ</p>
-                    </div>
-                `;
-            } else {
-                cart.forEach((item, index) => {
-                    totalQty += item.quantity;
-                    totalPrice += item.product.price * item.quantity;
-
-                    const cartItemEl = document.createElement('div');
-                    cartItemEl.className = "flex items-center gap-3 bg-slate-50 p-3 rounded-lg border border-slate-100 relative";
-                    cartItemEl.innerHTML = `
-                        <img src="${item.product.image}" alt="${item.product.name}" class="w-16 h-16 object-cover rounded bg-slate-200 border" onerror="this.src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&auto=format&fit=crop&q=60'">
-                        <div class="flex-1 min-w-0">
-                            <h4 class="text-sm font-bold text-slate-800 truncate" title="${item.product.name}">${item.product.name}</h4>
-                            <p class="text-xs text-slate-400">${item.product.store}</p>
-                            <p class="text-sm font-bold text-[#f57224] mt-1">${item.product.price.toLocaleString()} Ks</p>
-                            <div class="flex items-center gap-2 mt-2">
-                                <button onclick="changeQty(${index}, -1)" class="w-6 h-6 bg-white border border-slate-200 rounded flex items-center justify-center text-slate-600 hover:bg-slate-100 text-xs">-</button>
-                                <span class="text-xs font-bold w-6 text-center">${item.quantity}</span>
-                                <button onclick="changeQty(${index}, 1)" class="w-6 h-6 bg-white border border-slate-200 rounded flex items-center justify-center text-slate-600 hover:bg-slate-100 text-xs">+</button>
-                            </div>
-                        </div>
-                        <button onclick="removeFromCart(${index})" class="absolute top-2 right-2 text-slate-400 hover:text-red-500 transition">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
-                    `;
-                    cartItemsContainer.appendChild(cartItemEl);
-                });
-            }
-
-            // Update DOM Counts
-            document.getElementById('cart-count').innerText = totalQty;
-            document.getElementById('cart-count-mobile').innerText = totalQty;
-            document.getElementById('cart-total-qty').innerText = `${totalQty} ခု`;
-            document.getElementById('cart-total-price').innerText = `${totalPrice.toLocaleString()} Ks`;
-
-            lucide.createIcons();
-        }
-
-        // Change Cart Quantities
-        function changeQty(index, change) {
-            cart[index].quantity += change;
-            if (cart[index].quantity <= 0) {
-                cart.splice(index, 1);
-            }
-            localStorage.setItem('lazada_consolidated_cart', JSON.stringify(cart));
-            updateCartUI();
-        }
-
-        // Remove single item from cart
-        function removeFromCart(index) {
-            const name = cart[index].product.name;
-            cart.splice(index, 1);
-            localStorage.setItem('lazada_consolidated_cart', JSON.stringify(cart));
-            updateCartUI();
-            showToast(`"${name}" ကို ဖယ်ထုတ်လိုက်ပါပြီ`);
-        }
-
-        // Clear All Cart
-        function clearCart() {
-            if (cart.length === 0) return;
-            cart = [];
-            localStorage.removeItem('lazada_consolidated_cart');
-            updateCartUI();
-            showToast("ခြင်းတောင်းကို ရှင်းလင်းလိုက်ပါပြီ");
-        }
-
-        // Checkout Dialog Trigger
-        function openCheckoutModal() {
-            if (cart.length === 0) {
-                showToast("ခြင်းတောင်းထဲတွင် ပစ္စည်းအနည်းဆုံး တစ်ခု ရှိရပါမည်");
-                return;
-            }
-            toggleCart();
+            const msgBox = document.getElementById('chat-messages');
+            const clientMsg = document.createElement('div'); clientMsg.className = "bg-orange-500 text-white p-3 rounded-xl mt-2 space-y-1";
+            clientMsg.innerHTML = `<p class="font-bold border-b pb-1 text-[11px]">အော်ဒါအချက်အလက် ပေးပို့လွှာ</p><p class="whitespace-pre-line text-[10px]">${itemsStr}</p><p class="text-[10px]">စုစုပေါင်း: ${totalVal.toLocaleString()} ကျပ်</p><p class="text-[10px]">အမည်: ${name} | ဖုန်း: ${phone}</p><p class="text-[10px]">လိပ်စာ: ${address}</p><img src="${base64ReceiptData}" class="w-16 h-24 object-cover rounded mt-1 border">`;
+            msgBox.appendChild(clientMsg);
             
-            let totalAmount = 0;
-            cart.forEach(item => {
-                totalAmount += item.product.price * item.quantity;
-            });
-
-            // Randomize Invoice ID
-            document.getElementById('bill-id').innerText = `#LZD-${Math.floor(100000 + Math.random() * 900000)}`;
-            document.getElementById('bill-amount').innerText = `${totalAmount.toLocaleString()} Ks`;
-
-            const modal = document.getElementById('checkout-modal');
-            modal.classList.remove('hidden');
+            shoppingCart = []; updateCartBadges(); closeCheckoutModal(); document.getElementById('cart-drawer').classList.add('hidden'); removeScreenshot(); e.target.reset();
+            document.getElementById('admin-chat-box').classList.remove('hidden'); msgBox.scrollTop = msgBox.scrollHeight;
         }
 
-        function closeCheckoutModal() {
-            document.getElementById('checkout-modal').classList.add('hidden');
-            cart = [];
-            localStorage.removeItem('lazada_consolidated_cart');
-            updateCartUI();
-        }
-
-        // Admin Product Creator Dialog
-        function toggleAdminModal() {
-            const modal = document.getElementById('admin-modal');
-            const content = document.getElementById('admin-modal-content');
-            if (modal.classList.contains('hidden')) {
-                modal.classList.remove('hidden');
-                setTimeout(() => {
-                    content.classList.remove('scale-95', 'opacity-0');
-                }, 50);
-            } else {
-                content.classList.add('scale-95', 'opacity-0');
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                }, 150);
-            }
-        }
-
-        // Form Submission - Create/Import new product (ပစ္စည်းအသစ် ဖန်တီးသိမ်းဆည်းခြင်း)
-        function handleImportProduct(event) {
-            event.preventDefault();
-
-            const name = document.getElementById('import-name').value.trim();
-            const price = parseFloat(document.getElementById('import-price').value);
-            const store = document.getElementById('import-store').value.trim() || "Lazada General Merchant";
-            const category = document.getElementById('import-category').value;
-            const rating = parseFloat(document.getElementById('import-rating').value) || 4.5;
-            const imageInput = document.getElementById('import-image').value.trim();
-            const desc = document.getElementById('import-desc').value.trim();
-
-            const randomStockImage = "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=500&auto=format&fit=crop&q=60";
-            const finalImage = imageInput || randomStockImage;
-
-            const newProduct = {
-                id: Date.now(), // Unique ID
-                name,
-                price,
-                store,
-                category,
-                rating,
-                image: finalImage,
-                desc
-            };
-
-            products.unshift(newProduct); // Add to the top
-            localStorage.setItem('lazada_consolidated_products', JSON.stringify(products));
-            
-            toggleAdminModal();
-            renderProducts();
-            showToast(`Lazada ဆိုင်ပေါင်းစုံမှ "${name}" ကို အောင်မြင်စွာ တင်သွင်းပြီးပါပြီ။`);
-            
-            // Reset form
-            event.target.reset();
-        }
-
-        // Delete Product logic (ပစ္စည်းဖျက်ခြင်း)
-        function toggleDeleteProduct(id, event) {
-            event.stopPropagation();
-            if (confirm("ဤပစ္စည်းကို ဆိုင်စာရင်းထဲမှ အပြီးဖျက်လိုပါသလား?")) {
-                products = products.filter(p => p.id !== id);
-                localStorage.setItem('lazada_consolidated_products', JSON.stringify(products));
-                renderProducts();
-                showToast("ပစ္စည်းကို စတိုးထဲမှ ဖျက်သိမ်းပြီးပါပြီ");
-            }
-        }
-
-        // Universal Toast Notification
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-message').innerText = message;
-            toast.classList.remove('opacity-0', 'pointer-events-none');
-            toast.classList.add('opacity-100');
-            setTimeout(() => {
-                toast.classList.remove('opacity-100');
-                toast.classList.add('opacity-0', 'pointer-events-none');
-            }, 3000);
-        }
-
-        // DOWNLOAD UPDATED CODE LOGIC (အဓိကအရေးကြီးဆုံး လုပ်ဆောင်ချက်)
-        // ဤ Website ထဲမှာ ကိုယ်တိုင်အသစ်ထည့်ထားတဲ့ ပစ္စည်းအချက်အလက်တွေအပါအဝင်ဖြစ်အောင် 
-        // ၎င်းပစ္စည်းများကို Embedded သွင်းပြီး index.html အဖြစ် Download ချပေးပါမည်။
-        function downloadUpdatedCode() {
-            // Get current products
-            const currentProductsJSON = JSON.stringify(products, null, 4);
-            
-            // Fetch the entire current page document
-            let sourceHTML = document.documentElement.outerHTML;
-
-            // We will dynamically construct a clean source code where defaultProducts is pre-populated with current state
-            const findRegex = /const defaultProducts = \[\s*[\s\S]*?\s*\];/;
-            const replacement = `const defaultProducts = ${currentProductsJSON};`;
-            
-            let updatedHTML = sourceHTML.replace(findRegex, replacement);
-
-            // Create download blob
-            const blob = new Blob(["<!DOCTYPE html>\n" + updatedHTML], { type: "text/html;charset=utf-8" });
-            const url = URL.createObjectURL(blob);
-            
-            // Create temporary download anchor link
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'index.html';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            showToast("GitHub တွင်တင်ရန် 'index.html' ကို ဒေါင်းလုဒ်ဆွဲလိုက်ပါပြီ!");
-        }
+        function sendChatMessage() { const txt = document.getElementById('chat-reply-input').value; if (!txt.trim()) return; const msgBox = document.getElementById('chat-messages'); const div = document.createElement('div'); div.className = "bg-slate-800 text-white p-2 rounded-xl text-right mt-2"; div.innerText = txt; msgBox.appendChild(div); document.getElementById('chat-reply-input').value = ""; msgBox.scrollTop = msgBox.scrollHeight; }
+        function showToast(m) { const c = document.getElementById('toast-container'); const el = document.createElement('div'); el.className = "bg-slate-900 text-white text-xs px-4 py-2 rounded-lg shadow-md"; el.innerText = m; c.appendChild(el); setTimeout(() => el.remove(), 2500); }
+        function downloadWebsite() { const html = document.documentElement.outerHTML; const blob = new Blob([html], { type: 'text/html' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'index.html'; a.click(); }
     </script>
-
-</body></html>
+</body>
+</html>
