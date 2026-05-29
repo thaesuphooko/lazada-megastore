@@ -122,13 +122,13 @@
                 </div>
                 <form onsubmit="submitOrderForm(event)" class="p-6 space-y-4">
                     <div class="bg-amber-50 border border-amber-300 rounded-xl p-4">
-                        <p class="font-bold text-sm text-amber-800 mb-1">Wave Pay ဖြင့် ငွေလွှဲရန် အကောင့်</p>
+                        <p class="font-bold text-sm text-amber-800 mb-1">Wave Pay ဖြင့် NgweLwairရန် အကောင့်</p>
                         <p class="font-mono text-base font-bold text-slate-800 tracking-wide bg-white/80 px-2 py-1 rounded inline-block border">09 781 145 573</p>
                         <p class="text-xs text-slate-700 mt-1">အမည်: <strong>Thae Su Phoo Ko</strong></p>
                     </div>
                     <div class="space-y-3">
                         <div><label class="block text-xs font-bold text-gray-700 mb-1">ဝယ်ယူသူအမည် *</label><input type="text" id="cust-name" required class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none"></div>
-                        <div><label class="block text-xs font-bold text-gray-700 mb-1">فုန်းနံပါတ် *</label><input type="tel" id="cust-phone" required class="w-full border rounded-lg px-3 py-2 text-sm font-mono focus:outline-none" placeholder="09xxxxxxxxx"></div>
+                        <div><label class="block text-xs font-bold text-gray-700 mb-1">ဖုန်းနံပါတ် *</label><input type="tel" id="cust-phone" required class="w-full border rounded-lg px-3 py-2 text-sm font-mono focus:outline-none" placeholder="09xxxxxxxxx"></div>
                         <div><label class="block text-xs font-bold text-gray-700 mb-1">ပို့ဆောင်ရမည့် လိပ်စာ *</label><textarea id="cust-address" rows="2" required class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none"></textarea></div>
                     </div>
                     <div class="border-t pt-3">
@@ -140,7 +140,7 @@
                             </label>
                         </div>
                         <div id="screenshot-preview-box" class="hidden mt-2 p-2 border rounded-lg bg-gray-50 flex items-center gap-3">
-                            <img id="screenshot-img" src="#" class="w-12 h-16 object-cover rounded shadow"><div class="flex-1 overflow-hidden"><p class="text-xs font-bold text-slate-700 truncate" id="screenshot-filename">receipt.jpg</p></div><button type="button" onclick="removeScreenshot()" class="text-red-500 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                            <img id="screenshot-img" src="#" class="w-12 h-16 object-cover rounded shadow"><div class="flex-1 overflow-hidden"><p class="text-xs font-bold text-slate-707 truncate" id="screenshot-filename">receipt.jpg</p></div><button type="button" onclick="removeScreenshot()" class="text-red-500 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                         </div>
                     </div>
                     <div class="bg-slate-100 rounded-lg p-3 flex justify-between items-center text-xs">
@@ -152,16 +152,20 @@
         </div>
     </div>
 
-    <div id="admin-chat-box" class="fixed bottom-4 right-4 z-50 w-80 md:w-96 bg-white rounded-2xl shadow-2xl border hidden flex flex-col overflow-hidden">
+    <div id="admin-chat-box" class="fixed bottom-20 right-4 z-50 w-80 md:w-96 bg-white rounded-2xl shadow-2xl border hidden flex flex-col overflow-hidden transition-all duration-300">
         <div class="lazada-bg-blue text-white p-3 flex items-center justify-between"><h4 class="text-xs font-bold">Thae Su Phoo Ko (Admin Chat)</h4><button onclick="toggleChatBox()"><i data-lucide="minus" class="w-4 h-4"></i></button></div>
-        <div id="chat-messages" class="flex-1 h-64 overflow-y-auto p-4 space-y-3 bg-slate-50 text-xs"><div class="flex gap-2"><div class="bg-white border rounded-r-xl rounded-bl-xl p-2.5 max-w-[85%] text-slate-700">မင်္ဂလာပါရှင်။ အော်ဒါနှင့် ငွေလွှဲပြေစာကို ရရှိပါပြီ။ ခေတ္တစောင့်ပေးပါရှင်။</div></div></div>
+        <div id="chat-messages" class="flex-1 h-64 overflow-y-auto p-4 space-y-3 bg-slate-50 text-xs"><div class="flex gap-2"><div class="bg-white border rounded-r-xl rounded-bl-xl p-2.5 max-w-[85%] text-slate-700">မင်္ဂလာပါရှင်။ အော်ဒါနှင့် ငွေလွှဲပြေစာကို လက်ခံရရှိပါပြီ။ လူကြီးမင်းထံသို့ ဖုန်းဖြင့် ဆက်သွယ်ပေးပါမည်ရှင်။</div></div></div>
         <div class="p-2 border-t bg-white flex gap-1"><input type="text" id="chat-reply-input" placeholder="မက်ဆေ့ခ်ျရေးရန်..." class="flex-1 bg-slate-100 border rounded-lg px-3 py-2 text-xs focus:outline-none"><button onclick="sendChatMessage()" class="p-2 lazada-bg-orange text-white rounded-lg"><i data-lucide="send" class="w-4 h-4"></i></button></div>
     </div>
+
+    <button onclick="toggleChatBox()" class="fixed bottom-4 right-4 z-50 p-4 lazada-bg-orange text-white rounded-full shadow-2xl hover:scale-110 transition active:scale-95 flex items-center justify-center animate-bounce">
+        <i data-lucide="message-circle" class="w-6 h-6"></i>
+        <span class="absolute -top-1 -right-1 flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span></span>
+    </button>
     
     <div id="toast-container" class="fixed bottom-6 left-6 z-50 space-y-2 pointer-events-none"></div>
 
     <script>
-        // သင့်ထံမှ ပေးပို့လာသော Telegram API အချက်အလက်များ တိုက်ရိုက်ထည့်သွင်းပြီးဖြစ်သည်
         const TELEGRAM_TOKEN = '8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI';
         const TELEGRAM_CHAT_ID = '6917040501';
 
@@ -261,6 +265,8 @@
         function handleSearch(e) { e.preventDefault(); const val = document.getElementById('search-input').value; if (!val.trim()) return; currentSearchKeyword = val; generateTrulyUniqueProducts(currentSearchKeyword); document.getElementById('section-title').innerText = `"${currentSearchKeyword}" အတွက် ရှာဖွေမှုရလဒ်`; renderProducts(); }
         function filterPlatform(pName) { activePlatform = pName; renderProducts(); }
         function toggleCart() { const drawer = document.getElementById('cart-drawer'); drawer.classList.toggle('hidden'); if (!drawer.classList.contains('hidden')) renderCartDrawerList(); }
+        
+        // Chat Box ဖွင့်/ပိတ် စနစ်
         function toggleChatBox() { document.getElementById('admin-chat-box').classList.toggle('hidden'); }
         
         function addToCart(pId) {
@@ -302,7 +308,7 @@
 
         function removeScreenshot() { base64ReceiptData = null; receiptFileBlob = null; document.getElementById('screenshot-preview-box').classList.add('hidden'); }
 
-        // Telegram Bot သို့ အချက်အလက်နှင့် ပြေစာပုံ ပို့ပေးသည့် စနစ်ချုပ်
+        // ပြေစာပုံတင်ပြီး အော်ဒါနှိပ်လိုက်သည်နှင့် Admin Chat ချက်ချင်းပွင့်လာမည့် စနစ်
         function submitOrderForm(e) {
             e.preventDefault();
             if (!receiptFileBlob) { showToast("WavePay ပြေစာ ဓာတ်ပုံ တင်ပေးရန် လိုအပ်ပါသည်"); return; }
@@ -313,6 +319,16 @@
             let itemsStr = shoppingCart.map(item => `• ${item.product.title} (x${item.quantity})`).join('\n');
             const totalVal = shoppingCart.reduce((acc, item) => acc + (item.product.sellingPrice * item.quantity), 0);
             
+            // "ပို့နေပါသည်" စာသားမပြဘဲ ချက်ချင်း Chat Box ကို ဘုန်းခနဲ ပွင့်စေခြင်း
+            document.getElementById('checkout-modal').classList.add('hidden'); 
+            document.getElementById('admin-chat-box').classList.remove('hidden'); 
+            
+            const msgBox = document.getElementById('chat-messages');
+            const clientMsg = document.createElement('div'); clientMsg.className = "bg-orange-500 text-white p-3 rounded-xl mt-2 space-y-1";
+            clientMsg.innerHTML = `<p class="font-bold border-b pb-1 text-[11px]">အော်ဒါစာရင်း တင်သွင်းပြီးပါပြီ</p><p class="whitespace-pre-line text-[10px]">${itemsStr}</p><p class="text-[10px]">စုစုပေါင်း: ${totalVal.toLocaleString()} ကျပ်</p><img src="${base64ReceiptData}" class="w-16 h-24 object-cover rounded mt-1 border">`;
+            msgBox.appendChild(clientMsg);
+            msgBox.scrollTop = msgBox.scrollHeight;
+
             const telegramMessage = `📦 TSPK MEGA STORE - အော်ဒါအသစ် ရောက်ရှိပါပြီ\n\n👤 ဝယ်ယူသူအမည်: ${name}\n📞 ဖုန်းနံပါတ်: ${phone}\n📍 ပို့ဆောင်ရမည့်လိပ်စာ: ${address}\n\n🛒 မှာယူသည့်ပစ္စည်းများ:\n${itemsStr}\n\n💰 စုစုပေါင်းကျသင့်ငွေ: ${totalVal.toLocaleString()} ကျပ်`;
 
             const formData = new FormData();
@@ -320,23 +336,16 @@
             formData.append('photo', receiptFileBlob);
             formData.append('caption', telegramMessage);
 
-            showToast("အော်ဒါကို Admin Telegram ဆီသို့ ပို့နေပါသည်...");
-
+            // ဓာတ်ပုံနှင့် အချက်အလက်ကို နောက်ကွယ်မှ အသံတိတ် Telegram သို့ လှမ်းပို့ခြင်း
             fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto`, { method: 'POST', body: formData })
             .then(res => res.json())
             .then(data => {
                 if(data.ok) {
-                    showToast("အော်ဒါတင်ခြင်း အောင်မြင်ပါသည်ရှင်။");
-                    const msgBox = document.getElementById('chat-messages');
-                    const clientMsg = document.createElement('div'); clientMsg.className = "bg-orange-500 text-white p-3 rounded-xl mt-2 space-y-1";
-                    clientMsg.innerHTML = `<p class="font-bold border-b pb-1 text-[11px]">အော်ဒါ တင်ပြီးပါပြီ (Telegram သို့ တိုက်ရိုက်ပို့ပြီး)</p><p class="whitespace-pre-line text-[10px]">${itemsStr}</p><p class="text-[10px]">စုစုပေါင်း: ${totalVal.toLocaleString()} ကျပ်</p><img src="${base64ReceiptData}" class="w-16 h-24 object-cover rounded mt-1 border">`;
-                    msgBox.appendChild(clientMsg);
-                    
-                    shoppingCart = []; updateCartBadges(); closeCheckoutModal(); document.getElementById('cart-drawer').classList.add('hidden'); removeScreenshot(); e.target.reset();
-                    document.getElementById('admin-chat-box').classList.remove('hidden'); msgBox.scrollTop = msgBox.scrollHeight;
-                } else { alert("Telegram API သို့ ချိတ်ဆက်၍ မရပါ။ Token သို့မဟုတ် Chat ID ကို ပြန်စစ်ပါ။"); }
+                    showToast("အော်ဒါကို Telegram သို့ အောင်မြင်စွာ ပို့ပြီးပါပြီရှင်။");
+                    shoppingCart = []; updateCartBadges(); document.getElementById('cart-drawer').classList.add('hidden'); removeScreenshot(); e.target.reset();
+                } else { console.error("Telegram Error"); }
             })
-            .catch(err => { alert("အင်တာနက် လိုင်းမကောင်းသဖြင့် အော်ဒါမတင်နိုင်ပါ။"); });
+            .catch(err => { console.error("Network Error"); });
         }
 
         function sendChatMessage() { const txt = document.getElementById('chat-reply-input').value; if (!txt.trim()) return; const msgBox = document.getElementById('chat-messages'); const div = document.createElement('div'); div.className = "bg-slate-800 text-white p-2 rounded-xl text-right mt-2"; div.innerText = txt; msgBox.appendChild(div); document.getElementById('chat-reply-input').value = ""; msgBox.scrollTop = msgBox.scrollHeight; }
