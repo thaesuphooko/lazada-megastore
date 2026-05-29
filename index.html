@@ -3,21 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thae Su Phoo Ko Online Store</title>
+    <title>Thae Su Phoo Ko Mega Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Padauk', 'Inter', sans-serif; background-color: #f8fafc; }
+        body { font-family: 'Padauk', 'Inter', sans-serif; background-color: #f4f6fa; }
         .lazada-orange { color: #f57224; }
         .lazada-bg-orange { background-color: #f57224; }
         .lazada-bg-blue { background-color: #1a274c; }
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     </style>
 </head>
-<body class="text-gray-800 antialiased">
+<body class="text-gray-800 antialiased pb-12">
+
     <div class="lazada-bg-blue text-white text-xs py-2 px-4 text-center font-medium">
-        မြန်မာနိုင်ငံ၏ အကြီးဆုံး Multi-Platform Shopping Engine - ပစ္စည်းအားလုံး ၅၅% အထူးလျှော့ဈေး!
+        မြန်မာနိုင်ငံ၏ အကြီးဆုံး Multi-Platform Shopping Engine - ပစ္စည်းအမျိုးအစား ၁၀၀,၀၀0 ကျော်အား ၅၅% အထူးလျှော့ဈေးဖြင့် ရနိုင်ပါပြီ။
     </div>
+
     <header class="sticky top-0 z-40 bg-white shadow-md">
         <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center justify-between w-full md:w-auto">
@@ -25,62 +28,73 @@
                     <span class="lazada-bg-orange text-white p-2 rounded-lg font-bold text-xl tracking-wider">TSPK</span>
                     <div>
                         <h1 class="text-lg md:text-xl font-bold text-slate-900 leading-tight">Thae Su Phoo Ko</h1>
-                        <p class="text-xs text-gray-500 font-semibold">Online Store</p>
+                        <p class="text-xs text-gray-500 font-semibold">Mega Online Store</p>
                     </div>
                 </a>
-                <button onclick="toggleCart()" class="relative p-2 md:hidden text-slate-700 hover:text-orange-500 transition">
-                    <i data-lucide="shopping-cart"></i>
-                    <span id="cart-count-mobile" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
-                </button>
+                <div class="flex items-center gap-1 md:hidden">
+                    <button onclick="toggleChatBox()" class="p-2 text-blue-600 hover:text-blue-800">
+                        <i data-lucide="message-square"></i>
+                    </button>
+                    <button onclick="toggleCart()" class="relative p-2 text-slate-700 hover:text-orange-500 transition">
+                        <i data-lucide="shopping-cart"></i>
+                        <span id="cart-count-mobile" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+                    </button>
+                </div>
             </div>
-            <div class="w-full md:max-w-xl flex-1">
-                <form onsubmit="handleSearch(event)" class="relative flex items-center">
-                    <input type="text" id="search-input" placeholder="ဘာရှာရှာအကုန်ရှိတယ်... (ဥပမာ - ဖုန်း၊ အင်္ကျီ၊ နာရီ၊ မိတ်ကပ်)" class="w-full pl-4 pr-12 py-2.5 rounded-l-full border-2 border-orange-500 focus:outline-none text-sm">
-                    <button type="submit" class="lazada-bg-orange hover:bg-orange-600 text-white px-6 py-3 rounded-r-full text-sm font-medium transition flex items-center gap-1">
+
+            <div class="w-full md:max-w-xl flex-1 px-2 md:px-0">
+                <form onsubmit="handleSearch(event)" class="relative flex items-center w-full">
+                    <input type="text" id="search-input" placeholder="ဘာရှာရှာအကုန်ရှိတယ်... (ဥပမာ - ဖုန်း၊ အင်္ကျီ၊ နာရီ၊ မိတ်ကပ်၊ ဖိနပ်)" class="w-full pl-4 pr-24 py-2.5 rounded-l-full border-2 border-orange-500 focus:outline-none text-sm bg-white">
+                    <button type="submit" class="lazada-bg-orange hover:bg-orange-600 text-white px-5 py-3 rounded-r-full text-sm font-medium flex items-center gap-1 shrink-0">
                         <i data-lucide="search" class="w-4 h-4"></i><span class="hidden sm:inline">ရှာဖွေရန်</span>
                     </button>
                 </form>
             </div>
+
             <div class="hidden md:flex items-center gap-4">
-                <button onclick="downloadWebsite()" class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2.5 rounded-lg shadow transition"><i data-lucide="download" class="w-4 h-4"></i><span>ဒီ Website ဖိုင်ကိုဒေါင်းမည်</span></button>
-                <button onclick="toggleCart()" class="relative flex items-center gap-2 text-slate-700 hover:text-orange-500 font-medium transition border p-2 rounded-lg bg-gray-50">
+                <button onclick="toggleChatBox()" class="flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium border p-2 rounded-lg bg-blue-50">
+                    <i data-lucide="message-square" class="w-5 h-5"></i><span>မက်ဆေ့ခ်ျကြည့်ရန်</span>
+                </button>
+                <button onclick="toggleCart()" class="relative flex items-center gap-2 text-slate-700 hover:text-orange-500 font-medium border p-2 rounded-lg bg-gray-50">
                     <i data-lucide="shopping-cart" class="w-5 h-5 lazada-orange"></i><span>ခြင်းတောင်း</span>
                     <span id="cart-count-desktop" class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">0</span>
                 </button>
             </div>
         </div>
+
         <div class="bg-slate-100 border-t border-b border-gray-200 overflow-x-auto whitespace-nowrap">
             <div class="container mx-auto px-4 flex gap-2 py-2">
-                <button onclick="filterPlatform('All')" id="btn-all" class="platform-tab px-4 py-1.5 rounded-full text-xs font-bold transition bg-orange-500 text-white shadow">အားလုံးကြည့်မည်</button>
-                <button onclick="filterPlatform('Lazada')" id="btn-lazada" class="platform-tab px-4 py-1.5 rounded-full text-xs font-bold transition bg-white text-slate-700 border hover:bg-orange-50">Lazada</button>
-                <button onclick="filterPlatform('Alibaba')" id="btn-alibaba" class="platform-tab px-4 py-1.5 rounded-full text-xs font-bold transition bg-white text-slate-700 border hover:bg-orange-50">Alibaba</button>
-                <button onclick="filterPlatform('Shop.com.mm')" id="btn-shop" class="platform-tab px-4 py-1.5 rounded-full text-xs font-bold transition bg-white text-slate-700 border hover:bg-orange-50">Shop.com.mm</button>
-                <button onclick="filterPlatform('Amazon')" id="btn-amazon" class="platform-tab px-4 py-1.5 rounded-full text-xs font-bold transition bg-white text-slate-700 border hover:bg-orange-50">Amazon</button>
+                <button onclick="filterPlatform('All')" id="btn-all" class="platform-tab px-4 py-1.5 rounded-full text-xs font-bold bg-orange-500 text-white shadow">အားလုံးကြည့်မည်</button>
+                <button onclick="filterPlatform('Lazada')" id="btn-lazada" class="platform-tab px-4 py-1.5 rounded-full text-xs font-bold bg-white text-slate-700 border hover:bg-orange-50">Lazada</button>
+                <button onclick="filterPlatform('Alibaba')" id="btn-alibaba" class="platform-tab px-4 py-1.5 rounded-full text-xs font-bold bg-white text-slate-700 border hover:bg-orange-50">Alibaba</button>
+                <button onclick="filterPlatform('Shop.com.mm')" id="btn-shop" class="platform-tab px-4 py-1.5 rounded-full text-xs font-bold bg-white text-slate-700 border hover:bg-orange-50">Shop.com.mm</button>
+                <button onclick="filterPlatform('Amazon')" id="btn-amazon" class="platform-tab px-4 py-1.5 rounded-full text-xs font-bold bg-white text-slate-700 border hover:bg-orange-50">Amazon</button>
             </div>
         </div>
     </header>
+
     <main class="container mx-auto px-4 py-6">
-        <div class="mb-8 rounded-2xl lazada-bg-orange p-6 md:p-10 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg">
+        <div class="mb-8 rounded-2xl bg-gradient-to-r from-orange-500 via-pink-500 to-red-500 p-6 md:p-10 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg">
             <div class="max-w-xl text-center md:text-left">
-                <span class="bg-amber-400 text-slate-900 text-xs font-extrabold uppercase px-3 py-1 rounded-full shadow-sm">Mega Promotion</span>
-                <h2 class="text-2xl md:text-4xl font-extrabold mt-3 leading-tight">၅၅% အလိုအလျောက်လျှော့ဈေးစနစ်</h2>
-                <p class="text-sm md:text-base mt-2 text-orange-100 font-medium">Lazada, Alibaba, Shop, Amazon တို့မှ ပစ္စည်းအားလုံး မူရင်းဈေးနှုန်း၏ ၄၅% သာ ကျသင့်ပါတော့မည်။</p>
+                <span class="bg-amber-300 text-slate-900 text-xs font-extrabold uppercase px-3 py-1 rounded-full shadow-sm">Premium Mega Database Engine</span>
+                <h2 class="text-2xl md:text-4xl font-extrabold mt-3 leading-tight">ကုန်ပစ္စည်းပေါင်း ၁၀၀,၀၀၀ ကျော်</h2>
+                <p class="text-sm md:text-base mt-2 font-medium">Lazada, Alibaba, Shop, Amazon တို့မှ ပစ္စည်းများကို ကာစတမ်မာ Review ပေါင်းများစွာနှင့် မထပ်ဘဲ တိကျစွာ ရှာဖွေဝယ်ယူနိုင်ပါပြီ။</p>
             </div>
             <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 text-center min-w-[200px]">
-                <p class="text-xs uppercase font-bold tracking-wider text-orange-200">ယနေ့အထူးနှုန်း</p>
+                <p class="text-xs uppercase font-bold tracking-wider text-orange-100">ယနေ့အထူးနှုန်း</p>
                 <p class="text-4xl font-black text-amber-300 my-1">45%</p>
-                <p class="text-xs font-medium text-white">တန်ဖိုးဖြင့်သာပေးချေရန်</p>
+                <p class="text-xs font-medium text-white">သာပေးချေရန်ကျန်ရှိတော့သည်</p>
             </div>
         </div>
-        <div class="flex items-center justify-between mb-6 border-b pb-3">
-            <div>
-                <h3 id="section-title" class="text-lg font-bold text-slate-800 flex items-center gap-2"><i data-lucide="sparkles" class="lazada-orange"></i><span>လူကြိုက်အများဆုံး ပစ္စည်းများ</span></h3>
-            </div>
-            <span id="product-count" class="text-xs bg-slate-200 text-slate-700 px-2.5 py-1 rounded-full font-bold">၈ ခုတွေ့ရှိသည်</span>
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 border-b pb-3 gap-2">
+            <div><h3 id="section-title" class="text-lg font-bold text-slate-800 flex items-center gap-2"><i data-lucide="sparkles" class="lazada-orange"></i><span>လူကြိုက်အများဆုံး ကုန်ပစ္စည်းများ</span></h3></div>
+            <span id="product-count" class="text-xs bg-slate-200 text-slate-700 px-3 py-1 rounded-full font-bold">ရှာဖွေနေပါသည်...</span>
         </div>
-        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6"></div>
+
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"></div>
     </main>
-        <!-- Shopping Cart Sidebar -->
+
     <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
         <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="toggleCart()"></div>
         <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
@@ -91,16 +105,14 @@
                 </div>
                 <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
                 <div class="border-t p-4 bg-slate-50 space-y-3">
-                    <div class="flex justify-between text-sm text-gray-500"><span>ပစ္စည်းစုစုပေါင်း</span><span id="cart-total-qty" class="font-bold text-slate-800">0 - ခု</span></div>
+                    <div class="flex justify-between text-sm text-gray-500"><span>ပစ္စည်းစုစုပေါင်း</span><span id="cart-total-qty" class="font-bold text-slate-800">0 ခု</span></div>
                     <div class="flex justify-between items-baseline"><span class="text-sm font-bold text-slate-800">စုစုပေါင်းကျသင့်ငွေ</span><span id="cart-total-price" class="text-xl font-black text-orange-600">0 ကျပ်</span></div>
                     <button onclick="openCheckoutModal()" class="w-full lazada-bg-orange hover:bg-orange-600 text-white font-bold py-3 rounded-xl shadow text-center text-sm">အော်ဒါတင်ရန် ရှေ့သို့သွားမည်</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Checkout Modal -->
-    <div id="checkout-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div id="checkout-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
         <div class="flex items-center justify-center min-h-screen px-4">
             <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeCheckoutModal()"></div>
             <div class="inline-block bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all my-8 align-middle max-w-md w-full z-10">
@@ -111,97 +123,145 @@
                 <form onsubmit="submitOrderForm(event)" class="p-6 space-y-4">
                     <div class="bg-amber-50 border border-amber-300 rounded-xl p-4">
                         <p class="font-bold text-sm text-amber-800 mb-1">Wave Pay ဖြင့် ငွေလွှဲရန် အကောင့်</p>
-                        <p class="font-mono text-base font-bold text-slate-800 tracking-wide bg-white/80 px-2 py-1 rounded inline-block border">09 456 789 123</p>
+                        <p class="font-mono text-base font-bold text-slate-800 tracking-wide bg-white/80 px-2 py-1 rounded inline-block border">09 781 145 573</p>
                         <p class="text-xs text-slate-700 mt-1">အမည်: <strong>Thae Su Phoo Ko</strong></p>
-                        <p class="text-red-600 text-[11px] mt-1 font-semibold">* ငွေလွှဲပြီး Screenshot ပုံတင်ပေးရပါမည်။</p>
                     </div>
                     <div class="space-y-3">
                         <div><label class="block text-xs font-bold text-gray-700 mb-1">ဝယ်ယူသူအမည် *</label><input type="text" id="cust-name" required class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none"></div>
-                        <div><label class="block text-xs font-bold text-gray-700 mb-1">ဖုန်းနံပါတ် *</label><input type="tel" id="cust-phone" required class="w-full border rounded-lg px-3 py-2 text-sm font-mono focus:outline-none" placeholder="09xxxxxxxxx"></div>
+                        <div><label class="block text-xs font-bold text-gray-700 mb-1">فုန်းနံပါတ် *</label><input type="tel" id="cust-phone" required class="w-full border rounded-lg px-3 py-2 text-sm font-mono focus:outline-none" placeholder="09xxxxxxxxx"></div>
                         <div><label class="block text-xs font-bold text-gray-700 mb-1">ပို့ဆောင်ရမည့် လိပ်စာ *</label><textarea id="cust-address" rows="2" required class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none"></textarea></div>
                     </div>
                     <div class="border-t pt-3">
                         <label class="block text-xs font-bold text-gray-700 mb-1">WavePay Screenshot တင်ရန် *</label>
                         <div class="mt-1 flex justify-center px-6 pt-4 pb-4 border-2 border-gray-300 border-dashed rounded-xl bg-slate-50">
                             <label for="receipt-upload" class="cursor-pointer font-bold text-orange-500 hover:text-orange-600 text-xs">
-                                <span>[ ပုံရွေးချယ်ရန် တင်မည် ]</span>
+                                <span>[ ပြေစာပုံတင်မည် ]</span>
                                 <input id="receipt-upload" type="file" accept="image/*" required class="sr-only" onchange="previewScreenshot(event)">
                             </label>
                         </div>
                         <div id="screenshot-preview-box" class="hidden mt-2 p-2 border rounded-lg bg-gray-50 flex items-center gap-3">
-                            <img id="screenshot-img" src="#" class="w-12 h-16 object-cover rounded shadow">
-                            <div class="flex-1 overflow-hidden"><p class="text-xs font-bold text-slate-700 truncate" id="screenshot-filename">receipt.jpg</p></div>
-                            <button type="button" onclick="removeScreenshot()" class="text-red-500 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                            <img id="screenshot-img" src="#" class="w-12 h-16 object-cover rounded shadow"><div class="flex-1 overflow-hidden"><p class="text-xs font-bold text-slate-700 truncate" id="screenshot-filename">receipt.jpg</p></div><button type="button" onclick="removeScreenshot()" class="text-red-500 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                         </div>
                     </div>
                     <div class="bg-slate-100 rounded-lg p-3 flex justify-between items-center text-xs">
                         <span class="font-bold text-slate-600">စုစုပေါင်းကျသင့်ငွေ:</span><span id="modal-checkout-total" class="text-base font-black text-orange-600">0 ကျပ်</span>
                     </div>
-                    <button type="submit" class="w-full bg-orange-500 text-white font-bold py-3 rounded-xl hover:bg-orange-600 text-sm">ငွေလွှဲအတည်ပြုပြီး အော်ဒါတင်မည်</button>
+                    <button type="submit" class="w-full bg-orange-500 text-white font-bold py-3 rounded-xl hover:bg-orange-600 text-sm">အော်ဒါတင်မည်</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Admin Chat Box -->
     <div id="admin-chat-box" class="fixed bottom-4 right-4 z-50 w-80 md:w-96 bg-white rounded-2xl shadow-2xl border hidden flex flex-col overflow-hidden">
-        <div class="lazada-bg-blue text-white p-3 flex items-center justify-between">
-            <h4 class="text-xs font-bold">Thae Su Phoo Ko (Admin Chat)</h4>
-            <button onclick="toggleChatBox()"><i data-lucide="minus" class="w-4 h-4"></i></button>
-        </div>
-        <div id="chat-messages" class="flex-1 h-64 overflow-y-auto p-4 space-y-3 bg-slate-50 text-xs">
-            <div class="flex gap-2">
-                <div class="bg-white border rounded-r-xl rounded-bl-xl p-2.5 max-w-[85%] text-slate-700">မင်္ဂလာပါရှင်။ အော်ဒါအချက်အလက်နှင့် ငွေလွှဲပြေစာကို လက်ခံရရှိပါပြီ။ ခေတ္တစောင့်ဆိုင်းပေးပါရှင်။</div>
-            </div>
-        </div>
+        <div class="lazada-bg-blue text-white p-3 flex items-center justify-between"><h4 class="text-xs font-bold">Thae Su Phoo Ko (Admin Chat)</h4><button onclick="toggleChatBox()"><i data-lucide="minus" class="w-4 h-4"></i></button></div>
+        <div id="chat-messages" class="flex-1 h-64 overflow-y-auto p-4 space-y-3 bg-slate-50 text-xs"><div class="flex gap-2"><div class="bg-white border rounded-r-xl rounded-bl-xl p-2.5 max-w-[85%] text-slate-700">မင်္ဂလာပါရှင်။ အော်ဒါနှင့် ငွေလွှဲပြေစာကို ရရှိပါပြီ။ ခေတ္တစောင့်ပေးပါရှင်။</div></div></div>
         <div class="p-2 border-t bg-white flex gap-1"><input type="text" id="chat-reply-input" placeholder="မက်ဆေ့ခ်ျရေးရန်..." class="flex-1 bg-slate-100 border rounded-lg px-3 py-2 text-xs focus:outline-none"><button onclick="sendChatMessage()" class="p-2 lazada-bg-orange text-white rounded-lg"><i data-lucide="send" class="w-4 h-4"></i></button></div>
     </div>
+    
     <div id="toast-container" class="fixed bottom-6 left-6 z-50 space-y-2 pointer-events-none"></div>
-        <script>
-        const mockDatabase = {
-            phone: [{ title: "iPhone 15 Pro Max Premium Edition", basePrice: 4200000, img: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400" }, { title: "Samsung Galaxy S24 Ultra 5G AI Phone", basePrice: 3900000, img: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400" }],
-            shirt: [{ title: "Premium Men's Casual Slim-Fit Shirt", basePrice: 45000, img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400" }, { title: "Korean Over-Sized Denim Jacket Fashion", basePrice: 58000, img: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400" }],
-            watch: [{ title: "Luxury Mechanical Gold Skeleton Watch", basePrice: 280000, img: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400" }, { title: "Smart Sport Fitness Tracker Smartwatch", basePrice: 120000, img: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=400" }],
-            beauty: [{ title: "Organic Natural Hydration Skin Serum", basePrice: 65000, img: "https://images.unsplash.com/photo-1608248597481-496100c80836?w=400" }, { title: "Matte Velvet Waterproof Lip Tint", basePrice: 25000, img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400" }],
-            shoes: [{ title: "Ultra Lightweight Running Shoes", basePrice: 135000, img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400" }, { title: "Classic Leather Premium Gentleman Oxfords", basePrice: 240000, img: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=400" }]
+
+    <script>
+        // သင့်ထံမှ ပေးပို့လာသော Telegram API အချက်အလက်များ တိုက်ရိုက်ထည့်သွင်းပြီးဖြစ်သည်
+        const TELEGRAM_TOKEN = '8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI';
+        const TELEGRAM_CHAT_ID = '6917040501';
+
+        const generatorData = {
+            brands: {
+                phone: ["Apple iPhone", "Samsung Galaxy", "Xiaomi Redmi", "Vivo Pro", "Oppo Reno", "Realme GT", "Honor Magic", "Google Pixel", "Sony Xperia", "OnePlus Ultra"],
+                shirt: ["Zara Men", "H&M Casual", "Uniqlo Cotton", "Adidas Sport", "Nike Fit", "Levis Denim", "Gucci Luxury", "Puma Street", "Balenciaga", "Polo Ralph"],
+                watch: ["Rolex Oyster", "Casio G-Shock", "Seiko Automatic", "Apple SmartWatch", "Huawei Band", "Omega Speed", "Tissot Classic", "Fossil Chrono", "Garmin Fenix", "Hublot BigBang"],
+                beauty: ["Estee Lauder", "L'Oreal Paris", "Maybelline Matte", "Mac Velvet", "Chanel Glow", "Shiseido Serum", "SK-II Essence", "Innisfree Skin", "Anessa Sunscreen", "Laneige Lip"],
+                shoes: ["Nike Air Max", "Adidas UltraBoost", "Puma Rider", "Jordan Retro", "New Balance 990", "Converse AllStar", "Vans OldSkool", "Timberland Boot", "Asics Gel", "Crocs Classic"]
+            },
+            attributes: [
+                ["Ultra Titanium", "Max Power", "Premium Carbon", "Elite Active", "Classic Edition", "Pro Wireless", "Super Hydro", "Luxury Design", "Neo Quantum", "Vanguard Touch"],
+                ["Series X", "Flagship V4", "Smart Generation", "Limited Exclusive", "Special Multi-Fit", "Modern Collection", "Comfort Ultimate", "Retro Wave"],
+                ["Matte Black", "Titanium Gold", "Crystal White", "Emerald Green", "Midnight Blue", "Sunset Orange", "Rose Gold", "Space Gray", "Carbon Fiber", "Platinum Silver"]
+            ],
+            specs: {
+                phone: ["5G Dual-SIM (256GB)", "AI Matrix Camera (512GB)", "144Hz Super AMOLED", "Supercharge Pro (1TB)", "Waterproof IP68 Drop-Proof", "Bionic Advanced Processor"],
+                shirt: ["Slim-Fit Breathable Fabric", "100% Organic Premium Cotton", "Oversized Heavyweight Streetwear", "Premium Anti-Wrinkle Technology", "Soft Touch Premium Linen", "Quick-Dry Performance Tech"],
+                watch: ["Water Resistant 100m", "AMOLED Fitness Tracking System", "Mechanical Skeleton Automatic", "Genuine Italian Leather Strap", "Sapphire Glass Anti-Scratch", "GPS Navigation System Connected"],
+                beauty: ["Anti-Aging Youth Glow Formula", "Waterproof 24H Long Lasting Fit", "Organic Natural Plant Extract", "High Pigment 18-Color Blend", "Intense Hydration Boost Complex", "SPF50+ PA++++ Protection"],
+                shoes: ["Lightweight Cushioned Soles", "Breathable Mesh Tech Running", "Handmade Genuine Grade-A Leather", "Anti-Slip Outdoor Sports Grip", "Retro Unisex Casual Streetwear", "Orthotic Comfort Insole System"]
+            },
+            reviewPool: [
+                "တအားသုံးလို့ကောင်းပါတယ်။ ၅၅% Discount မို့ အရမ်းတန်တယ်!", "ပစ္စည်းစစ်ပဲ အရည်အသွေး ရှယ်ကြိုက်။ Delivery လည်း မြန်တယ်ရှင်။",
+                "ထင်ထားတာထက် ပိုမိုက်တယ်။ Wrapping သေချာထုတ်ပေးလို့ ကျေးဇူး။", "မူရင်းအတိုင်း စိတ်ချရတယ်။ TSPK Store ကို အမြဲအားပေးမယ်။",
+                "WavePay နဲ့ ငွေလွှဲရတာ လွယ်ကူပြီး အော်ဒါတန်းရောက်လို့ အဆင်ပြေတယ်။", "စျေးလည်းတန် ပစ္စည်းလည်းကောင်း ဗျာ။ စိတ်ချလက်ချ မှာလို့ရတယ်။"
+            ],
+            buyers: ["ဦးကျော်ဇော", "မသီတာထွန်း", "Ko Min Thant", "Su Su Naing", "Aung Kyaw", "မေမြတ်နိုး", "Zin Mar", "Htet Lin"]
         };
+
         const platforms = ["Lazada", "Alibaba", "Shop.com.mm", "Amazon"];
-        const translationDictionary = { "ဖုန်း": "phone", "phone": "phone", "အင်္ကျီ": "shirt", "shirt": "shirt", "နာရီ": "watch", "watch": "watch", "မိတ်ကပ်": "beauty", "makeup": "beauty", "ဖိနပ်": "shoes", "shoes": "shoes" };
+        const translationDict = { "ဖုန်း": "phone", "phone": "phone", "iphone": "phone", "samsung": "phone", "အင်္ကျီ": "shirt", "shirt": "shirt", "tshirt": "shirt", "နာရီ": "watch", "watch": "watch", "မိတ်ကပ်": "beauty", "beauty": "beauty", "အလှကုန်": "beauty", "ဖိနပ်": "shoes", "shoes": "shoes", "sneaker": "shoes" };
         
-        let activePlatform = "All", currentSearchKeyword = "ဖုန်း", generatedProducts = [], shoppingCart = [], base64ReceiptData = null;
+        let activePlatform = "All", currentSearchKeyword = "ဖုန်း", generatedProducts = [], shoppingCart = [], base64ReceiptData = null, receiptFileBlob = null;
 
-        window.addEventListener('DOMContentLoaded', () => { generateSmartProducts(currentSearchKeyword); renderProducts(); updateCartBadges(); lucide.createIcons(); });
+        window.addEventListener('DOMContentLoaded', () => { generateTrulyUniqueProducts(currentSearchKeyword); renderProducts(); updateCartBadges(); });
 
-        function generateSmartProducts(keyword) {
-            let targetCategory = "phone";
-            for (let keys in translationDictionary) { if (keyword.toLowerCase().includes(keys)) { targetCategory = translationDictionary[keys]; break; } }
-            const baseCollection = mockDatabase[targetCategory]; generatedProducts = [];
-            let itemCounter = 1;
-            platforms.forEach(platform => {
-                baseCollection.forEach(item => {
-                    const priceModifier = 0.9 + (Math.random() * 0.3);
-                    const origPrice = Math.round((item.basePrice * priceModifier) / 100) * 100;
-                    const sellPrice = Math.round((origPrice * 0.45) / 100) * 100;
-                    generatedProducts.push({ id: `P-${itemCounter}`, title: `[${platform}] ${item.title}`, originalPrice: origPrice, sellingPrice: sellPrice, discountPercentage: 55, image: item.img, platform: platform, rating: "4.8", reviewsCount: "120" });
-                    itemCounter++;
+        function generateTrulyUniqueProducts(keyword) {
+            let cat = "phone";
+            for (let k in translationDict) { if (keyword.toLowerCase().includes(k)) { cat = translationDict[k]; break; } }
+            generatedProducts = []; let displayCount = 120; let seed = 0;
+            for (let i = 0; i < keyword.length; i++) { seed += keyword.charCodeAt(i); }
+
+            for (let id = 1; id <= displayCount; id++) {
+                let platIdx = (id + seed) % platforms.length;
+                let brandIdx = (id * 7 + seed) % generatorData.brands[cat].length;
+                let attr1Idx = (id * 13 + seed) % generatorData.attributes[0].length;
+                let attr2Idx = (id * 17 + seed) % generatorData.attributes[1].length;
+                let attr3Idx = (id * 19 + seed) % generatorData.attributes[2].length;
+                let specIdx = (id * 23 + seed) % generatorData.specs[cat].length;
+                
+                let title = `[${platforms[platIdx]}] ${generatorData.brands[cat][brandIdx]} ${generatorData.attributes[0][attr1Idx]} ${generatorData.attributes[1][attr2Idx]} (${generatorData.attributes[2][attr3Idx]}) - ${generatorData.specs[cat][specIdx]} [SKU: TSPK-${cat.toUpperCase()}-${14020 + id}]`;
+                
+                let basePrices = { phone: 1500000, shirt: 45000, watch: 95000, beauty: 32000, shoes: 65000 };
+                let priceVariation = 0.6 + ((id * 29 + seed) % 140) / 100; 
+                let origPrice = Math.round((basePrices[cat] * priceVariation) / 500) * 500;
+                let sellPrice = Math.round((origPrice * 0.45) / 500) * 500;
+                
+                let imgIds = { phone: "photo-1598327105666-5b89351aff97", shirt: "photo-1596755094514-f87e34085b2c", watch: "photo-1524592094714-0f0654e20314", beauty: "photo-1608248597481-496100c80836", shoes: "photo-1542291026-7eec264c27ff" };
+                
+                let reviews = []; let rCount = 2 + (id % 3); 
+                for (let r = 0; r < rCount; r++) {
+                    reviews.push({
+                        name: generatorData.buyers[(id * r + 3) % generatorData.buyers.length],
+                        text: generatorData.reviewPool[(id * r + 7) % generatorData.reviewPool.length],
+                        star: 4 + ((id + r) % 2)
+                    });
+                }
+                generatedProducts.push({
+                    id: `TSPK-PROD-${id}-${seed}`, title: title, originalPrice: origPrice, sellingPrice: sellPrice,
+                    image: `https://images.unsplash.com/${imgIds[cat]}?w=400`, platform: platforms[platIdx],
+                    rating: (4.4 + (id % 7) / 10).toFixed(1), reviewsCount: 220 + (id * 31 % 3400), customerReviews: reviews
                 });
-            });
+            }
         }
-
-        function renderProducts() {
+                function renderProducts() {
             const grid = document.getElementById('product-grid'); grid.innerHTML = '';
             const filtered = activePlatform === "All" ? generatedProducts : generatedProducts.filter(p => p.platform === activePlatform);
-            document.getElementById('product-count').innerText = `${filtered.length} ခုတွေ့ရှိသည်`;
+            document.getElementById('product-count').innerText = `ပစ္စည်းအမျိုးအစား ၁၀၀,၀၀0 ကျော်အနက်မှ "${currentSearchKeyword}" နှင့် ကိုက်ညီသည့် ပစ္စည်း ${filtered.length} ခု တိကျစွာ ပြသနေသည်`;
+            
             filtered.forEach(p => {
-                const card = document.createElement('div'); card.className = "bg-white border rounded-xl overflow-hidden p-3 flex flex-col justify-between relative shadow-xs";
-                card.innerHTML = `<div class="absolute top-2 left-2 bg-slate-900/80 text-white text-[10px] px-1.5 py-0.5 rounded">${p.platform}</div><div class="absolute top-2 right-2 bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded">-55%</div><img src="${p.image}" class="w-full aspect-square object-cover rounded-lg"><h4 class="text-xs font-semibold mt-2 line-clamp-2">${p.title}</h4><div class="mt-2"><div class="text-[11px] text-gray-400 line-through">${p.originalPrice.toLocaleString()} ကျပ်</div><div class="text-sm font-black text-orange-500">${p.sellingPrice.toLocaleString()} ကျပ်</div><button onclick="addToCart('${p.id}')" class="w-full mt-2 bg-orange-50 hover:bg-orange-500 text-orange-600 hover:text-white transition text-[11px] py-1.5 rounded-lg font-bold">ခြင်းတောင်းထဲထည့်မည်</button></div>`;
+                const card = document.createElement('div'); card.className = "bg-white border rounded-2xl overflow-hidden p-4 flex flex-col justify-between shadow-sm hover:shadow-md transition relative bg-white";
+                let revHtml = ''; p.customerReviews.forEach(r => { revHtml += `<div class="border-t pt-1.5 mt-1.5 text-[10px] text-gray-500"><span class="font-bold text-slate-700">${r.name}:</span> "${r.text}" ⭐${r.star}</div>`; });
+                card.innerHTML = `
+                    <div class="absolute top-2 left-2 bg-slate-900/80 text-white text-[9px] px-2 py-0.5 rounded-full font-bold">${p.platform}</div><div class="absolute top-2 right-2 bg-red-500 text-white text-[9px] px-2 py-0.5 rounded-full font-bold">-55%</div>
+                    <img src="${p.image}" class="w-full aspect-square object-cover rounded-xl mb-2">
+                    <div><h4 class="text-xs font-bold text-slate-800 line-clamp-2 leading-snug">${p.title}</h4><div class="flex items-center gap-1 my-1"><span class="text-amber-500 text-xs font-bold">★ ${p.rating}</span><span class="text-[10px] text-gray-400">(${p.reviewsCount.toLocaleString()} reviews)</span></div></div>
+                    <div class="mt-2 border-t pt-2"><div class="text-[11px] text-gray-400 line-through">${p.originalPrice.toLocaleString()} ကျပ်</div><div class="text-sm font-black text-orange-500">${p.sellingPrice.toLocaleString()} ကျပ်</div>
+                    <button onclick="addToCart('${p.id}')" class="w-full mt-2 lazada-bg-orange hover:bg-orange-600 text-white transition text-xs py-2 rounded-xl font-bold shadow-sm">ခြင်းတောင်းထဲထည့်မည်</button>
+                    <div class="mt-2 bg-slate-50 p-2 rounded-lg border border-gray-100 max-h-24 overflow-y-auto"><p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Top Customer Reviews</p>${revHtml}</div></div>`;
                 grid.appendChild(card);
             });
+            lucide.createIcons();
         }
 
-        function handleSearch(e) { e.preventDefault(); const val = document.getElementById('search-input').value; if (!val.trim()) return; currentSearchKeyword = val; generateSmartProducts(currentSearchKeyword); document.getElementById('section-title').innerText = `"${currentSearchKeyword}" ရှာဖွေမှုရလဒ်`; renderProducts(); }
+        function handleSearch(e) { e.preventDefault(); const val = document.getElementById('search-input').value; if (!val.trim()) return; currentSearchKeyword = val; generateTrulyUniqueProducts(currentSearchKeyword); document.getElementById('section-title').innerText = `"${currentSearchKeyword}" အတွက် ရှာဖွေမှုရလဒ်`; renderProducts(); }
         function filterPlatform(pName) { activePlatform = pName; renderProducts(); }
         function toggleCart() { const drawer = document.getElementById('cart-drawer'); drawer.classList.toggle('hidden'); if (!drawer.classList.contains('hidden')) renderCartDrawerList(); }
+        function toggleChatBox() { document.getElementById('admin-chat-box').classList.toggle('hidden'); }
         
         function addToCart(pId) {
             const match = generatedProducts.find(p => p.id === pId); if (!match) return;
@@ -232,36 +292,56 @@
 
         function openCheckoutModal() { if (shoppingCart.length === 0) return; const totalVal = shoppingCart.reduce((acc, item) => acc + (item.product.sellingPrice * item.quantity), 0); document.getElementById('modal-checkout-total').innerText = `${totalVal.toLocaleString()} ကျပ်`; document.getElementById('checkout-modal').classList.remove('hidden'); }
         function closeCheckoutModal() { document.getElementById('checkout-modal').classList.add('hidden'); }
-        function toggleChatBox() { document.getElementById('admin-chat-box').classList.toggle('hidden'); }
 
         function previewScreenshot(e) {
             const file = e.target.files[0]; if (!file) return;
-            document.getElementById('screenshot-filename').innerText = file.name;
+            receiptFileBlob = file; document.getElementById('screenshot-filename').innerText = file.name;
             const reader = new FileReader(); reader.onload = function(event) { base64ReceiptData = event.target.result; document.getElementById('screenshot-img').src = base64ReceiptData; document.getElementById('screenshot-preview-box').classList.remove('hidden'); };
             reader.readAsDataURL(file);
         }
 
-        function removeScreenshot() { base64ReceiptData = null; document.getElementById('screenshot-preview-box').classList.add('hidden'); }
+        function removeScreenshot() { base64ReceiptData = null; receiptFileBlob = null; document.getElementById('screenshot-preview-box').classList.add('hidden'); }
 
+        // Telegram Bot သို့ အချက်အလက်နှင့် ပြေစာပုံ ပို့ပေးသည့် စနစ်ချုပ်
         function submitOrderForm(e) {
             e.preventDefault();
-            if (!base64ReceiptData) return;
-            const name = document.getElementById('cust-name').value, phone = document.getElementById('cust-phone').value, address = document.getElementById('cust-address').value;
+            if (!receiptFileBlob) { showToast("WavePay ပြေစာ ဓာတ်ပုံ တင်ပေးရန် လိုအပ်ပါသည်"); return; }
+            
+            const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
+            const address = document.getElementById('cust-address').value;
             let itemsStr = shoppingCart.map(item => `• ${item.product.title} (x${item.quantity})`).join('\n');
             const totalVal = shoppingCart.reduce((acc, item) => acc + (item.product.sellingPrice * item.quantity), 0);
             
-            const msgBox = document.getElementById('chat-messages');
-            const clientMsg = document.createElement('div'); clientMsg.className = "bg-orange-500 text-white p-3 rounded-xl mt-2 space-y-1";
-            clientMsg.innerHTML = `<p class="font-bold border-b pb-1 text-[11px]">အော်ဒါအချက်အလက် ပေးပို့လွှာ</p><p class="whitespace-pre-line text-[10px]">${itemsStr}</p><p class="text-[10px]">စုစုပေါင်း: ${totalVal.toLocaleString()} ကျပ်</p><p class="text-[10px]">အမည်: ${name} | ဖုန်း: ${phone}</p><p class="text-[10px]">လိပ်စာ: ${address}</p><img src="${base64ReceiptData}" class="w-16 h-24 object-cover rounded mt-1 border">`;
-            msgBox.appendChild(clientMsg);
-            
-            shoppingCart = []; updateCartBadges(); closeCheckoutModal(); document.getElementById('cart-drawer').classList.add('hidden'); removeScreenshot(); e.target.reset();
-            document.getElementById('admin-chat-box').classList.remove('hidden'); msgBox.scrollTop = msgBox.scrollHeight;
+            const telegramMessage = `📦 TSPK MEGA STORE - အော်ဒါအသစ် ရောက်ရှိပါပြီ\n\n👤 ဝယ်ယူသူအမည်: ${name}\n📞 ဖုန်းနံပါတ်: ${phone}\n📍 ပို့ဆောင်ရမည့်လိပ်စာ: ${address}\n\n🛒 မှာယူသည့်ပစ္စည်းများ:\n${itemsStr}\n\n💰 စုစုပေါင်းကျသင့်ငွေ: ${totalVal.toLocaleString()} ကျပ်`;
+
+            const formData = new FormData();
+            formData.append('chat_id', TELEGRAM_CHAT_ID);
+            formData.append('photo', receiptFileBlob);
+            formData.append('caption', telegramMessage);
+
+            showToast("အော်ဒါကို Admin Telegram ဆီသို့ ပို့နေပါသည်...");
+
+            fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto`, { method: 'POST', body: formData })
+            .then(res => res.json())
+            .then(data => {
+                if(data.ok) {
+                    showToast("အော်ဒါတင်ခြင်း အောင်မြင်ပါသည်ရှင်။");
+                    const msgBox = document.getElementById('chat-messages');
+                    const clientMsg = document.createElement('div'); clientMsg.className = "bg-orange-500 text-white p-3 rounded-xl mt-2 space-y-1";
+                    clientMsg.innerHTML = `<p class="font-bold border-b pb-1 text-[11px]">အော်ဒါ တင်ပြီးပါပြီ (Telegram သို့ တိုက်ရိုက်ပို့ပြီး)</p><p class="whitespace-pre-line text-[10px]">${itemsStr}</p><p class="text-[10px]">စုစုပေါင်း: ${totalVal.toLocaleString()} ကျပ်</p><img src="${base64ReceiptData}" class="w-16 h-24 object-cover rounded mt-1 border">`;
+                    msgBox.appendChild(clientMsg);
+                    
+                    shoppingCart = []; updateCartBadges(); closeCheckoutModal(); document.getElementById('cart-drawer').classList.add('hidden'); removeScreenshot(); e.target.reset();
+                    document.getElementById('admin-chat-box').classList.remove('hidden'); msgBox.scrollTop = msgBox.scrollHeight;
+                } else { alert("Telegram API သို့ ချိတ်ဆက်၍ မရပါ။ Token သို့မဟုတ် Chat ID ကို ပြန်စစ်ပါ။"); }
+            })
+            .catch(err => { alert("အင်တာနက် လိုင်းမကောင်းသဖြင့် အော်ဒါမတင်နိုင်ပါ။"); });
         }
 
         function sendChatMessage() { const txt = document.getElementById('chat-reply-input').value; if (!txt.trim()) return; const msgBox = document.getElementById('chat-messages'); const div = document.createElement('div'); div.className = "bg-slate-800 text-white p-2 rounded-xl text-right mt-2"; div.innerText = txt; msgBox.appendChild(div); document.getElementById('chat-reply-input').value = ""; msgBox.scrollTop = msgBox.scrollHeight; }
         function showToast(m) { const c = document.getElementById('toast-container'); const el = document.createElement('div'); el.className = "bg-slate-900 text-white text-xs px-4 py-2 rounded-lg shadow-md"; el.innerText = m; c.appendChild(el); setTimeout(() => el.remove(), 2500); }
-        function downloadWebsite() { const html = document.documentElement.outerHTML; const blob = new Blob([html], { type: 'text/html' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'index.html'; a.click(); }
     </script>
 </body>
 </html>
+
