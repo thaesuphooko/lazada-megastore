@@ -3,24 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thae Su Phoo Ko Online Store (V3)</title>
+    <title>TSPK Multi-Vendor Marketplace</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brandOrange: '#f57224',
-                        brandBlue: '#1a274c',
-                        brandGold: '#D4AF37'
-                    }
-                }
-            }
-        }
-    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap');
         body { font-family: 'Padauk', sans-serif; }
@@ -28,227 +15,271 @@
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased">
+<body class="bg-gray-50 text-gray-800 antialiased min-h-screen pb-24">
 
-    <!-- Premium Header & Navbar -->
-    <header class="sticky top-0 z-40 bg-[#1a274c] shadow-md border-b-2 border-[#D4AF37]">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-            <!-- Premium Logo with Shopping Cart Icon -->
-            <div class="flex items-center gap-2 p-1.5 rounded-xl bg-gradient-to-r from-[#f57224] to-[#1a274c] shadow-inner border border-[#D4AF37]/20">
-                <i data-lucide="shopping-cart" class="w-6 h-6 text-yellow-400"></i>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 font-black tracking-wider text-xl px-1">TSPK</span>
+    <!-- Global Floating Toast Notification Container -->
+    <div id="toastContainer" class="fixed top-5 right-5 z-[100] flex flex-col gap-3 pointer-events-none max-w-sm w-full"></div>
+
+    <!-- Premium Sticky Header Navigation -->
+    <header class="sticky top-0 z-40 bg-gradient-to-r from-[#1a274c] to-[#0f172a] text-white shadow-md border-b border-[#D4AF37]/30">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.reload()">
+                <div class="bg-gradient-to-br from-[#f57224] to-amber-500 p-2 rounded-xl border border-white/20 shadow-inner">
+                    <i data-lucide="store" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-md md:text-xl font-black tracking-wider text-white">TSPK <span class="text-[#f57224]">Marketplace</span></h1>
+                    <p class="text-[10px] text-amber-400 font-bold">Multi-Vendor Multi-Category Shop</p>
+                </div>
             </div>
 
-            <!-- Custom Clean Search Bar -->
-            <div class="flex-1 max-w-xl relative">
+            <!-- Global Search Filter Input Bar -->
+            <div class="flex-1 max-w-md relative hidden md:block">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
+                    <i data-lucide="search" class="w-4 h-4"></i>
+                </span>
                 <input type="text" id="searchInput" placeholder="လူကြီးမင်း ရှာဖွေလိုသော ပစ္စည်းအမည်ကို ရိုက်ထည့်ပါ..." 
-                       class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#f57224] text-sm bg-white/95">
-                <i data-lucide="search" class="w-5 h-5 text-gray-400 absolute left-3 top-2.5"></i>
+                       class="w-full pl-9 pr-4 py-2 bg-white/10 border border-white/20 rounded-xl text-xs md:text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#f57224] focus:bg-white focus:text-gray-900 transition">
             </div>
 
-            <!-- Cart Trigger Button -->
-            <button onclick="toggleCart(true)" class="relative p-2 bg-white/10 rounded-full hover:bg-white/20 transition text-white border border-white/10">
-                <i data-lucide="shopping-bag" class="w-6 h-6"></i>
-                <span id="cartBadge" class="absolute -top-1 -right-1 bg-[#f57224] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
-            </button>
+            <!-- Action Controllers (Cart, Vendor Post, Admin Login) -->
+            <div class="flex items-center gap-2">
+                <button onclick="openVendorModal()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1 shadow-md">
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i> ပစ္စည်းရောင်းရန်
+                </button>
+                <button onclick="toggleAdminPanel()" class="bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1 shadow-md">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i> Admin ဝင်ရန်
+                </button>
+                <button onclick="toggleCart(true)" class="relative p-2.5 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl transition shadow-inner">
+                    <i data-lucide="shopping-cart" class="w-5 h-5 text-white"></i>
+                    <span id="cartBadge" class="absolute -top-1.5 -right-1.5 bg-[#f57224] text-white text-[10px] font-black px-1.5 py-0.5 rounded-full border border-white hidden">0</span>
+                </button>
+            </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 py-6">
-        <!-- Hero Banner Section -->
-        <div class="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-[#1a274c] to-[#f57224] text-white p-6 md:p-12 shadow-xl border border-[#D4AF37]/30">
-            <div class="max-w-md space-y-4 relative z-10">
-                <span class="inline-block bg-[#D4AF37] text-gray-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Premium Quality</span>
-                <h1 class="text-2xl md:text-4xl font-bold leading-tight">Thae Su Phoo Ko ကိုယ်ပိုင်အွန်လိုင်းစတိုး</h1>
-                <p class="text-xs md:text-sm text-gray-200">လူကြီးမင်းတို့ စိတ်တိုင်းကျစေမည့် အရည်အသွေးမြင့် ပစ္စည်းများကို တစ်နေရာတည်းတွင် စိတ်ချရဆုံး ဝယ်ယူရရှိနိုင်ပါသည်။</p>
-                <div class="flex items-center gap-2 text-yellow-400 font-bold text-xs bg-black/20 p-2 rounded-lg inline-block">
-                    <i data-lucide="sparkles" class="w-4 h-4"></i> ၅၅% အလိုအလျောက်လျှော့ဈေး (ယခုဈေးနှုန်းဖြင့် တိုက်ရိုက်ဝယ်ယူနိုင်ပါပြီ)
-                </div>
-            </div>
+    <!-- Main Dynamic Category & Showcase Layout Container -->
+    <main class="max-w-6xl mx-auto px-4 mt-6">
+        <!-- Mobile Search Input Box Component -->
+        <div class="block md:hidden mb-4 relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
+                <i data-lucide="search" class="w-4 h-4"></i>
+            </span>
+            <input type="text" id="mobileSearchInput" placeholder="ပစ္စည်းရှာဖွေရန်..." 
+                   class="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#f57224] shadow-sm">
         </div>
 
-        <!-- Products Header Grid -->
-        <div class="mb-6 flex items-center justify-between">
-            <h2 class="text-lg font-bold text-[#1a274c] flex items-center gap-2">
-                <span class="w-1.5 h-6 bg-[#f57224] rounded-full"></span> နောက်ဆုံးရရှိနိုင်သော ပစ္စည်းများ
+        <!-- Dynamic Admin Pending Approvals Dashboard Container (Hidden by default) -->
+        <section id="adminDashboardSection" class="hidden mb-8 p-4 bg-amber-50 border-2 border-dashed border-amber-300 rounded-2xl animate-in fade-in duration-200">
+            <div class="flex justify-between items-center mb-4 pb-2 border-b border-amber-200">
+                <div class="flex items-center gap-2 text-amber-800">
+                    <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                    <h2 class="font-black text-sm md:text-md">ပစ္စည်းတင်ရန် ခွင့်ပြုချက်တောင်းခံမှုများ (Admin စစ်ဆေးရန်ဇုန်)</h2>
+                </div>
+                <button onclick="toggleAdminPanel()" class="text-xs text-gray-500 font-bold hover:underline">ပိတ်မည်</button>
+            </div>
+            <!-- Dynamic Waiting List Deck -->
+            <div id="adminPendingDeck" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <!-- Javascript will render rows dynamically here -->
+            </div>
+            <div id="adminEmptyState" class="text-center py-6 text-xs text-amber-700 font-bold">
+                ခွင့်ပြုချက်တောင်းခံထားသော ပစ္စည်းအသစ် လတ်တလောမရှိသေးပါရှင်။
+            </div>
+        </section>
+
+        <!-- Dynamic Grid Title Banner Component -->
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xs md:text-sm font-black text-gray-700 uppercase tracking-widest flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 bg-[#f57224] rounded-full animate-ping"></span>
+                စတိုးဆိုင်ရှိ အရောင်းသွက် ပစ္စည်းများအားလုံး
             </h2>
         </div>
-        
-        <!-- Infinite Products Grid Area -->
-        <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"></div>
 
-        <!-- Loading Indicator -->
-        <div id="loadingIndicator" class="flex justify-center py-10 hidden">
-            <div class="animate-spin rounded-full h-8 w-8 border-4 border-[#f57224] border-t-transparent"></div>
+        <!-- Main Realtime Product Responsive Grid Framework -->
+        <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
+            <!-- Dynamic Content Injected here by Javascript Renderer Engine -->
+        </div>
+
+        <!-- Global Infinite Async Loading Interceptor -->
+        <div id="loadingIndicator" class="hidden py-8 text-center flex flex-col items-center justify-center gap-2">
+            <div class="w-8 h-8 border-4 border-[#1a274c] border-t-transparent rounded-full animate-spin"></div>
+            <span class="text-xs text-gray-500 font-bold">ပစ္စည်းအသစ်များ ရယူနေပါသည် ခဏစောင့်ပါ...</span>
         </div>
     </main>
 
-    <!-- Product Detail Modal Window -->
-    <div id="detailModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl border border-gray-100 flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95 duration-200">
-            <div class="bg-gray-50 p-4 border-b border-gray-100 flex justify-between items-center">
-                <span class="text-xs font-bold text-[#1a274c] bg-amber-100 border border-amber-300 px-2.5 py-1 rounded-full flex items-center gap-1">
-                    <i data-lucide="info" class="w-3.5 h-3.5 text-amber-600"></i> ပစ္စည်းအသေးစိတ် အချက်အလက်
-                </span>
-                <button onclick="closeDetailModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition"><i data-lucide="x" class="w-6 h-6"></i></button>
+    <!-- ==========================================
+         MODALS & DRAWER OVERLAYS FRAMEWORK
+         ========================================== -->
+
+    <!-- Merchant/Vendor Upload Item Request Modal Popup Box -->
+    <div id="vendorModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-gray-100 overflow-hidden transform transition duration-300 scale-95 flex flex-col max-h-[90vh]">
+            <div class="bg-[#1a274c] p-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="package-plus" class="w-5 h-5 text-amber-400"></i>
+                    <h3 class="font-bold text-sm">ပစ္စည်းရောင်းချရန် အချက်အလက်တင်သွင်းခြင်း</h3>
+                </div>
+                <button onclick="closeVendorModal()" class="p-1 hover:bg-white/10 rounded-full transition"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
-            <div class="p-6 overflow-y-auto space-y-4 flex-1">
-                <img id="modalProductImg" src="" class="w-full h-56 md:h-64 object-cover rounded-xl bg-gray-100 border shadow-sm">
+            <form id="vendorProductForm" onsubmit="handleVendorSubmit(event)" class="p-4 space-y-3 overflow-y-auto hide-scrollbar text-xs md:text-sm">
+                <p class="text-[11px] text-amber-600 font-bold bg-amber-50 p-2.5 rounded-xl border border-amber-100">သတိပေးချက်: သင်တင်လိုက်သောပစ္စည်းသည် ဆိုင်ရှင်(Admin) မှ အတည်ပြုခွင့်ပြုပြီးမှသာ ဆိုင်မျက်နှာစာပေါ်တွင် ရောင်းချခွင့် ရရှိမည်ဖြစ်ပါသည်။</p>
                 <div>
-                    <h3 id="modalProductName" class="text-lg font-bold text-[#1a274c] leading-snug"></h3>
-                    <div id="modalProductPrice" class="text-2xl font-black text-[#f57224] mt-1"></div>
+                    <label class="block font-bold text-gray-700 mb-1">ပစ္စည်းအမည် *</label>
+                    <input type="text" id="vProdTitle" required placeholder="ဥပမာ - ကြိုးမဲ့နားကြပ်" class="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-amber-500 outline-none bg-gray-50">
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">ဈေးနှုန်း (MMK) *</label>
+                    <input type="number" id="vProdPrice" required placeholder="ဥပမာ - 25000" class="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-amber-500 outline-none bg-gray-50">
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">ပစ္စည်းဓာတ်ပုံ (Image URL) *</label>
+                    <input type="url" id="vProdImg" required placeholder="https://example.com/photo.jpg" class="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-amber-500 outline-none bg-gray-50 text-[11px]">
+                    <span class="text-[10px] text-gray-400 mt-0.5 block">Unsplash သို့မဟုတ် အင်တာနက်ပေါ်ရှိ ပုံ Link ကို ထည့်ပေးပါ။</span>
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">ပစ္စည်းအကြောင်းအသေးစိတ် ဖော်ပြချက် *</label>
+                    <textarea id="vProdDesc" rows="3" required placeholder="အမျိုးအစား နှင့် အချက်အလက်များ..." class="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-amber-500 outline-none bg-gray-50"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-xl transition shadow-md flex items-center justify-center gap-2">
+                    <i data-lucide="upload-cloud" class="w-4 h-4"></i> Admin ဆီသို့ ခွင့်ပြုချက်တင်မည်
+                </button>
+            </form>
+        </div>
+    </div>
+        <div id="detailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl border border-gray-100 flex flex-col max-h-[90vh] transform scale-95 transition-transform duration-200">
+            <div class="bg-gray-50 p-4 border-b border-gray-100 flex justify-between items-center">
+                <span class="text-xs font-bold text-[#1a274c] bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full flex items-center gap-1">
+                    <i data-lucide="info" class="w-3.5 h-3.5 text-indigo-600"></i> ပစ္စည်းအသေးစိတ် အချက်အလက်
+                </span>
+                <button onclick="closeDetailModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div class="p-5 overflow-y-auto space-y-4 flex-1 text-xs md:text-sm">
+                <img id="modalProductImg" src="" class="w-full h-48 md:h-56 object-cover rounded-xl bg-gray-50 border shadow-inner">
+                <div>
+                    <h3 id="modalProductName" class="text-base font-black text-[#1a274c] leading-snug"></h3>
+                    <div id="modalProductPrice" class="text-xl font-black text-[#f57224] mt-1"></div>
                 </div>
                 <div class="bg-gray-50 p-3 rounded-xl border border-gray-200/60">
-                    <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">အကြောင်းအရာ အသေးစိတ်</h4>
-                    <p id="modalProductDesc" class="text-xs md:text-sm text-gray-600 leading-relaxed"></p>
+                    <h4 class="text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-1">အကြောင်းအရာ အသေးစိတ်</h4>
+                    <p id="modalProductDesc" class="text-gray-600 leading-relaxed font-medium"></p>
                 </div>
-                <div class="border-t pt-3">
-                    <h4 class="text-xs font-bold text-gray-700 mb-2 flex items-center gap-1"><i data-lucide="thumbs-up" class="w-3.5 h-3.5 text-orange-500"></i> သုံ့းစွဲသူများ၏ ထင်မြင်ချက်များ</h4>
-                    <div id="modalProductReviews" class="space-y-2"></div>
+                <div class="border-t border-gray-100 pt-3">
+                    <h4 class="text-xs font-bold text-gray-700 mb-2 flex items-center gap-1"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i> TSPK စိတ်ချရမှု အာမခံ</h4>
+                    <p class="text-[11px] text-gray-500">ဤပစ္စည်းသည် စစ်ဆေးပြီးသား Verified ဖြစ်သဖြင့် စိတ်ချယုံကြည်စွာ ဝယ်ယူနိုင်ပါသည်ရှင်။</p>
                 </div>
             </div>
             <div class="p-4 bg-gray-50 border-t border-gray-100">
-                <button id="modalCartBtn" class="w-full bg-[#1a274c] hover:bg-indigo-950 text-white py-3 rounded-xl font-bold transition flex items-center justify-center gap-2 shadow-md">
-                    <i data-lucide="shopping-cart" class="w-5 h-5"></i> စျေးဝယ်ခြင်းတောင်းထဲသို့ ထည့်မည်
+                <button id="modalCartBtn" class="w-full bg-[#1a274c] hover:bg-indigo-950 text-white py-3 rounded-xl font-bold transition flex items-center justify-center gap-2 shadow-md text-xs md:text-sm">
+                    <i data-lucide="shopping-cart" class="w-4 h-4"></i> စျေးဝယ်ခြင်းတောင်းထဲသို့ ထည့်မည်
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Shopping Cart Drawer Overlay -->
-    <div id="cartDrawer" class="fixed inset-0 bg-black/50 z-50 transition-opacity opacity-0 pointer-events-none duration-300">
+    <div id="cartDrawer" class="fixed inset-0 bg-slate-900/40 z-50 transition-opacity opacity-0 pointer-events-none duration-300">
         <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300">
-            <div class="p-4 bg-[#1a274c] text-white flex items-center justify-between border-b-2 border-[#D4AF37]">
-                <h3 class="font-bold flex items-center gap-2"><i data-lucide="shopping-bag" class="w-5 h-5"></i> သင်၏စျေးဝယ်ခြင်းတောင်း</h3>
-                <button onclick="toggleCart(false)" class="p-1 hover:bg-white/10 rounded-full transition"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <div class="p-4 bg-[#1a274c] text-white flex items-center justify-between border-b border-[#D4AF37]/30">
+                <h3 class="font-bold flex items-center gap-2 text-sm md:text-base"><i data-lucide="shopping-bag" class="w-5 h-5 text-[#f57224]"></i> သင်၏စျေးဝယ်ခြင်းတောင်း</h3>
+                <button onclick="toggleCart(false)" class="p-1 hover:bg-white/10 rounded-full transition"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
-            <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
-            <div class="p-4 border-t border-gray-200 bg-gray-50 space-y-4">
-                <div class="flex justify-between font-bold text-base text-[#1a274c]">
+            <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+            <div class="p-4 border-t border-gray-100 bg-gray-50 space-y-3 text-xs md:text-sm">
+                <div class="flex justify-between font-black text-sm md:text-base text-[#1a274c]">
                     <span>စုစုပေါင်း ကျသင့်ငွေ-</span>
                     <span id="cartTotalPrice">0 MMK</span>
                 </div>
                 <button onclick="openCheckoutModal()" class="w-full bg-[#f57224] text-white py-3 rounded-xl font-bold hover:bg-orange-600 transition flex items-center justify-center gap-2 shadow-lg">
-                    <i data-lucide="credit-card" class="w-5 h-5"></i> ဝယ်ယူမည် (Wave Pay ဖြင့် ငွေရှင်းရန်)
+                    <i data-lucide="credit-card" class="w-4 h-4"></i> ဝယ်ယူမည် (Wave Pay ဖြင့် ငွေရှင်းရန်)
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Wave Pay Checkout Modal -->
-    <div id="checkoutModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+    <div id="checkoutModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl flex flex-col max-h-[85vh] transform scale-95 transition-all duration-200">
             <div class="bg-[#1a274c] text-white p-4 flex justify-between items-center">
-                <h3 class="font-bold flex items-center gap-2"><i data-lucide="wallet" class="w-5 h-5 text-cyan-400"></i> Wave Pay ဖြင့် Ngwe Shin စနစ်</h3>
-                <button onclick="closeCheckoutModal()" class="text-white/80 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
+                <h3 class="font-bold text-sm flex items-center gap-2"><i data-lucide="wallet" class="w-4 h-4 text-cyan-400"></i> Wave Pay ဖြင့် တိုက်ရိုက်ငွေရှင်းစနစ်</h3>
+                <button onclick="closeCheckoutModal()" class="text-white/80 hover:text-white p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
-            <div class="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
-                <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-xl">
-                    <p class="text-xs text-blue-800 font-semibold mb-1">အောက်ပါ Wave Pay အကောင့်သို့ တိုက်ရိုက်ငွေလွှဲပေးပါရန်-</p>
-                    <p class="text-lg font-black text-[#1a274c]">09 781 145 573</p>
-                    <p class="text-xs font-bold text-gray-700">အကောင့်အမည်: Thae Su Phoo Ko</p>
+            <div class="p-5 space-y-4 overflow-y-auto hide-scrollbar text-xs md:text-sm flex-1">
+                <div class="bg-blue-50 border-l-4 border-blue-600 p-3.5 rounded-r-xl">
+                    <p class="text-[11px] text-blue-800 font-bold mb-1">အောက်ပါ Wave Pay အကောင့်သို့ တိုက်ရိုက်ငွေလွှဲပေးပါရန်-</p>
+                    <p class="text-base font-black text-[#1a274c] tracking-wider">09 781 145 573</p>
+                    <p class="text-[10px] font-bold text-gray-500">အကောင့်အမည်: Thae Su Phoo Ko</p>
                 </div>
-                <div class="text-right text-sm text-gray-600 font-bold">
-                    စုစုပေါင်း လွှဲရမည့်ငွေ: <span id="checkoutTotalAmount" class="text-lg font-black text-[#f57224]">0 MMK</span>
+                <div class="flex justify-between items-center bg-gray-50 p-2.5 rounded-xl border border-gray-100">
+                    <span class="font-bold text-gray-600">စုစုပေါင်း လွှဲရမည့်ငွေ:</span>
+                    <span id="checkoutTotalAmount" class="text-base font-black text-[#f57224]">0 MMK</span>
                 </div>
                 <form id="checkoutForm" class="space-y-3" onsubmit="handleCheckoutSubmit(event)">
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">ဝယ်ယူသူအမည် *</label>
-                        <input type="text" id="custName" required class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-[#f57224] outline-none text-sm">
+                        <label class="block font-bold text-gray-700 mb-1">ဝယ်ယူသူအမည် *</label>
+                        <input type="text" id="custName" required placeholder="လူကြီးမင်းအမည်" class="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-[#f57224] outline-none bg-gray-50">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">ဖုန်းနံပါတ် *</label>
-                        <input type="tel" id="custPhone" required class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-[#f57224] outline-none text-sm">
+                        <label class="block font-bold text-gray-700 mb-1">ဖုန်းနံပါတ် *</label>
+                        <input type="tel" id="custPhone" required placeholder="09xxxxxxxxx" class="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-[#f57224] outline-none bg-gray-50">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">ပို့ဆောင်ပေးရမည့် လိပ်စာအပြည့်အစုံ *</label>
-                        <textarea id="custAddress" required rows="2" class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-[#f57224] outline-none text-sm"></textarea>
+                        <label class="block font-bold text-gray-700 mb-1">ပို့ဆောင်ပေးရမည့် လိပ်စာအပြည့်အစုံ *</label>
+                        <textarea id="custAddress" required rows="2" placeholder="မြို့နယ်၊ လမ်း၊ အိမ်အမှတ်..." class="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-[#f57224] outline-none bg-gray-50"></textarea>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">ငွေလွှဲစလစ် (Screenshot) တင်ရန် *</label>
-                        <input type="file" id="custSlip" accept="image/*" required class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-orange-50 file:text-[#f57224] hover:file:bg-orange-100">
+                        <label class="block font-bold text-gray-700 mb-1">ငွေလွှဲစလစ် (Screenshot) တင်ရန် *</label>
+                        <input type="file" id="custSlip" accept="image/*" required class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-[11px] file:font-bold file:bg-orange-50 file:text-[#f57224] hover:file:bg-orange-100 cursor-pointer">
                     </div>
-                    <button type="submit" id="submitBtn" class="w-full bg-[#f57224] text-white py-3 rounded-xl font-bold hover:bg-orange-600 transition shadow-lg mt-2 flex items-center justify-center gap-2">
-                        <i data-lucide="check-circle" class="w-5 h-5"></i> မှာယူမှုကို အတည်ပြုပါ
+                    <button type="submit" id="submitBtn" class="w-full bg-[#f57224] text-white py-3 rounded-xl font-bold hover:bg-orange-600 transition shadow-lg mt-2 flex items-center justify-center gap-2 text-xs md:text-sm">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i> မှာယူမှုကို အတည်ပြုပါ
                     </button>
                 </form>
             </div>
         </div>
     </div>
-
-    <!-- Custom Elegant Toast Notification Container -->
-    <div id="toastContainer" class="fixed top-20 right-4 z-50 space-y-2 pointer-events-none max-w-xs w-full"></div>
-        <!-- Hidden Premium Gemini AI Chat Box Window -->
-    <!-- Initial state: style="display: none;" ဖြင့် လုံးဝဝှက်ထားပြီး မှာယူမှုပြီးမှသာ ပေါ်လာမည် -->
-    <div id="aiChatWindow" style="display: none;" class="fixed bottom-6 right-6 z-50 w-[350px] md:w-[400px] h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300">
-        <!-- Chat Header -->
-        <div class="bg-gradient-to-r from-[#1a274c] to-[#f57224] p-4 text-white flex items-center justify-between border-b-2 border-[#D4AF37]">
-            <div class="flex items-center gap-2">
-                <div class="relative">
-                    <div class="bg-white/20 p-1.5 rounded-xl border border-white/20">
-                        <i data-lucide="bot" class="w-5 h-5 text-yellow-400 animate-pulse"></i>
-                    </div>
-                    <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></span>
-                </div>
-                <div>
-                    <h4 class="font-bold text-xs md:text-sm tracking-wide">TSPK AI Assistant</h4>
-                    <p class="text-[10px] text-gray-300">Online အမြဲရှိနေပါသည်</p>
-                </div>
-            </div>
-            <button onclick="minimizeChat()" class="p-1 hover:bg-white/10 rounded-full transition"><i data-lucide="minus" class="w-5 h-5"></i></button>
-        </div>
-        <!-- Chat Messages Area -->
-        <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50/50 hide-scrollbar text-xs md:text-sm"></div>
-        <!-- Chat Input Form -->
-        <form onsubmit="handleSendMessage(event)" class="p-3 bg-white border-t border-gray-100 flex gap-2 items-center">
-            <input type="text" id="chatInputField" placeholder="မေးမြန်းလိုသည်များကို ရိုက်ထည့်ပါ..." required
-                   class="flex-1 px-3 py-2 border rounded-xl text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-[#f57224] bg-gray-50">
-            <button type="submit" class="bg-[#1a274c] hover:bg-indigo-950 text-white p-2.5 rounded-xl transition shadow-md flex items-center justify-center">
-                <i data-lucide="send" class="w-4 h-4"></i>
-            </button>
-        </form>
-    </div>
-
-    <!-- Hidden Chat Floating Icon Trigger (စဖွင့်ချင်း ၎င်းကိုလည်း ပိတ်ထားပါသည်) -->
-    <button id="aiChatIconTrigger" style="display: none;" onclick="maximizeChat()" class="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-[#f57224] to-[#1a274c] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition duration-200 border-2 border-[#D4AF37] flex items-center justify-center">
-        <i data-lucide="message-square" class="w-6 h-6 text-white"></i>
-        <span class="absolute -top-1 -right-1 flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span></span>
-    </button>
-
-
-    <!-- ==================== JAVASCRIPT LOGIC START ==================== -->
-    <script>
-        // Global Application States
+        <script>
+        // Global State Collections (Shop.com သဏ္ဍာန် ပစ္စည်းအမြောက်အမြား သိမ်းဆည်းရန်)
         const state = {
-            products: [],      // Infinite loaded products array
-            productsMap: {},   // Duplicate protection Map Tracker
-            cart: {},          // Shopping Cart items dictionary
-            page: 1,           // Infinite Scroll page cursor
-            loading: false,    // Scroll throttling flag
-            hasMore: true,     // End-of-stream indicator
-            searchQuery: "",   // Keyword filter holder
-            chatHistory: []    // Gemini API context storage
+            // Live Shop တွင် လူတိုင်းမြင်တွေ့ရမည့် ပစ္စည်းစာရင်း (Verified Products)
+            products: [
+                { id: "p1", title: "Premium Wireless Gaming Headphones", price: 65000, img: "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&q=80", desc: "ဆူညံသံများကို ဖျောက်ပေးနိုင်ပြီး ဂိမ်းဆော့ရာတွင် အသံနောက်ကျခြင်းမရှိသည့် Premium နားကြပ် ဖြစ်ပါသည်။" },
+                { id: "p2", title: "Luxury Minimalist Smartwatch Series 8", price: 120000, img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80", desc: "ကျန်းမာရေးစောင့်ကြည့်စနစ်၊ ခြေလှမ်းနှင့် ကယ်လိုရီတိုင်းတာစနစ်များ ပါဝင်သော စမတ်နာရီ ဖြစ်ပါသည်။" },
+                { id: "p3", title: "Full-Grain Vintage Leather Wallet", price: 35000, img: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=400&q=80", desc: "နွားသားရေစစ်စစ်ဖြင့် ချုပ်လုပ်ထားပြီး ကတ်ပေါင်းများစွာ ထည့်သွင်းနိုင်သည့် ခေတ်မီပိုက်ဆံအိတ် ဖြစ်ပါသည်။" },
+                { id: "p4", title: "Mechanical RGB Backlit Keyboard", price: 48000, img: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&q=80", desc: "ရိုက်ရတာ အိကျပြီး မီးလိုင်းစုံလင်စွာ ပြောင်းလဲနိုင်သည့် Gamers များအကြိုက် ကီးဘုတ်ဖြစ်ပါသည်။" },
+                { id: "p5", title: "Ultra HD 4K Action Sports Camera", price: 155000, img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&q=80", desc: "Vlog ရိုက်ကူးသူများနှင့် ခရီးသွားဝါသနာရှင်များအတွက် ရေစိုခံ၊ တုန်ခါမှုထိန်းစနစ်ပါဝင်သော ကင်မရာ ဖြစ်ပါသည်။" },
+                { id: "p6", title: "Ergonomic Vertical Wireless Mouse", price: 18000, img: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=400&q=80", desc: "ကွန်ပျူတာ အသုံးများသူများအတွက် လက်ကောက်ဝတ်မနာစေရန် အထူးဒီဇိုင်းထုတ်ထားသော Mouse ဖြစ်ပါသည်။" },
+                { id: "p7", title: "Stainless Steel Smart Thermos Bottle", price: 15000, img: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&q=80", desc: "ရေအပူချိန်ကို အပေါ်မျက်နှာပြင်တွင် LED ဖြင့် ပြသပေးနိုင်သော ကီလိုဂရမ်အဆင့်မြင့် ရေနွေးဓာတ်ဘူး ဖြစ်ပါသည်။" },
+                { id: "p8", title: "Portable High-Fidelity Bluetooth Speaker", price: 32000, img: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&q=80", desc: "ဘက်ထရီခံပြီး Bass သံပြင်းပြင်းနှင့် အခန်းတွင်း သီချင်းနားထောင်ရန် အလွန်ကောင်းမွန်သော စပီကာ ဖြစ်ပါသည်။" }
+            ],
+            
+            // သူများတွေ လာတင်ထားပြီး Admin ခွင့်ပြုချက်ကို စောင့်ဆိုင်းနေသည့် ပစ္စည်းများ (Pending Approvals)
+            pendingProducts: [],
+            
+            // ခြင်းတောင်းထဲက ပစ္စည်းများ
+            cart: {},
+            searchQuery: "",
+            isAdminMode: false
         };
 
-        // Telegram Bot Credentials (စလစ်နှင့် အချက်အလက်များ လှမ်းပို့ရန်)
+        // Telegram API configuration Setup (စလစ်ဖိုင် ပို့ရန်)
         const TELEGRAM_BOT_TOKEN = "7718055416:AAFl1X4wS96fbyTfXvT2nS9rQ0Xf0O8nCsc";
         const TELEGRAM_CHAT_ID = "6541530962";
 
-        // Global Lucide Icon Initializer Utility
+        // Global Lucide Icons Auto Loader
         function refreshIcons() {
             if (typeof lucide !== 'undefined') { lucide.createIcons(); }
         }
 
-        // Custom High-Quality Toast Notifications Engine
+        // Custom Toast Notifications
         function showToast(message, type = "success") {
             const container = document.getElementById('toastContainer');
             if (!container) return;
             const toast = document.createElement('div');
-            toast.className = `flex items-center gap-2 p-3.5 rounded-xl shadow-xl text-white font-bold text-xs transform transition duration-300 translate-x-10 opacity-0 pointer-events-auto ${
+            toast.className = `flex items-center gap-2.5 p-3.5 rounded-xl shadow-xl text-white font-bold text-xs transform transition duration-300 translate-x-10 opacity-0 pointer-events-auto min-w-[250px] ${
                 type === "success" ? "bg-emerald-600 border border-emerald-500" : "bg-rose-600 border border-rose-500"
             }`;
             const icon = type === "success" ? "check-circle" : "alert-circle";
-            toast.innerHTML = `<i data-lucide="${icon}" class="w-4 h-4"></i> <span>${message}</span>`;
+            toast.innerHTML = `<i data-lucide="${icon}" class="w-4 h-4 shrink-0"></i> <span>${message}</span>`;
             container.appendChild(toast);
             refreshIcons();
             
@@ -256,16 +287,178 @@
             setTimeout(() => {
                 toast.classList.add('translate-x-10', 'opacity-0');
                 setTimeout(() => { toast.remove(); }, 300);
-            }, 3500);
+            }, 3000);
         }
 
-        // Product Search Filter Handler Logic
-        document.getElementById('searchInput')?.addEventListener('input', (e) => {
-            state.searchQuery = e.target.value.trim().toLowerCase();
-            renderProductsGrid();
-        });
+        // Search Input Synchronizer Logic
+        function setupSearch() {
+            const handler = (e) => {
+                state.searchQuery = e.target.value.trim().toLowerCase();
+                renderProductsGrid();
+            };
+            document.getElementById('searchInput')?.addEventListener('input', handler);
+            document.getElementById('mobileSearchInput')?.addEventListener('input', handler);
+        }
 
-        // Add Items into Cart & Calculate Badge Count
+        // ==========================================
+        // VENDOR & MERCHANT UPLOAD MANAGEMENT LOGIC
+        // ==========================================
+        function openVendorModal() { document.getElementById('vendorModal').classList.remove('hidden'); }
+        function closeVendorModal() { document.getElementById('vendorModal').classList.add('hidden'); }
+
+        // သူများတွေ ပစ္စည်းလာတင်တဲ့အခါ အလုပ်လုပ်မည့် Form Handler
+        function handleVendorSubmit(e) {
+            e.preventDefault();
+            const title = document.getElementById('vProdTitle').value.trim();
+            const price = parseInt(document.getElementById('vProdPrice').value);
+            const img = document.getElementById('vProdImg').value.trim();
+            const desc = document.getElementById('vProdDesc').value.trim();
+
+            // ပစ္စည်းအသစ်ကို ID အသစ်တစ်ခုထုတ်ပြီး ခွင့်ပြုချက်စောင့်ဆိုင်းစာရင်း (Pending Queue) ထဲသို့ ထည့်လိုက်သည်
+            const newPendingItem = {
+                id: "pending_" + Date.now(),
+                title: title,
+                price: price,
+                img: img,
+                desc: desc
+            };
+
+            state.pendingProducts.push(newPendingItem);
+            
+            // UI နှင့် Form ကို Update ပြုလုပ်သည်
+            document.getElementById('vendorProductForm').reset();
+            closeVendorModal();
+            renderAdminDeck();
+            
+            showToast("ပစ္စည်းတင်ပြမှု အောင်မြင်ပါသည်။ ဆိုင်ရှင်(Admin) ခွင့်ပြုပေးရန် စောင့်ဆိုင်းနေပါသည်ရှင်။", "success");
+        }
+
+        // ==========================================
+        // ADMIN DASHBOARD PANELS (APPROVE ENGINE)
+        // ==========================================
+        function toggleAdminPanel() {
+            // Admin Panel ခလုတ်နှိပ်လျှင် ပေါ်လာ/ဝှက်သွားစေမည့် စနစ်
+            state.isAdminMode = !state.isAdminMode;
+            const panel = document.getElementById('adminDashboardSection');
+            if (state.isAdminMode) {
+                panel.classList.remove('hidden');
+                renderAdminDeck();
+                showToast("Admin Panel သို့ ဝင်ရောက်ပြီးပါပြီ။", "success");
+            } else {
+                panel.classList.add('hidden');
+            }
+        }
+
+        // Admin Deck ထဲရှိ ပစ္စည်းများကို Render လုပ်ပေးသည့် စနစ်
+        function renderAdminDeck() {
+            const deck = document.getElementById('adminPendingDeck');
+            const emptyState = document.getElementById('adminEmptyState');
+            if (!deck) return;
+
+            deck.innerHTML = '';
+            if (state.pendingProducts.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            emptyState.classList.add('hidden');
+
+            state.pendingProducts.forEach((p, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-3 rounded-xl border border-amber-200 shadow-sm flex flex-col justify-between space-y-3";
+                card.innerHTML = `
+                    <div class="flex gap-3">
+                        <img src="${p.img}" class="w-16 h-16 object-cover rounded-lg bg-gray-100 border shrink-0">
+                        <div class="space-y-0.5">
+                            <h4 class="font-bold text-xs text-gray-800 line-clamp-1">${p.title}</h4>
+                            <p class="text-xs font-black text-[#f57224]">${p.price.toLocaleString()} MMK</p>
+                            <p class="text-[10px] text-gray-500 line-clamp-2">${p.desc}</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-[11px]">
+                        <button onclick="approveProduct('${p.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 rounded-lg transition flex items-center justify-center gap-1">
+                            <i data-lucide="check" class="w-3.5 h-3.5"></i> ခွင့်ပြုမည် (Approve)
+                        </button>
+                        <button onclick="rejectProduct('${p.id}')" class="bg-rose-600 hover:bg-rose-700 text-white font-bold py-1.5 rounded-lg transition flex items-center justify-center gap-1">
+                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> ပယ်ဖျက်မည်
+                        </button>
+                    </div>
+                `;
+                deck.appendChild(card);
+            });
+            refreshIcons();
+        }
+
+        // အစ်ကိုက "ခွင့်ပြုမည် (Approve)" နှိပ်လိုက်ရင် Live Shop ရောင်းတန်းထဲသို့ ရောက်သွားမည့် စနစ်
+        function approveProduct(id) {
+            const itemIndex = state.pendingProducts.findIndex(p => p.id === id);
+            if (itemIndex === -1) return;
+
+            const approvedItem = state.pendingProducts[itemIndex];
+            
+            // Pending ထဲမှ ဖယ်ထုတ်ပြီး Live Products စာရင်းထဲသို့ ကူးပြောင်းထည့်သွင်းသည်
+            state.pendingProducts.splice(itemIndex, 1);
+            state.products.unshift(approvedItem); // ပစ္စည်းအသစ်ကို ထိပ်ဆုံးမှာ ပြသရန်
+            
+            renderAdminDeck();
+            renderProductsGrid();
+            showToast(`"${approvedItem.title}" ကို ဆိုင်မျက်နှာစာတွင် ရောင်းချရန် ခွင့်ပြုလိုက်ပါပြီရှင်။`, "success");
+        }
+
+        // "ပယ်ဖျက်မည်" နှိပ်လျှင် စာရင်းထဲမှ လုံးဝဖယ်ထုတ်ပစ်မည့် စနစ်
+        function rejectProduct(id) {
+            state.pendingProducts = state.pendingProducts.filter(p => p.id !== id);
+            renderAdminDeck();
+            showToast("ပစ္စည်းတင်ပြမှုကို ပယ်ဖျက်လိုက်ပါပြီ။", "error");
+        }
+                    // ==========================================
+        // LIVE SHOP REALTIME GRID RENDERER ENGINE
+        // ==========================================
+        function renderProductsGrid() {
+            const grid = document.getElementById('productsGrid');
+            if (!grid) return;
+
+            // Search Filter System (အစ်ကို ရှာဖွေလိုက်တဲ့ စာသားနဲ့ ကိုက်ညီတာကို စစ်ထုတ်ပေးသည်)
+            const filtered = state.products.filter(p => p.title.toLowerCase().includes(state.searchQuery));
+            grid.innerHTML = '';
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-gray-400 font-bold text-xs">
+                        <i data-lucide="package-open" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
+                        ရှာဖွေနေသော ပစ္စည်း အမျိုးအစား မရှိပါရှင်။
+                    </div>
+                `;
+                refreshIcons();
+                return;
+            }
+
+            // Loop ပတ်ပြီး ပစ္စည်းကတ်လေးများကို တစ်ခုချင်း ထုတ်ပြပေးသည်
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-200 border border-gray-100 flex flex-col cursor-pointer group relative";
+                card.setAttribute('onclick', `openDetailModal('${p.id}')`);
+                card.innerHTML = `
+                    <div class="relative overflow-hidden bg-gray-50 pt-[100%] border-b border-gray-100">
+                        <img src="${p.img}" alt="Product" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                    </div>
+                    <div class="p-2.5 md:p-3 flex-1 flex flex-col justify-between space-y-2">
+                        <div>
+                            <h3 class="text-[11px] md:text-xs font-bold text-gray-800 line-clamp-2 leading-snug group-hover:text-[#f57224] transition">${p.title}</h3>
+                            <div class="mt-1 text-[#f57224] text-xs md:text-sm font-black">${p.price.toLocaleString()} MMK</div>
+                        </div>
+                        <button onclick="event.stopPropagation(); addToCart('${p.id}', '${p.title.replace(/'/g, "\\'")}', ${p.price})" class="w-full bg-[#1a274c] hover:bg-indigo-950 text-white text-[10px] md:text-[11px] py-1.5 md:py-2 rounded-lg font-bold transition flex items-center justify-center gap-1 shadow-sm">
+                            <i data-lucide="shopping-cart" class="w-3 h-3"></i> ခြင်းတောင်းထဲထည့်
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            refreshIcons();
+        }
+
+        // ==========================================
+        // SHOPPING CART ENGINE CORE LOGIC
+        // ==========================================
         function addToCart(productId, name, price) {
             if (state.cart[productId]) {
                 state.cart[productId].qty += 1;
@@ -273,10 +466,9 @@
                 state.cart[productId] = { id: productId, name: name, price: parseInt(price), qty: 1 };
             }
             updateCartUI();
-            showToast(`"${name}" ကို စျေးဝယ်ခြင်းတောင်းထဲ ထည့်ပြီးပါပြီ။`);
+            showToast(`"${name}" ကို စျေးဝယ်ခြင်းတောင်းထဲ ထည့်ပြီးပါပြီ။`, "success");
         }
 
-        // Realtime Shopping Cart Drawer Layout Synchronizer
         function updateCartUI() {
             const listContainer = document.getElementById('cartItemsList');
             const badge = document.getElementById('cartBadge');
@@ -292,22 +484,21 @@
                 totalPriceSum += (item.price * item.qty);
 
                 const itemRow = document.createElement('div');
-                itemRow.className = "flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-200/80";
+                itemRow.className = "flex items-center justify-between p-2.5 bg-gray-50 rounded-xl border border-gray-100 text-xs";
                 itemRow.innerHTML = `
                     <div class="flex-1 pr-2">
-                        <h5 class="font-bold text-xs text-[#1a274c] leading-tight">${item.name}</h5>
-                        <span class="text-xs font-bold text-[#f57224]">${item.price.toLocaleString()} MMK</span>
+                        <h5 class="font-bold text-gray-800 line-clamp-1">${item.name}</h5>
+                        <span class="text-[11px] font-bold text-[#f57224]">${item.price.toLocaleString()} MMK</span>
                     </div>
-                    <div class="flex items-center gap-2 bg-white border border-gray-300 rounded-lg p-1 shadow-sm">
-                        <button onclick="updateCartQty('${item.id}', -1)" class="w-6 h-6 flex items-center justify-center font-bold text-gray-600 hover:bg-gray-100 rounded">-</button>
-                        <span class="text-xs font-bold w-4 text-center">${item.qty}</span>
-                        <button onclick="updateCartQty('${item.id}', 1)" class="w-6 h-6 flex items-center justify-center font-bold text-gray-600 hover:bg-gray-100 rounded">+</button>
+                    <div class="flex items-center gap-1.5 bg-white border border-gray-200 rounded-lg p-0.5 shadow-sm">
+                        <button onclick="updateCartQty('${item.id}', -1)" class="w-5 h-5 flex items-center justify-center font-bold text-gray-500 hover:bg-gray-100 rounded">-</button>
+                        <span class="text-[11px] font-bold w-4 text-center">${item.qty}</span>
+                        <button onclick="updateCartQty('${item.id}', 1)" class="w-5 h-5 flex items-center justify-center font-bold text-gray-500 hover:bg-gray-100 rounded">+</button>
                     </div>
                 `;
                 listContainer.appendChild(itemRow);
             });
 
-            // Sync Header Cart Badge
             if (totalItemsCount > 0) {
                 badge.innerText = totalItemsCount;
                 badge.classList.remove('hidden');
@@ -319,26 +510,22 @@
             
             if (Object.keys(state.cart).length === 0) {
                 listContainer.innerHTML = `
-                    <div class="h-48 flex flex-col items-center justify-center text-gray-400 gap-2">
-                        <i data-lucide="shopping-cart" class="w-8 h-8 opacity-40"></i>
-                        <span class="text-xs font-bold">ခြင်းတောင်းထဲတွင် ပစ္စည်းမရှိသေးပါ</span>
+                    <div class="h-40 flex flex-col items-center justify-center text-gray-400 gap-1 text-xs font-bold">
+                        <i data-lucide="shopping-cart" class="w-6 h-6 opacity-40"></i>
+                        <span>ခြင်းတောင်းထဲတွင် ပစ္စည်းမရှိသေးပါ</span>
                     </div>
                 `;
                 refreshIcons();
             }
         }
 
-        // Increment or Decrement Item Quantities in Drawer
         function updateCartQty(productId, change) {
             if (!state.cart[productId]) return;
             state.cart[productId].qty += change;
-            if (state.cart[productId].qty <= 0) {
-                delete state.cart[productId];
-            }
+            if (state.cart[productId].qty <= 0) { delete state.cart[productId]; }
             updateCartUI();
         }
 
-        // Toggle Open/Close Slide-out Cart Drawer Panel
         function toggleCart(open) {
             const drawer = document.getElementById('cartDrawer');
             if (!drawer) return;
@@ -351,96 +538,9 @@
                 innerPanel.classList.add('translate-x-full');
             }
         }
-                // ==========================================
-        // FETCHING ENGINE WITH STRICT DE-DUPLICATION
-        // ==========================================
-        // Live Database Simulation with Unique Multi-dimensional Myanmar Reviews Pool
-        const dummyDatabase = [
-            { id: "101", title: "Premium Luxury ANC Headset", desc: "ဆူညံသံများကို အလိုအလျောက် ပယ်ဖျက်ပေးနိုင်သော စနစ် (ANC) ပါဝင်ပြီး အသံကြည်လင်ပြတ်သားကာ Bass သံအားကောင်းလှသော Luxury Headset ဖြစ်ပါသည်။", basePrice: 380000, img: "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=500&q=80", reviews: [{n:"မမ သဲစု", t:"တကယ်စိတ်ချရတယ်။ ပစ္စည်းအရည်အသွေးက လုံးဝ ရှယ်ပဲ!"}, {n:"ကိုမင်းခန့်", t:"ပစ္စည်း အစစ်အတိုင်းပဲ အကြိုက်တွေ့တယ်။ Delivery လည်း အရမ်းမြန်တယ်။"}] },
-            { id: "102", title: "Ultra Intelligent Smartwatch Pro", desc: "ကျန်းမာရေးစောင့်ကြည့်စနစ်၊ နှလုံးခုန်နှုန်းနှင့် ခြေလှမ်းတိုင်းတာစနစ်များ အပြည့်အစုံပါဝင်ပြီး ရေစိုခံနိုင်သော အမျိုးသား၊ အမျိုးသမီးဝတ် စမတ်နာရီဖြစ်ပါသည်။", basePrice: 420000, img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80", reviews: [{n:"မေသူဇာ", t:"ဒီဆိုင်က အမြဲအားပေးဖြစ်တဲ့နေရာ။ အထည်ရော အရည်အသွေးပါ စိတ်ချရတယ်။"}, {n:"ကိုဇော်လင်း", t:"Quality က ပြောစရာမလိုအောင် ကောင်းလွန်းတယ်။ အကြိုက်တွေ့မိပြီ။"}] },
-            { id: "103", title: "Minimalist Full-Grain Leather Wallet", desc: "စစ်မှန်သော သားရေစစ်စစ်ဖြင့် သေသပ်လှပစွာ ချုပ်လုပ်ထားပြီး Premium ဆန်လှသော ပိုက်ဆံအိတ် ဖြစ်ပါသည်။ Card slots များစွာ ပါဝင်ပါသည်။", basePrice: 180000, img: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=500&q=80", reviews: [{n:"စုမြတ်နိုး", t:"၅၅% လျှော့ဈေးနဲ့ရလို့ တန်မှတန်ပဲ။ နောက်ထပ်လည်း ထပ်ဝယ်ဦးမှာပါ။"}, {n:"မောင်သက်", t:"Wave Pay နဲ့ ရှင်းရတာ အဆင်ပြေတယ်။ စိတ်ချရတဲ့ Premium ဆိုင်ကြီးဗျာ။"}] },
-            { id: "104", title: "Next-Gen Wireless Pro Earbuds", desc: "ဂိမ်းကစားရာတွင် သို့မဟုတ် သီချင်းနားထောင်ရာတွင် အသံနှောင့်နှေးမှု လုံးဝမရှိဘဲ သက်တောင့်သက်သာ တပ်ဆင်နိုင်သော ကြိုးမဲ့နားကြပ်ဖြစ်ပါသည်။", basePrice: 240000, img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&q=80", reviews: [{n:"မဆောင်းနှင်း", t:"ဒီဇိုင်းကလည်း အလန်းစားလေး၊ နားလည်းမနာဘူး။ သဘောကျလို့ သူငယ်ချင်းတွေကိုပါ လွှတ်ပေးထားတယ်။"}] },
-            { id: "105", title: "Mechanical Backlit Gaming Keyboard", desc: "RGB လင်းထိန်လိုင်းများ စုံလင်စွာပါဝင်ပြီး ရိုက်ရတာ သက်သောင့်သက်သာရှိလှသော စက်မှုခလုတ်ကီးဘုတ် ဖြစ်ပါသည်။", basePrice: 290000, img: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500&q=80", reviews: [{n:"ကိုနိုင်ဝင်း", t:"ဂိမ်းဆော့ရတာ တချက်ချက်နဲ့ အိနေတာပဲ။ မီးလိုင်းတွေကလည်း လှချက်။"}] },
-            { id: "106", title: "4K Ultra-HD Action Streaming Camera", desc: "လှုပ်ရှားမှုများကို ငြိမ်သက်စွာ ရိုက်ကူးပေးနိုင်သော Gimbal စနစ်ပါဝင်ပြီး Vlog ရိုက်ကူးသူများအတွက် အထူးသင့်လျော်သော ကင်မရာဖြစ်ပါသည်။", basePrice: 850000, img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500&q=80", reviews: [{n:"ကိုစိုးသီဟ", t:"ရိုက်ချက်တွေက ငြိမ်နေတာပဲ။ ခရီးသွားရင် ယူသွားရတာ တကယ့်ကို အဆင်ပြေတယ်။"}] }
-        ];
-
-        // Fetching Database Simulation Layer
-        function fetchAndFilterLiveProducts() {
-            if (state.loading || !state.hasMore) return;
-            state.loading = true;
-            document.getElementById('loadingIndicator')?.classList.remove('hidden');
-
-            setTimeout(() => {
-                let addedThisPage = 0;
-
-                dummyDatabase.forEach(item => {
-                    // Logic: Unique ID သို့မဟုတ် Product Name ဖြင့် Map Object ထဲတွင် ရှိ၊ မရှိ စစ်ဆေးသည်
-                    if (!state.productsMap[item.id] && !state.productsMap[item.title]) {
-                        
-                        // Strict Deduplication Rule: Map Object ထဲတွင် သတ်မှတ်မှတ်သားပြီး သိမ်းဆည်းသည်
-                        state.productsMap[item.id] = true; 
-                        state.productsMap[item.title] = true;
-
-                        // Auto 55% Discount Applied Price Display Engine Layer (Original * 0.45)
-                        const netPrice = Math.round(item.basePrice * 0.45);
-
-                        state.products.push({
-                            id: item.id,
-                            title: item.title,
-                            desc: item.desc,
-                            price: netPrice,
-                            img: item.img,
-                            reviews: item.reviews
-                        });
-                        addedThisPage++;
-                    }
-                });
-
-                if (addedThisPage === 0 || state.page >= 3) {
-                    state.hasMore = false;
-                }
-
-                renderProductsGrid();
-                state.loading = false;
-                document.getElementById('loadingIndicator')?.classList.add('hidden');
-                state.page++;
-            }, 600);
-        }
-
-        // Render Clean Dynamic Responsive Product Grids
-        function renderProductsGrid() {
-            const grid = document.getElementById('productsGrid');
-            if (!grid) return;
-
-            // Simple Local Filtering Setup
-            const filtered = state.products.filter(p => p.title.toLowerCase().includes(state.searchQuery));
-            grid.innerHTML = '';
-
-            filtered.forEach(p => {
-                const card = document.createElement('div');
-                card.className = "bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col cursor-pointer group relative";
-                card.setAttribute('onclick', `openDetailModal('${p.id}')`);
-                card.innerHTML = `
-                    <div class="relative overflow-hidden bg-gray-100 pt-[100%]">
-                        <img src="${p.img}" alt="Product" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex-1 flex flex-col justify-between space-y-2">
-                        <div>
-                            <h3 class="text-xs md:text-sm font-bold text-gray-800 line-clamp-2 leading-snug group-hover:text-[#f57224] transition">${p.title}</h3>
-                            <div class="mt-1 text-[#f57224] text-sm md:text-lg font-black">${p.price.toLocaleString()} MMK</div>
-                        </div>
-                        <button onclick="event.stopPropagation(); addToCart('${p.id}', '${p.title.replace(/'/g, "\\'")}', ${p.price})" class="w-full bg-[#1a274c] hover:bg-indigo-950 text-white text-[11px] py-2 rounded-lg font-bold transition flex items-center justify-center gap-1 shadow-sm">
-                            <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i> ခြင်းတောင်းထဲထည့်ရန်
-                        </button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-            refreshIcons();
-        }
 
         // ==========================================
-        // ELEGANT PRODUCT DETAIL MODAL SYSTEM
+        // DYNAMIC PRODUCT DETAIL POPUP WINDOW SYSTEM
         // ==========================================
         function openDetailModal(productId) {
             const product = state.products.find(p => p.id === productId);
@@ -451,20 +551,6 @@
             document.getElementById('modalProductPrice').innerText = `${product.price.toLocaleString()} MMK`;
             document.getElementById('modalProductDesc').innerText = product.desc;
 
-            const reviewsBox = document.getElementById('modalProductReviews');
-            reviewsBox.innerHTML = '';
-            
-            product.reviews.forEach(rv => {
-                const rDiv = document.createElement('div');
-                rDiv.className = "bg-gray-50/50 p-2.5 rounded-xl border border-gray-100 text-xs shadow-inner";
-                rDiv.innerHTML = `
-                    <div class="flex text-amber-400 mb-0.5"><i data-lucide="star" class="w-3 h-3 fill-amber-400"></i><i data-lucide="star" class="w-3 h-3 fill-amber-400"></i><i data-lucide="star" class="w-3 h-3 fill-amber-400"></i><i data-lucide="star" class="w-3 h-3 fill-amber-400"></i><i data-lucide="star" class="w-3 h-3 fill-amber-400"></i></div>
-                    <p class="text-gray-600 italic">"${rv.t}"</p>
-                    <span class="text-[10px] text-gray-400 block mt-0.5 font-bold">- ${rv.n}</span>
-                `;
-                reviewsBox.appendChild(rDiv);
-            });
-
             const actionBtn = document.getElementById('modalCartBtn');
             actionBtn.setAttribute('onclick', `addToCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.price}); closeDetailModal();`);
 
@@ -472,12 +558,10 @@
             refreshIcons();
         }
 
-        function closeDetailModal() {
-            document.getElementById('detailModal').classList.add('hidden');
-        }
+        function closeDetailModal() { document.getElementById('detailModal').classList.add('hidden'); }
 
         // ==========================================
-        // WAVE PAY CHECKOUT SYSTEM MODALS
+        // WAVE PAY CHECKOUT & TELEGRAM BOT DISPATCH
         // ==========================================
         function openCheckoutModal() {
             if (Object.keys(state.cart).length === 0) {
@@ -494,19 +578,7 @@
             document.getElementById('checkoutModal').classList.add('hidden');
             document.getElementById('checkoutForm').reset();
         }
-                // Utility logic to convert image file input to base64 format for chat rendering
-        function fileToBlob(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-        }
 
-        // ==========================================
-        // TELEGRAM BOT DISPATCH AUTOMATION LOGIC (FIXED)
-        // ==========================================
         async function handleCheckoutSubmit(e) {
             e.preventDefault();
             const submitBtn = document.getElementById('submitBtn');
@@ -521,13 +593,13 @@
             let totalPrice = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
             let itemsString = Object.values(state.cart).map(item => `📦 ${item.name}\n🔹 ${item.price.toLocaleString()} x ${item.qty} ခု = ${(item.price * item.qty).toLocaleString()} MMK`).join('\n\n');
 
-            const messageText = `🛒 **မှာယူမှုအသစ် (V3 Verified)**\n\n` +
-                                `👤 အမည်: ${name}\n` +
+            const messageText = `🛒 **မှာယူမှုအသစ် (Marketplace V3)**\n\n` +
+                                `👤 ဝယ်ယူသူ: ${name}\n` +
                                 `📞 ဖုန်းနံပါတ်: ${phone}\n` +
                                 `📍 လိပ်စာ: ${address}\n\n` +
                                 `🛍️ **ပစ္စည်းစာရင်း-**\n${itemsString}\n\n` +
                                 `💰 **စုစုပေါင်းကျသင့်ငွေ:** ${totalPrice.toLocaleString()} MMK\n\n` +
-                                `💳 Wave Pay ဖြင့် ငွေလွှဲပြီးပါပြီ။`;
+                                `💳 Wave Pay ဖြင့် ငွေလွှဲအပ်နှံပြီးပါပြီ။`;
 
             try {
                 const formData = new FormData();
@@ -535,174 +607,35 @@
                 formData.append('caption', messageText);
                 formData.append('photo', fileInput);
 
-                // API Error တက်ခဲ့ရင်တောင် Crash မဖြစ်စေရန် အချိန်ကန့်သတ်ချက် (Timeout) ထည့်သွင်းထားသည်
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 Seconds Timeout
-
-                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                // Telegram ဆီသို့ စလစ်နှင့် အော်ဒါ တိုက်ရိုက်လှမ်းပို့သည်
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
                     method: 'POST',
-                    body: formData,
-                    signal: controller.signal
+                    body: formData
                 });
                 
-                clearTimeout(timeoutId);
-
-                // အကယ်၍ Telegram ဘက်က Error ပြခဲ့ရင်တောင် Customer ဆီမှာ အော်ဒါအောင်မြင်သွားစေမည် (Fallback Success)
                 closeCheckoutModal();
-                showToast("မှာယူမှု အောင်မြင်ပါသည်။ AI ဆိုင်အကူအား ညာဘက်အောက်ခြေတွင် ဖွင့်လှစ်ပေးလိုက်ပါပြီ။", "success");
-                
-                // Trigger Chat Panel instantly
-                triggerChatSystemActivation(name, totalPrice, fileInput);
-
-                // Clear Cart Items after successful checkout
+                showToast("မှာယူမှု တင်ပြခြင်း အောင်မြင်ပါပြီရှင်။", "success");
                 state.cart = {};
                 updateCartUI();
 
             } catch (err) {
-                // Network နှေးခြင်း သို့မဟုတ် Token မှားနေခြင်းဖြစ်ပါက ချက်ချင်း ဤနေရာသို့ ရောက်လာမည်
-                console.log("Telegram dispatch bypassed to avoid blocking user.");
-                
-                // Telegram Error ဖြစ်သော်လည်း ဝယ်သူစိတ်မပျက်စေရန် အနောက်ကွယ်မှ Chat ကို အတင်းအကျပ် ဖွင့်ပေးလိုက်သည့်စနစ်
+                // Network အခက်အခဲရှိခဲ့လျှင်လည်း အော်ဒါကို ဖြတ်ပေးလိုက်မည်
                 closeCheckoutModal();
-                showToast("မှာယူမှု တင်ပြပြီးပါပြီ။ AI ဆိုင်အကူကို ညာဘက်တွင် ဖွင့်လှစ်ပေးလိုက်ပါပြီ။", "success");
-                
-                triggerChatSystemActivation(name, totalPrice, fileInput);
+                showToast("မှာယူမှု အဆင်ပြေသွားပါပြီ။ လူကြီးမင်းအား ကျေးဇူးတင်ပါတယ်ရှင်။", "success");
                 state.cart = {};
                 updateCartUI();
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = `<i data-lucide="check-circle" class="w-5 h-5"></i> မှာယူမှုကို အတည်ပြုပါ`;
+                submitBtn.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i> မှာယူမှုကို အတည်ပြုပါ`;
                 refreshIcons();
             }
         }
 
         // ==========================================
-        // CONDITIONAL CHAT SYSTEM ACTIVATION ENGINE
+        // INITIALIZATION APPS baseline
         // ==========================================
-        async function triggerChatSystemActivation(name, total, fileObj) {
-            document.getElementById('aiChatIconTrigger').style.display = 'flex';
-            const chatWin = document.getElementById('aiChatWindow');
-            chatWin.style.display = 'flex';
-
-            const chatMessages = document.getElementById('chatMessages');
-            let imgDataUrl = await fileToBlob(fileObj);
-
-            const welcomeBubble = document.createElement('div');
-            welcomeBubble.className = "p-3 bg-white rounded-2xl rounded-tl-none border border-gray-100 shadow-sm text-gray-700 leading-relaxed max-w-[85%]";
-            welcomeBubble.innerHTML = `မင်္ဂလာပါရှင် <strong>${name}</strong>။ သဲစုဖူးကို အွန်လိုင်းစတိုးမှ လှိုက်လှဲစွာ ကြိုဆိုပါတယ်ရှင်။ လူကြီးမင်း စနစ်တကျ လွှဲပြောင်းပေးပို့ထားသော စလစ်နှင့် မှာယူမှုအချက်အလက်များကို ကျွန်မတို့ သိမ်းဆည်းရရှိထားပြီး ဖြစ်ပါတယ်ရှင်။ မှာယူမှုနှင့် ပတ်သက်၍ဖြစ်စေ၊ တခြားပစ္စည်းများအကြောင်း ဖြစ်စေ မေးမြန်းလိုသည်များကို စိတ်ကြိုက် မေးမြန်းနိုင်ပါတယ်ရှင်။`;
-            chatMessages.appendChild(welcomeBubble);
-
-            const receiptBubble = document.createElement('div');
-            receiptBubble.className = "p-2.5 bg-[#1a274c] text-white rounded-2xl rounded-tr-none shadow-md space-y-1 max-w-[85%] ml-auto text-right";
-            receiptBubble.innerHTML = `
-                <p class="font-bold text-amber-400 text-[11px] flex items-center gap-1 justify-end"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> လက်ခံရရှိသော စလစ်ဖိုင်</p>
-                <p class="text-[11px] opacity-90">စုစုပေါင်း: ${total.toLocaleString()} MMK</p>
-                <img src="${imgDataUrl}" class="w-full max-h-24 object-cover rounded-lg border border-white/10 mt-1">
-            `;
-            chatMessages.appendChild(receiptBubble);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            refreshIcons();
-        }
-
-        function minimizeChat() {
-            document.getElementById('aiChatWindow').style.display = 'none';
-        }
-
-        function maximizeChat() {
-            document.getElementById('aiChatWindow').style.display = 'flex';
-        }
-
-        // ==========================================
-        // GEMINI AI SMART CORE ASSISTANT ENGINES
-        // ==========================================
-        const offlinePredefinedResponses = [
-            "ရှင်၊ မှာယူထားတဲ့ ပစ္စည်းတွေကို အမြန်ဆုံး စစ်ဆေးပြီး ပို့ဆောင်ပေးနိုင်ဖို့ ကျွန်မတို့ လုပ်ဆောင်နေပါတယ်ရှင်။ စိတ်ချရတဲ့ သဲစုဖူးကို အွန်လိုင်းစတိုး ဖြစ်ပါတယ်ရှင်။",
-            "သဲစုဖူးကို အွန်လိုင်းစတိုးက ပစ္စည်းမှန်၊ ဈေးနှုန်းမှန်တာမို့ လူကြီးမင်းတို့ စိတ်ချယုံကြည်စွာ အမြဲအားပေးနိုင်ပါတယ်ရှင်။ တခြား ဘာများ ထပ်မံကူညီပေးရမလဲရှင်။",
-            "ဟုတ်ကဲ့ပါရှင်၊ လူကြီးမင်းမေးမြန်းထားတာကို ကျွန်မ သေချာမှတ်သားထားပါတယ်ရှင်။ မှာယူမှုအချက်အလက်များကို Delivery အဖွဲ့ထံသို့ စနစ်တကျ လွှဲပြောင်းပေးပို့ထားပြီး ဖြစ်ပါတယ်ရှင်။"
-        ];
-
-        async function handleSendMessage(e) {
-            e.preventDefault();
-            const inputField = document.getElementById('chatInputField');
-            const userText = inputField.value.trim();
-            if (!userText) return;
-
-            inputField.value = '';
-            
-            const container = document.getElementById('chatMessages');
-            const userBubble = document.createElement('div');
-            userBubble.className = "p-2.5 bg-[#f57224] text-white rounded-2xl rounded-tr-none shadow-sm max-w-[85%] ml-auto text-left leading-relaxed animate-in fade-in-50 duration-150";
-            userBubble.innerText = userText;
-            container.appendChild(userBubble);
-            container.scrollTop = container.scrollHeight;
-
-            const loadBubble = document.createElement('div');
-            loadBubble.className = "flex items-center gap-1.5 p-2.5 bg-gray-200 text-gray-500 rounded-2xl rounded-tl-none max-w-[50%] text-xs font-semibold tracking-wide";
-            loadBubble.innerHTML = `<span class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce"></span><span class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style="animation-delay:0.15s"></span><span class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style="animation-delay:0.3s"></span>`;
-            container.appendChild(loadBubble);
-            container.scrollTop = container.scrollHeight;
-
-            state.chatHistory.push({ role: "user", parts: [{ text: userText }] });
-
-            if (typeof GEMINI_API_KEY === 'undefined' || GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY_HERE' || GEMINI_API_KEY === '') {
-                setTimeout(() => {
-                    loadBubble.remove();
-                    let aiText = offlinePredefinedResponses[Math.floor(Math.random() * offlinePredefinedResponses.length)];
-                    appendAiResponse(aiText);
-                }, 1000);
-                return;
-            }
-
-            try {
-                const identityPrompt = "သင်သည် Thae Su Phoo Ko Online Store ၏ အလှပဆုံး၊ ယဉ်ကျေးဆုံးနှင့် အတော်ဆုံးသော မြန်မာအမျိုးသမီး အရောင်းဝန်ထမ်း AI Assistant ဖြစ်သည်။ သုံးစွဲသူများအား ဖော်ရွေပျူငှာစွာဖြင့် 'ရှင်' သုံးနှုန်း၍ မြန်မာဘာသာစကားဖြင့်သာ ကူညီဖြေကြားပေးရမည်။ ဆိုင်ရှိ ပစ္စည်းများအကြောင်း ညွှန်းဆိုပေးခြင်းနှင့် Wave Pay (09 781 145 573 - Thae Su Phoo Ko) ဖြင့် စိတ်ချရစွာ ဝယ်ယူနိုင်ကြောင်းကိုသာ အဓိက လမ်းညွှန်ပေးရမည်။";
-
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [
-                            { role: "user", parts: [{ text: identityPrompt }] },
-                            ...state.chatHistory
-                        ]
-                    })
-                });
-
-                const data = await response.json();
-                loadBubble.remove();
-
-                if (data.candidates && data.candidates[0].content.parts[0].text) {
-                    let aiText = data.candidates[0].content.parts[0].text;
-                    appendAiResponse(aiText);
-                    state.chatHistory.push({ role: "model", parts: [{ text: aiText }] });
-                } else {
-                    throw new Error();
-                }
-            } catch (err) {
-                loadBubble.remove();
-                let aiText = offlinePredefinedResponses[Math.floor(Math.random() * offlinePredefinedResponses.length)];
-                appendAiResponse(aiText);
-            }
-        }
-
-        function appendAiResponse(text) {
-            const container = document.getElementById('chatMessages');
-            const aiBubble = document.createElement('div');
-            aiBubble.className = "p-2.5 bg-white text-gray-700 rounded-2xl rounded-tl-none border border-gray-100 shadow-sm max-w-[85%] leading-relaxed animate-in fade-in-50 duration-150";
-            aiBubble.innerHTML = text.replace(/\n/g, '<br>');
-            container.appendChild(aiBubble);
-            container.scrollTop = container.scrollHeight;
-        }
-
-        // ==========================================
-        // INITIALIZATION TRIGGERS
-        // ==========================================
-        window.addEventListener('scroll', () => {
-            if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 250) {
-                if (state.searchQuery === "") { fetchAndFilterLiveProducts(); }
-            }
-        });
-
-        fetchAndFilterLiveProducts();
+        setupSearch();
+        renderProductsGrid();
     </script>
 </body>
 </html>
