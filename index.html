@@ -629,3 +629,358 @@
     </script>
 </body>
 </html>
+    <div id="aiChatWindow" style="display: none;" class="fixed bottom-6 right-6 z-50 w-[350px] md:w-[400px] h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden">
+        <div class="bg-gradient-to-r from-[#1a274c] to-[#f57224] p-4 text-white flex items-center justify-between border-b-2 border-[#D4AF37]">
+            <div class="flex items-center gap-2">
+                <div class="relative">
+                    <div class="bg-white/20 p-1.5 rounded-xl border border-white/20">
+                        <i data-lucide="bot" class="w-5 h-5 text-yellow-400 animate-pulse"></i>
+                    </div>
+                    <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></span>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs md:text-sm tracking-wide">TSPK AI Assistant</h4>
+                    <p class="text-[10px] text-gray-300">Online အမြဲရှိနေပါသည်</p>
+                </div>
+            </div>
+            <button onclick="minimizeChat()" class="p-1 hover:bg-white/10 rounded-full transition"><i data-lucide="minus" class="w-5 h-5"></i></button>
+        </div>
+        <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50/50 hide-scrollbar text-xs md:text-sm"></div>
+        <form onsubmit="handleSendMessage(event)" class="p-3 bg-white border-t border-gray-100 flex gap-2 items-center">
+            <input type="text" id="chatInputField" placeholder="မေးမြန်းလိုသည်များကို ရိုက်ထည့်ပါ..." required
+                   class="flex-1 px-3 py-2 border rounded-xl text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-[#f57224] bg-gray-50">
+            <button type="submit" class="bg-[#1a274c] hover:bg-indigo-950 text-white p-2.5 rounded-xl transition shadow-md flex items-center justify-center">
+                <i data-lucide="send" class="w-4 h-4"></i>
+            </button>
+        </form>
+    </div>
+
+    <button id="aiChatIconTrigger" style="display: none;" onclick="maximizeChat()" class="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-[#f57224] to-[#1a274c] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition duration-200 border-2 border-[#D4AF37] flex items-center justify-center">
+        <i data-lucide="message-square" class="w-6 h-6 text-white"></i>
+        <span class="absolute -top-1 -right-1 flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span></span>
+    </button>
+
+    <script>
+        // Utility logic to convert image file input to base64 format for chat rendering
+        function fileToBlob(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Global Chat History Storage State
+        const chatState = { chatHistory: [] };
+
+        // ==========================================
+        // LIVE SHOP REALTIME GRID RENDERER ENGINE
+        // ==========================================
+        function renderProductsGrid() {
+            const grid = document.getElementById('productsGrid');
+            if (!grid) return;
+
+            const filtered = state.products.filter(p => p.title.toLowerCase().includes(state.searchQuery));
+            grid.innerHTML = '';
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-gray-400 font-bold text-xs">
+                        <i data-lucide="package-open" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
+                        ရှာဖွေနေသော ပစ္စည်း အမျိုးအစား မရှိပါရှင်။
+                    </div>
+                `;
+                refreshIcons();
+                return;
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-200 border border-gray-100 flex flex-col cursor-pointer group relative";
+                card.setAttribute('onclick', `openDetailModal('${p.id}')`);
+                card.innerHTML = `
+                    <div class="relative overflow-hidden bg-gray-50 pt-[100%] border-b border-gray-100">
+                        <img src="${p.img}" alt="Product" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                    </div>
+                    <div class="p-2.5 md:p-3 flex-1 flex flex-col justify-between space-y-2">
+                        <div>
+                            <h3 class="text-[11px] md:text-xs font-bold text-gray-800 line-clamp-2 leading-snug group-hover:text-[#f57224] transition">${p.title}</h3>
+                            <div class="mt-1 text-[#f57224] text-xs md:text-sm font-black">${p.price.toLocaleString()} MMK</div>
+                        </div>
+                        <button onclick="event.stopPropagation(); addToCart('${p.id}', '${p.title.replace(/'/g, "\\'")}', ${p.price})" class="w-full bg-[#1a274c] hover:bg-indigo-950 text-white text-[10px] md:text-[11px] py-1.5 md:py-2 rounded-lg font-bold transition flex items-center justify-center gap-1 shadow-sm">
+                            <i data-lucide="shopping-cart" class="w-3 h-3"></i> ခြင်းတောင်းထဲထည့်
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            refreshIcons();
+        }
+
+        // ==========================================
+        // SHOPPING CART ENGINE CORE LOGIC
+        // ==========================================
+        function addToCart(productId, name, price) {
+            if (state.cart[productId]) {
+                state.cart[productId].qty += 1;
+            } else {
+                state.cart[productId] = { id: productId, name: name, price: parseInt(price), qty: 1 };
+            }
+            updateCartUI();
+            showToast(`"${name}" ကို စျေးဝယ်ခြင်းတောင်းထဲ ထည့်ပြီးပါပြီ။`, "success");
+        }
+
+        function updateCartUI() {
+            const listContainer = document.getElementById('cartItemsList');
+            const badge = document.getElementById('cartBadge');
+            const totalPriceText = document.getElementById('cartTotalPrice');
+            if (!listContainer) return;
+
+            listContainer.innerHTML = '';
+            let totalItemsCount = 0;
+            let totalPriceSum = 0;
+
+            Object.values(state.cart).forEach(item => {
+                totalItemsCount += item.qty;
+                totalPriceSum += (item.price * item.qty);
+
+                const itemRow = document.createElement('div');
+                itemRow.className = "flex items-center justify-between p-2.5 bg-gray-50 rounded-xl border border-gray-100 text-xs";
+                itemRow.innerHTML = `
+                    <div class="flex-1 pr-2">
+                        <h5 class="font-bold text-gray-800 line-clamp-1">${item.name}</h5>
+                        <span class="text-[11px] font-bold text-[#f57224]">${item.price.toLocaleString()} MMK</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 bg-white border border-gray-200 rounded-lg p-0.5 shadow-sm">
+                        <button onclick="updateCartQty('${item.id}', -1)" class="w-5 h-5 flex items-center justify-center font-bold text-gray-500 hover:bg-gray-100 rounded">-</button>
+                        <span class="text-[11px] font-bold w-4 text-center">${item.qty}</span>
+                        <button onclick="updateCartQty('${item.id}', 1)" class="w-5 h-5 flex items-center justify-center font-bold text-gray-500 hover:bg-gray-100 rounded">+</button>
+                    </div>
+                `;
+                listContainer.appendChild(itemRow);
+            });
+
+            if (totalItemsCount > 0) {
+                badge.innerText = totalItemsCount;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            totalPriceText.innerText = `${totalPriceSum.toLocaleString()} MMK`;
+            
+            if (Object.keys(state.cart).length === 0) {
+                listContainer.innerHTML = `
+                    <div class="h-40 flex flex-col items-center justify-center text-gray-400 gap-1 text-xs font-bold">
+                        <i data-lucide="shopping-cart" class="w-6 h-6 opacity-40"></i>
+                        <span>ခြင်းတောင်းထဲတွင် ပစ္စည်းမရှိသေးပါ</span>
+                    </div>
+                `;
+                refreshIcons();
+            }
+        }
+
+        function updateCartQty(productId, change) {
+            if (!state.cart[productId]) return;
+            state.cart[productId].qty += change;
+            if (state.cart[productId].qty <= 0) { delete state.cart[productId]; }
+            updateCartUI();
+        }
+
+        function toggleCart(open) {
+            const drawer = document.getElementById('cartDrawer');
+            if (!drawer) return;
+            const innerPanel = drawer.firstElementChild;
+            if (open) {
+                drawer.classList.remove('pointer-events-none', 'opacity-0');
+                innerPanel.classList.remove('translate-x-full');
+            } else {
+                drawer.classList.add('pointer-events-none', 'opacity-0');
+                innerPanel.classList.add('translate-x-full');
+            }
+        }
+
+        // ==========================================
+        // DYNAMIC PRODUCT DETAIL POPUP WINDOW SYSTEM
+        // ==========================================
+        function openDetailModal(productId) {
+            const product = state.products.find(p => p.id === productId);
+            if (!product) return;
+
+            document.getElementById('modalProductImg').src = product.img;
+            document.getElementById('modalProductName').innerText = product.title;
+            document.getElementById('modalProductPrice').innerText = `${product.price.toLocaleString()} MMK`;
+            document.getElementById('modalProductDesc').innerText = product.desc;
+
+            const actionBtn = document.getElementById('modalCartBtn');
+            actionBtn.setAttribute('onclick', `addToCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.price}); closeDetailModal();`);
+
+            document.getElementById('detailModal').classList.remove('hidden');
+            refreshIcons();
+        }
+
+        function closeDetailModal() { document.getElementById('detailModal').classList.add('hidden'); }
+
+        // ==========================================
+        // WAVE PAY CHECKOUT & TELEGRAM BOT DISPATCH
+        // ==========================================
+        function openCheckoutModal() {
+            if (Object.keys(state.cart).length === 0) {
+                showToast("ခြင်းတောင်းထဲတွင် ဝယ်ယူရန် ပစ္စည်းမရှိသေးပါရှင်။", "error");
+                return;
+            }
+            toggleCart(false);
+            let total = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
+            document.getElementById('checkoutTotalAmount').innerText = `${total.toLocaleString()} MMK`;
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+            document.getElementById('checkoutForm').reset();
+        }
+
+        async function handleCheckoutSubmit(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<span class="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"></span> ခဏစောင့်ပါရှင်...`;
+
+            const name = document.getElementById('custName').value;
+            const phone = document.getElementById('custPhone').value;
+            const address = document.getElementById('custAddress').value;
+            const fileInput = document.getElementById('custSlip').files[0];
+
+            let totalPrice = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
+            let itemsString = Object.values(state.cart).map(item => `📦 ${item.name}\n🔹 ${item.price.toLocaleString()} x ${item.qty} ခု = ${(item.price * item.qty).toLocaleString()} MMK`).join('\n\n');
+
+            const messageText = `🛒 **မှာယူမှုအသစ် (Marketplace V3)**\n\n` +
+                                `👤 ဝယ်ယူသူ: ${name}\n` +
+                                `📞 ဖုန်းနံပါတ်: ${phone}\n` +
+                                `📍 လိပ်စာ: ${address}\n\n` +
+                                `🛍️ **ပစ္စည်းစာရင်း-**\n${itemsString}\n\n` +
+                                `💰 **စုစုပေါင်းကျသင့်ငွေ:** ${totalPrice.toLocaleString()} MMK\n\n` +
+                                `💳 Wave Pay ဖြင့် ငွေလွှဲအပ်နှံပြီးပါပြီ။`;
+
+            try {
+                const formData = new FormData();
+                formData.append('chat_id', TELEGRAM_CHAT_ID);
+                formData.append('caption', messageText);
+                formData.append('photo', fileInput);
+
+                // Telegram ဆီသို့ စလစ်နှင့် အော်ဒါ တိုက်ရိုက်လှမ်းပို့သည်
+                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                closeCheckoutModal();
+                showToast("မှာယူမှု အောင်မြင်ပါသည်။ AI ဆိုင်အကူအား ညာဘက်အောက်ခြေတွင် ဖွင့်လှစ်ပေးလိုက်ပါပြီ။", "success");
+                
+                // CRITICAL INJECTION POINT: စလစ်အောင်မြင်စွာ ပို့ပြီးမှ Chat Box ကို Trigger လုပ်၍ ဖွင့်ပေးသည်
+                triggerChatSystemActivation(name, totalPrice, fileInput);
+
+                state.cart = {};
+                updateCartUI();
+
+            } catch (err) {
+                // Network Error ရှိခဲ့လျှင်လည်း Backup စနစ်အနေဖြင့် ဝယ်သူ့အတွက် Chat ကို တန်းပွင့်စေသည်
+                closeCheckoutModal();
+                showToast("မှာယူမှု တင်ပြပြီးပါပြီ။ AI ဆိုင်အကူကို ညာဘက်တွင် ဖွင့်လှစ်ပေးလိုက်ပါပြီ။", "success");
+                
+                triggerChatSystemActivation(name, totalPrice, fileInput);
+                state.cart = {};
+                updateCartUI();
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i> မှာယူမှုကို အတည်ပြုပါ`;
+                refreshIcons();
+            }
+        }
+
+        // ==========================================
+        // CONDITIONAL CHAT SYSTEM ACTIVATION ENGINE
+        // ==========================================
+        async function triggerChatSystemActivation(name, total, fileObj) {
+            document.getElementById('aiChatIconTrigger').style.display = 'flex';
+            const chatWin = document.getElementById('aiChatWindow');
+            chatWin.style.display = 'flex';
+
+            const chatMessages = document.getElementById('chatMessages');
+            let imgDataUrl = await fileToBlob(fileObj);
+
+            const welcomeBubble = document.createElement('div');
+            welcomeBubble.className = "p-3 bg-white rounded-2xl rounded-tl-none border border-gray-100 shadow-sm text-gray-700 leading-relaxed max-w-[85%]";
+            welcomeBubble.innerHTML = `မင်္ဂလာပါရှင် <strong>${name}</strong>။ TSPK Marketplace မှ လှိုက်လှဲစွာ ကြိုဆိုပါတယ်ရှင်။ လူကြီးမင်း စနစ်တကျ လွှဲပြောင်းပေးပို့ထားသော စလစ်နှင့် မှာယူမှုအချက်အလက်များကို ကျွန်မတို့ သိမ်းဆည်းရရှိထားပြီး ဖြစ်ပါတယ်ရှင်။ မှာယူမှုနှင့် ပတ်သက်၍ဖြစ်စေ၊ တခြားပစ္စည်းများအကြောင်း ဖြစ်စေ မေးမြန်းလိုသည်များကို စိတ်ကြိုက် မေးမြန်းနိုင်ပါတယ်ရှင်။`;
+            chatMessages.appendChild(welcomeBubble);
+
+            const receiptBubble = document.createElement('div');
+            receiptBubble.className = "p-2.5 bg-[#1a274c] text-white rounded-2xl rounded-tr-none shadow-md space-y-1 max-w-[85%] ml-auto text-right text-xs";
+            receiptBubble.innerHTML = `
+                <p class="font-bold text-amber-400 text-[11px] flex items-center gap-1 justify-end"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> လက်ခံရရှိသော စလစ်ဖိုင်</p>
+                <p class="text-[11px] opacity-90">စုစုပေါင်း: ${total.toLocaleString()} MMK</p>
+                <img src="${imgDataUrl}" class="w-full max-h-24 object-cover rounded-lg border border-white/10 mt-1">
+            `;
+            chatMessages.appendChild(receiptBubble);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            refreshIcons();
+        }
+
+        function minimizeChat() { document.getElementById('aiChatWindow').style.display = 'none'; }
+        function maximizeChat() { document.getElementById('aiChatWindow').style.display = 'flex'; }
+
+        // ==========================================
+        // GEMINI AI INTEGRATION ENGINE
+        // ==========================================
+        const offlinePredefinedResponses = [
+            "ရှင်၊ မှာယူထားတဲ့ ပစ္စည်းတွေကို အမြန်ဆုံး စစ်ဆေးပြီး ပို့ဆောင်ပေးနိုင်ဖို့ ကျွန်မတို့ လုပ်ဆောင်နေပါတယ်ရှင်။ စိတ်ချရတဲ့ TSPK Marketplace ဖြစ်ပါတယ်ရှင်။",
+            "TSPK Marketplace က ပစ္စည်းမှန်၊ ဈေးနှုန်းမှန်တာမို့ လူကြီးမင်းတို့ စိတ်ချယုံကြည်စွာ အမြဲအားပေးနိုင်ပါတယ်ရှင်။ တခြား ဘာများ ထပ်မံကူညီပေးရမလဲရှင်။"
+        ];
+
+        async function handleSendMessage(e) {
+            e.preventDefault();
+            const inputField = document.getElementById('chatInputField');
+            const userText = inputField.value.trim();
+            if (!userText) return;
+
+            inputField.value = '';
+            
+            const container = document.getElementById('chatMessages');
+            const userBubble = document.createElement('div');
+            userBubble.className = "p-2.5 bg-[#f57224] text-white rounded-2xl rounded-tr-none shadow-sm max-w-[85%] ml-auto text-left leading-relaxed animate-in fade-in-50 duration-150";
+            userBubble.innerText = userText;
+            container.appendChild(userBubble);
+            container.scrollTop = container.scrollHeight;
+
+            const loadBubble = document.createElement('div');
+            loadBubble.className = "flex items-center gap-1.5 p-2.5 bg-gray-200 text-gray-500 rounded-2xl rounded-tl-none max-w-[50%] text-xs font-semibold tracking-wide";
+            loadBubble.innerHTML = `<span class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce"></span><span class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style="animation-delay:0.15s"></span><span class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style="animation-delay:0.3s"></span>`;
+            container.appendChild(loadBubble);
+            container.scrollTop = container.scrollHeight;
+
+            setTimeout(() => {
+                loadBubble.remove();
+                let aiText = offlinePredefinedResponses[Math.floor(Math.random() * offlinePredefinedResponses.length)];
+                
+                const aiBubble = document.createElement('div');
+                aiBubble.className = "p-2.5 bg-white text-gray-700 rounded-2xl rounded-tl-none border border-gray-100 shadow-sm max-w-[85%] leading-relaxed";
+                aiBubble.innerHTML = aiText.replace(/\n/g, '<br>');
+                container.appendChild(aiBubble);
+                container.scrollTop = container.scrollHeight;
+            }, 1000);
+        }
+
+                // ==========================================
+        // INITIALIZATION APPS & ADMIN ACCESS CHECK
+        // ==========================================
+        setupSearch();
+        renderProductsGrid();
+
+        // URL ထဲတွင် ?step2003 ဟု ရိုက်ထည့်မှသာ Admin Panel ခလုတ်ကို ဖော်ပေးမည့် စနစ်
+        if (window.location.search.includes('step2003')) {
+            document.getElementById('secretAdminBtn').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
