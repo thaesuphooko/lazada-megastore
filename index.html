@@ -175,11 +175,13 @@
                     </button>
                 </div>
 
-                <div id="checkoutStep3" class="hidden space-y-4">
-                    <div class="bg-rose-50 border border-rose-200 p-3 rounded-xl flex items-center justify-between text-rose-800 font-bold">
-                        <span class="flex items-center gap-1"><i data-lucide="timer" class="w-4 h-4 animate-spin"></i> ငွေလွှဲရန် ကျန်ရှိချိန်-</span>
-                        <span id="countdownDisplay" class="text-sm font-black bg-rose-600 text-white px-2.5 py-1 rounded-lg tracking-wider">60:00</span>
-                    </div>
+                <!-- STEP 3: COUNTDOWN TIMER & SLIP UPLOAD (CAMERA & GALLERY SEPARATION) -->
+<div id="checkoutStep3" class="hidden space-y-4">
+    <div class="bg-rose-50 border border-rose-200 p-3 rounded-xl flex items-center justify-between text-rose-800 font-bold">
+        <span class="flex items-center gap-1 text-[11px]"><i data-lucide="timer" class="w-4 h-4 animate-spin text-rose-600"></i> ငွေလွှဲရန် ကျန်ရှိချိန်-</span>
+        <!-- နာရီ၊ မိနစ်၊ စကန့်၊ မီလီစကန့် ပုံစံသစ် -->
+        <span id="countdownDisplay" class="text-sm font-black bg-rose-600 text-white px-2.5 py-1 rounded-lg tracking-wider font-mono">01:00:00:00</span>
+    </div>
 
                     <div class="bg-blue-50 border-l-4 border-blue-600 p-3.5 rounded-r-xl">
                         <p class="text-[11px] text-blue-800 font-bold mb-1">အောက်ပါ Wave Pay အကောင့်သို့ ငွေလွှဲပေးပါရန်-</p>
@@ -461,27 +463,51 @@
             startOneHourCountdown();
         }
 
-        function startOneHourCountdown() {
-            if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
-            let timeRemaining = 3600; 
-            const display = document.getElementById('countdownDisplay');
-            checkoutTimerInterval = setInterval(() => {
-                let minutes = Math.floor(timeRemaining / 60);
-                let seconds = timeRemaining % 60;
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-                if (display) display.innerText = `${minutes}:${seconds}`;
-                if (timeRemaining === 60) { showToast("မှာယူမှုပြီးဆုံးရန် ၁ မိနစ်သာ ကျန်ပါတော့သည်။", "error"); }
-                if (timeRemaining <= 0) {
-                    clearInterval(checkoutTimerInterval);
-                    closeCheckoutModal();
-                    alert("ငွေလွှဲရန် အချိန်ပြည့်သွားသဖြင့် မှာယူမှုကို ပယ်ဖျက်လိုက်ပါပြီ။");
-                }
-                timeRemaining--;
-            }, 1000);
+// ========================================================
+// HIGH-SPEED MILLISECOND TIMER ENGINE (နာရီ:မိနစ်:စကန့်:မီလီစကန့်)
+// ========================================================
+function startOneHourCountdown() {
+    if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
+    
+    // စုစုပေါင်း အချိန် ၁ နာရီ (မီလီစကန့်ဖြင့် = ၆၀ မိနစ် x ၆၀ စကန့် x ၁၀၀၀ မီလီစကန့်)
+    let totalMilliseconds = 60 * 60 * 1000; 
+    const display = document.getElementById('countdownDisplay');
+    
+    const startTime = Date.now();
+    const endTime = startTime + totalMilliseconds;
+
+    // တစ်စက္ကန့်ကို အကြိမ် ၁၀၀ နှုန်း (10ms တိုင်း) ပုံမှန် Update လုပ်ပေးမည့် စနစ်
+    checkoutTimerInterval = setInterval(() => {
+        const timeLeft = endTime - Date.now();
+
+        if (timeLeft <= 0) {
+            clearInterval(checkoutTimerInterval);
+            if (display) display.innerText = "00:00:00:00";
+            closeCheckoutModal();
+            alert("ငွေလွှဲရန် အချိန်ပြည့်သွားသဖြင့် မှာယူမှုကို ပယ်ဖျက်လိုက်ပါပြီ။");
+            return;
         }
 
-        function closeCheckoutModal() {
+        // နာရီ၊ မိနစ်၊ စကန့် နှင့် မီလီစကန့် တွက်ချက်ခြင်း
+        let hours = Math.floor(timeLeft / (1000 * 60 * 60));
+        let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        // မီလီစကန့်ကို ဂဏန်း ၂ လုံးတည်းပြရန် (ဥပမာ- ၀၀ မှ ၉၉ အထိ အမြန်ပြေးရန်)
+        let milliseconds = Math.floor((timeLeft % 1000) / 10); 
+
+        // ဂဏန်းတွေ ရှေ့ကနေ ၀ ခံပေးခြင်း
+        hours = hours < 10 ? "0" + hours : hours;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        milliseconds = milliseconds < 10 ? "0" + milliseconds : milliseconds;
+
+        // UI ပေါ်တွင် ဂဏန်း ၄ မျိုးလုံးကို ဒုန်းစိုင်းပြသပေးခြင်း
+        if (display) {
+            display.innerText = `${hours}:${minutes}:${seconds}:${milliseconds}`;
+        }
+    }, 10); // 10 Milliseconds တိုင်း Update လုပ်သည်
+}
+
             if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
             document.getElementById('checkoutModal').classList.add('hidden');
         }
