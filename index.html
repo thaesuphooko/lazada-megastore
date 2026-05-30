@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TSPK Multi-Vendor Marketplace</title>
+    <title>TSPK Premium Shopping App</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -15,98 +15,141 @@
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased min-h-screen pb-24">
 
-    <div id="toastContainer" class="fixed top-5 right-5 z-[100] flex flex-col gap-3 pointer-events-none max-w-sm w-full"></div>
+    <div id="toastContainer" class="fixed top-5 right-5 z-[100] flex flex-col gap-3 max-w-sm w-full pointer-events-none"></div>
 
-    <header class="sticky top-0 z-40 bg-gradient-to-r from-[#1a274c] to-[#0f172a] text-white shadow-md border-b border-[#D4AF37]/30">
+    <header class="sticky top-0 z-40 bg-[#1a274c] text-white shadow-md border-b border-amber-500/30">
         <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-            <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.reload()">
-                <div class="bg-gradient-to-br from-[#f57224] to-amber-500 p-2 rounded-xl border border-white/20 shadow-inner">
-                    <i data-lucide="store" class="w-6 h-6 text-white"></i>
+            
+            <div class="flex items-center gap-2 cursor-pointer" onclick="switchTab('home')">
+                <div class="bg-gradient-to-br from-[#f57224] to-amber-500 p-2 rounded-xl shadow-inner">
+                    <i data-lucide="shopping-bag" class="w-6 h-6 text-white"></i>
                 </div>
                 <div>
-                    <h1 class="text-md md:text-xl font-black tracking-wider text-white">TSPK <span class="text-[#f57224]">Marketplace</span></h1>
-                    <p class="text-[10px] text-amber-400 font-bold">Multi-Vendor Multi-Category Shop</p>
+                    <h1 class="text-md md:text-xl font-black text-white flex items-center gap-1">TSPK <span class="text-[#f57224]">Shop</span></h1>
+                    <p class="text-[10px] text-amber-400 font-bold">Premium Marketplace V3</p>
                 </div>
             </div>
 
             <div class="flex-1 max-w-md relative hidden md:block">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 pointer-events-none">
                     <i data-lucide="search" class="w-4 h-4"></i>
                 </span>
-                <input type="text" id="searchInput" placeholder="ရှာဖွေလိုသော ပစ္စည်းအမည်ကို ရိုက်ထည့်ပါ..." 
+                <input type="text" id="desktopSearch" placeholder="ပစ္စည်းအမည်ဖြင့် ရှာဖွေရန်..." oninput="handleSearch(this.value)"
                        class="w-full pl-9 pr-4 py-2 bg-white/10 border border-white/20 rounded-xl text-xs text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#f57224] focus:bg-white focus:text-gray-900 transition">
             </div>
 
             <div class="flex items-center gap-2">
-                <button onclick="openVendorModal()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1 shadow-md">
-                    <i data-lucide="plus-circle" class="w-4 h-4"></i> ပစ္စည်းရောင်းရန်
-                </button>
-                
-                <button id="secretAdminBtn" style="display: none;" onclick="toggleAdminPanel()" class="bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1 shadow-md">
-                    <i data-lucide="shield-check" class="w-4 h-4"></i> Admin Panel
+                <button onclick="switchTab('orders')" class="relative p-2.5 bg-white/10 hover:bg-white/20 rounded-xl transition flex items-center gap-1 text-xs font-bold">
+                    <i data-lucide="truck" class="w-4 h-4 text-amber-400"></i>
+                    <span class="hidden sm:inline">Order Tracking</span>
+                    <span id="orderBadge" class="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] px-1 rounded-full hidden">0</span>
                 </button>
 
-                <button onclick="toggleCart(true)" class="relative p-2.5 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl transition shadow-inner">
+                <button onclick="toggleCart(true)" class="relative p-2.5 bg-white/10 hover:bg-white/20 rounded-xl transition shadow-inner">
                     <i data-lucide="shopping-cart" class="w-5 h-5 text-white"></i>
                     <span id="cartBadge" class="absolute -top-1.5 -right-1.5 bg-[#f57224] text-white text-[10px] font-black px-1.5 py-0.5 rounded-full border border-white hidden">0</span>
                 </button>
             </div>
         </div>
     </header>
-        <main class="max-w-6xl mx-auto px-4 mt-6">
-        <div class="block md:hidden mb-4 relative">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
+
+    <main class="max-w-6xl mx-auto px-4 mt-4">
+        
+        <div class="block md:hidden mb-4 relative" id="mobileSearchWrapper">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
                 <i data-lucide="search" class="w-4 h-4"></i>
             </span>
-            <input type="text" id="mobileSearchInput" placeholder="ပစ္စည်းရှာဖွေရန်..." 
+            <input type="text" id="mobileSearch" placeholder="ပစ္စည်းရှာဖွေရန်..." oninput="handleSearch(this.value)"
                    class="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#f57224] shadow-sm">
         </div>
 
-        <section id="adminDashboardSection" class="hidden mb-8 p-4 bg-amber-50 border-2 border-dashed border-amber-300 rounded-2xl">
-            <div class="flex justify-between items-center mb-4 pb-2 border-b border-amber-200">
-                <div class="flex items-center gap-2 text-amber-800">
-                    <i data-lucide="shield-alert" class="w-5 h-5"></i>
-                    <h2 class="font-black text-sm">ပစ္စည်းတင်ရန် ခွင့်ပြုချက်တောင်းခံမှုများ (Admin ဇုန်)</h2>
+        <div id="tab-home" class="space-y-6">
+            <div class="w-full bg-gradient-to-r from-orange-500 to-amber-500 rounded-2xl p-6 text-white shadow-md relative overflow-hidden">
+                <div class="relative z-10 max-w-sm space-y-2">
+                    <span class="bg-white/20 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Weekly New Arrivals</span>
+                    <h2 class="text-xl md:text-2xl font-black leading-tight">Shop App အတွင်း အသက်သာဆုံး စျေးနှုန်းများ</h2>
+                    <p class="text-xs text-white/90">အရည်အသွေးမြင့် ပစ္စည်းမျိုးစုံကို စိတ်ချရသော စနစ်ဖြင့် အိမ်တိုင်ရာရောက် ပို့ဆောင်ပေးနေပါပြီ။</p>
                 </div>
-                <button onclick="toggleAdminPanel()" class="text-xs text-gray-500 font-bold hover:underline">ပိတ်မည်</button>
+                <i data-lucide="sparkles" class="w-40 h-40 text-white/10 absolute -right-4 -bottom-4 transform rotate-12"></i>
             </div>
-            <div id="adminPendingDeck" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
-            <div id="adminEmptyState" class="text-center py-6 text-xs text-amber-700 font-bold">
-                ခွင့်ပြုချက်တောင်းခံထားသော ပစ္စည်းအသစ် လတ်တလောမရှိသေးပါရှင်။
-            </div>
-        </section>
 
-        <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xs md:text-sm font-black text-gray-700 uppercase tracking-widest flex items-center gap-1.5">
-                <span class="w-2.5 h-2.5 bg-[#f57224] rounded-full animate-ping"></span>
-                စတိုးဆိုင်ရှိ အရောင်းသွက် ပစ္စည်းများအားလုံး
-            </h2>
+            <div class="space-y-2">
+                <h3 class="text-xs font-black text-gray-500 uppercase tracking-widest">Categories</h3>
+                <div class="flex gap-2 overflow-x-auto pb-2 hide-scrollbar">
+                    <button onclick="filterCategory('all')" class="category-btn px-4 py-2 bg-[#1a274c] text-white rounded-xl text-xs font-bold whitespace-nowrap shadow-sm">🔥 All Items</button>
+                    <button onclick="filterCategory('electronics')" class="category-btn px-4 py-2 bg-white text-gray-600 border rounded-xl text-xs font-bold whitespace-nowrap hover:bg-gray-50">📱 Electronics</button>
+                    <button onclick="filterCategory('fashion')" class="category-btn px-4 py-2 bg-white text-gray-600 border rounded-xl text-xs font-bold whitespace-nowrap hover:bg-gray-50">👕 Fashion</button>
+                    <button onclick="filterCategory('home')" class="category-btn px-4 py-2 bg-white text-gray-600 border rounded-xl text-xs font-bold whitespace-nowrap hover:bg-gray-50">🏡 Home & Living</button>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <h2 class="text-xs md:text-sm font-black text-gray-700 uppercase tracking-widest flex items-center gap-1.5">
+                    <span class="w-2 h-2 bg-[#f57224] rounded-full animate-pulse"></span>
+                    ပစ္စည်းများအားလုံး
+                </h2>
+            </div>
+
+            <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4"></div>
         </div>
 
-        <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4"></div>
-    </main>
+        <div id="tab-orders" class="hidden space-y-4">
+            <div class="flex items-center justify-between pb-2 border-b">
+                <h2 class="text-base font-black text-[#1a274c] flex items-center gap-1.5"><i data-lucide="package-search" class="text-[#f57224]"></i> မှာယူထားသော အော်ဒါမှတ်တမ်းများနှင့် Delivery အဆင့်များ</h2>
+                <button onclick="switchTab('home')" class="text-xs text-indigo-600 font-bold hover:underline">စျေးဝယ်ကွင်းပြင်သို့ ပြန်သွားမည်</button>
+            </div>
+            <div id="ordersHistoryList" class="space-y-4"></div>
+        </div>
 
+    </main>
     <div id="detailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
-            <div class="bg-gray-50 p-4 border-b border-gray-100 flex justify-between items-center">
+        <div class="bg-white rounded-2xl max-w-xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[92vh]">
+            <div class="bg-gray-50 px-4 py-3 border-b flex justify-between items-center">
                 <span class="text-xs font-bold text-[#1a274c] bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full flex items-center gap-1">
-                    <i data-lucide="info" class="w-3.5 h-3.5 text-indigo-600"></i> ပစ္စည်းအသေးစိတ် အချက်အလက်
+                    <i data-lucide="layers" class="w-3.5 h-3.5 text-indigo-600"></i> Product Media Explorer
                 </span>
                 <button onclick="closeDetailModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
-            <div class="p-5 overflow-y-auto space-y-4 flex-1 text-xs md:text-sm">
-                <img id="modalProductImg" src="" class="w-full h-48 md:h-56 object-cover rounded-xl bg-gray-50 border">
-                <div>
-                    <h3 id="modalProductName" class="text-base font-black text-[#1a274c] leading-snug"></h3>
-                    <div id="modalProductPrice" class="text-xl font-black text-[#f57224] mt-1"></div>
+            
+            <div class="p-5 overflow-y-auto space-y-4 flex-1 text-xs md:text-sm hide-scrollbar">
+                
+                <div class="w-full h-56 md:h-64 rounded-xl bg-slate-900 overflow-hidden border relative flex items-center justify-center">
+                    <img id="modalImgView" src="" class="w-full h-full object-cover">
+                    <video id="modalVideoView" controls class="w-full h-full object-contain hidden bg-black"></video>
+                    <iframe id="modalYoutubeView" class="w-full h-full hidden" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <div class="bg-gray-50 p-3 rounded-xl border border-gray-200/60">
-                    <p id="modalProductDesc" class="text-gray-600 leading-relaxed font-medium"></p>
+
+                <div class="grid grid-cols-3 gap-2">
+                    <button id="mediaTabImg" onclick="switchMediaMode('image')" class="p-2 border rounded-xl font-bold flex items-center justify-center gap-1 bg-indigo-50 border-indigo-500 text-indigo-700 text-[11px]">
+                        <i data-lucide="image" class="w-3.5 h-3.5"></i> ပစ္စည်းပုံ
+                    </button>
+                    <button id="mediaTabVideo" onclick="switchMediaMode('video')" class="p-2 border rounded-xl font-bold flex items-center justify-center gap-1 text-gray-500 hover:bg-gray-50 text-[11px]">
+                        <i data-lucide="clapperboard" class="w-3.5 h-3.5"></i> ဗီဒီယို (MP4)
+                    </button>
+                    <button id="mediaTabYoutube" onclick="switchMediaMode('youtube')" class="p-2 border rounded-xl font-bold flex items-center justify-center gap-1 text-gray-500 hover:bg-gray-50 text-[11px]">
+                        <i data-lucide="youtube" class="w-3.5 h-3.5"></i> YouTube ပြကွက်
+                    </button>
+                </div>
+
+                <div class="space-y-1">
+                    <h3 id="modalProductName" class="text-base font-black text-[#1a274c] leading-snug"></h3>
+                    <div id="modalProductPrice" class="text-xl font-black text-[#f57224]"></div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 bg-slate-50 p-2.5 rounded-xl border text-[11px] font-bold text-gray-600">
+                    <div class="flex items-center gap-1"><i data-lucide="truck" class="w-4 h-4 text-emerald-600"></i> Delivery standard အမြန်ရနိုင်သည်</div>
+                    <div class="flex items-center gap-1"><i data-lucide="shield-check" class="w-4 h-4 text-blue-600"></i> 100% Authentic Quality</div>
+                </div>
+
+                <div class="space-y-1">
+                    <span class="font-bold text-gray-500 uppercase tracking-wider text-[10px]">Product Details</span>
+                    <p id="modalProductDesc" class="text-gray-600 leading-relaxed font-medium bg-gray-50/70 p-3 rounded-xl border border-gray-100"></p>
                 </div>
             </div>
-            <div class="p-4 bg-gray-50 border-t border-gray-100">
-                <button id="modalCartBtn" class="w-full bg-[#1a274c] hover:bg-indigo-950 text-white py-3 rounded-xl font-bold transition text-xs md:text-sm">
-                    စျေးဝယ်ခြင်းတောင်းထဲသို့ ထည့်မည်
+
+            <div class="p-4 bg-gray-50 border-t">
+                <button id="modalCartBtn" class="w-full bg-[#1a274c] hover:bg-indigo-950 text-white py-3 rounded-xl font-bold transition flex items-center justify-center gap-2">
+                    <i data-lucide="shopping-cart" class="w-4 h-4"></i> စျေးဝယ်ခြင်းတောင်းထဲသို့ ထည့်မည်
                 </button>
             </div>
         </div>
@@ -114,18 +157,18 @@
 
     <div id="cartDrawer" class="fixed inset-0 bg-slate-900/40 z-50 transition-opacity opacity-0 pointer-events-none duration-300">
         <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300">
-            <div class="p-4 bg-[#1a274c] text-white flex items-center justify-between border-b border-[#D4AF37]/30">
+            <div class="p-4 bg-[#1a274c] text-white flex items-center justify-between border-b border-amber-500/30">
                 <h3 class="font-bold flex items-center gap-2 text-sm md:text-base"><i data-lucide="shopping-bag" class="w-5 h-5 text-[#f57224]"></i> သင်၏စျေးဝယ်ခြင်းတောင်း</h3>
                 <button onclick="toggleCart(false)" class="p-1 hover:bg-white/10 rounded-full transition"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
-            <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+            <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-3 hide-scrollbar"></div>
             <div class="p-4 border-t border-gray-100 bg-gray-50 space-y-3 text-xs md:text-sm">
                 <div class="flex justify-between font-black text-sm text-[#1a274c]">
                     <span>စုစုပေါင်း ကျသင့်ငွေ-</span>
                     <span id="cartTotalPrice">0 MMK</span>
                 </div>
                 <button onclick="startCheckoutFlow()" class="w-full bg-[#f57224] text-white py-3 rounded-xl font-bold hover:bg-orange-600 transition flex items-center justify-center gap-2 shadow-lg">
-                    <i data-lucide="credit-card" class="w-4 h-4"></i> ဝယ်ယူမည် (လုံခြုံစိတ်ချရသော စနစ်)
+                    ဝယ်ယူမှု အဆင့်သို့ ဆက်သွားမည် <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </button>
             </div>
         </div>
@@ -133,31 +176,14 @@
 
     <div id="checkoutModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
-            
-            <div class="bg-[#1a274c] text-white p-4 flex justify-between items-center">
-                <h3 class="font-bold text-xs flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4 text-cyan-400"></i> TSPK Verified Checkout</h3>
+            <div class="bg-[#1a274c] text-white p-4 flex justify-between items-center border-b border-amber-500/20">
+                <h3 class="font-bold text-xs flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4 text-cyan-400"></i> TSPK Secure Checkout System</h3>
                 <button onclick="closeCheckoutModal()" class="text-white/80 hover:text-white p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
 
             <div class="p-5 space-y-4 overflow-y-auto hide-scrollbar text-xs md:text-sm flex-1">
-                
-                <div id="checkoutStep1" class="space-y-4">
-                    <div class="text-center space-y-2">
-                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto text-[#f57224]"><i data-lucide="shield-alert" class="w-6 h-6"></i></div>
-                        <h4 class="font-black text-sm text-gray-800">ဝယ်ယူမှုဆိုင်ရာ သဘောတူညီချက် စည်းကမ်းချက်များ</h4>
-                    </div>
-                    <div class="bg-gray-50 border border-gray-200 rounded-xl p-3.5 space-y-2.5 text-gray-600 leading-relaxed font-medium">
-                        <p class="text-emerald-700 font-bold flex items-center gap-1"><i data-lucide="check" class="w-4 h-4"></i> စနစ်အတွင်း လိမ်လည်မှုမရှိစေရန် Wave Pay (တိုက်ရိုက်ငွေလွှဲ) စနစ်တစ်ခုတည်းကိုသာ လက်ခံပါသည်။</p>
-                        <p class="text-amber-700 font-bold flex items-center gap-1"><i data-lucide="clock" class="w-4 h-4"></i> အော်ဒါတင်ပြီးပါက Ngwe လွှဲရန် အချိန် (၁) နာရီတိတိ ပေးပါမည်။</p>
-                        <p class="text-rose-600 font-bold flex items-center gap-1"><i data-lucide="alert-triangle" class="w-4 h-4"></i> ၁ နာရီအတွင်း ငွေလွှဲစလစ် မတင်ပါက မှာယူမှုကို အလိုအလျောက် ပယ်ဖျက်သွားပါမည်။</p>
-                    </div>
-                    <button onclick="goToCheckoutStep2()" class="w-full bg-[#1a274c] text-white py-3 rounded-xl font-bold hover:bg-indigo-950 transition flex items-center justify-center gap-1.5">
-                        စည်းကမ်းချက်များကို သဘောတူပါသည် <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </button>
-                </div>
-
-                <div id="checkoutStep2" class="hidden space-y-3">
-                    <h4 class="font-black text-gray-800 flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4 text-[#f57224]"></i> ပို့ဆောင်ပေးရမည့် လိပ်စာဖြည့်သွင်းရန်</h4>
+                <div id="checkoutStep1" class="space-y-3">
+                    <h4 class="font-black text-gray-800 flex items-center gap-1 mb-2"><i data-lucide="map-pin" class="w-4 h-4 text-[#f57224]"></i> ပို့ဆောင်ပေးရမည့် လိပ်စာဖြည့်သွင်းရန်</h4>
                     <div>
                         <label class="block font-bold text-gray-700 mb-1">ဝယ်ယူသူအမည် *</label>
                         <input type="text" id="custName" placeholder="လူကြီးမင်းအမည်" class="w-full p-2.5 border rounded-xl outline-none bg-gray-50">
@@ -170,525 +196,546 @@
                         <label class="block font-bold text-gray-700 mb-1">ပို့ဆောင်ပေးရမည့် လိပ်စာအပြည့်အစုံ *</label>
                         <textarea id="custAddress" rows="2" placeholder="မြို့နယ်၊ လမ်း၊ အိမ်အမှတ်..." class="w-full p-2.5 border rounded-xl outline-none bg-gray-50"></textarea>
                     </div>
-                    <button onclick="goToCheckoutStep3()" class="w-full bg-[#f57224] text-white py-3 rounded-xl font-bold hover:bg-orange-600 transition flex items-center justify-center gap-1.5">
-                        ငွေလွှဲရန် နံပါတ်ရယူမည် <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    <button onclick="processToPaymentStep()" class="w-full bg-[#f57224] text-white py-3 rounded-xl font-bold hover:bg-orange-600 transition flex items-center justify-center gap-1.5 shadow-md">
+                        ငွေပေးချေမှု အဆင့်သို့ သွားမည် <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
                 </div>
 
-                <div id="checkoutStep3" class="hidden space-y-4">
+                <div id="checkoutStep2" class="hidden space-y-4">
                     <div class="bg-rose-50 border border-rose-200 p-3 rounded-xl flex items-center justify-between text-rose-800 font-bold">
-                        <span class="flex items-center gap-1 text-[11px]"><i data-lucide="timer" class="w-4 h-4 animate-spin text-rose-600"></i> Ngwe လွှဲရန် ကျန်ရှိချိန်-</span>
-                        <span id="countdownDisplay" class="text-sm font-black bg-rose-600 text-white px-2.5 py-1 rounded-lg tracking-wider font-mono">01:00:00:00</span>
+                        <span class="flex items-center gap-1 text-[11px]"><i data-lucide="timer" class="w-4 h-4 animate-spin text-rose-600"></i> ငွေလွှဲစလစ်တင်ရန် အချိန်ကျန်ရှိချိန်-</span>
+                        <span id="countdownDisplay" class="text-sm font-black bg-rose-600 text-white px-2.5 py-1 rounded-lg tracking-wider font-mono">60:00</span>
                     </div>
 
                     <div class="bg-blue-50 border-l-4 border-blue-600 p-3.5 rounded-r-xl">
-                        <p class="text-[11px] text-blue-800 font-bold mb-1">အောက်ပါ Wave Pay အကောင့်သို့ ငွေလွှဲပေးပါရန်-</p>
+                        <p class="text-[11px] text-blue-800 font-bold mb-1">အောက်ပါ Wave Pay အကောင့်သို့ တိုက်ရိုက်ငွေလွှဲပေးပါရန်-</p>
                         <p class="text-base font-black text-[#1a274c] tracking-wider flex items-center justify-between">
                             <span>09 781 145 573</span>
                             <span class="text-[10px] text-gray-400 font-normal">(Thae Su Phoo Ko)</span>
                         </p>
                     </div>
 
-                    <div class="flex justify-between items-center bg-gray-50 p-2.5 rounded-xl border border-gray-100">
+                    <div class="flex justify-between items-center bg-gray-50 p-2.5 rounded-xl border text-xs">
                         <span class="font-bold text-gray-600">စုစုပေါင်း လွှဲရမည့်ငွေ:</span>
                         <span id="checkoutTotalAmount" class="text-base font-black text-[#f57224]">0 MMK</span>
                     </div>
 
-                    <form id="checkoutForm" class="space-y-4" onsubmit="handleCheckoutSubmit(event)">
-                        <input type="file" id="custSlipCamera" accept="image/*" capture="environment" class="hidden" onchange="handleSlipSelected('camera')">
-                        <input type="file" id="custSlipGallery" accept="image/*" class="hidden" onchange="handleSlipSelected('gallery')">
+                    <form onsubmit="handleOrderSubmission(event)" class="space-y-4">
+                        <input type="file" id="custSlipCamera" accept="image/*" capture="environment" class="hidden" onchange="handleFilePicked()">
+                        <input type="file" id="custSlipGallery" accept="image/*" class="hidden" onchange="handleFilePicked()">
 
                         <div>
                             <label class="block font-bold text-gray-700 mb-2">ငွေလွှဲစလစ် (Screenshot သို့မဟုတ် ဓာတ်ပုံ) တင်ရန် *</label>
-                            
                             <div class="grid grid-cols-2 gap-3">
                                 <button type="button" onclick="document.getElementById('custSlipCamera').click()" class="bg-indigo-50 border border-indigo-200 text-[#1a274c] p-3 rounded-xl font-bold flex flex-col items-center justify-center gap-1 hover:bg-indigo-100 transition">
-                                    <i data-lucide="camera" class="w-5 h-5 text-indigo-600"></i>
-                                    <span>📷 ပုံရိုက်မည်</span>
+                                    <i data-lucide="camera" class="w-5 h-5 text-indigo-600"></i><span>📷 ပုံရိုက်မည်</span>
                                 </button>
                                 <button type="button" onclick="document.getElementById('custSlipGallery').click()" class="bg-orange-50 border border-orange-200 text-[#f57224] p-3 rounded-xl font-bold flex flex-col items-center justify-center gap-1 hover:bg-orange-100 transition">
-                                    <i data-lucide="image" class="w-5 h-5 text-[#f57224]"></i>
-                                    <span>🖼️ ပုံထည့်မည်</span>
+                                    <i data-lucide="image" class="w-5 h-5 text-[#f57224]"></i><span>🖼️ ပုံထည့်မည်</span>
                                 </button>
                             </div>
-                            
-                            <div id="slipStatusBadge" class="mt-2 text-center text-xs font-bold text-emerald-600 hidden bg-emerald-50 border border-emerald-100 py-1.5 rounded-lg flex items-center justify-center gap-1">
-                                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> စလစ်ပုံ ရွေးချယ်ပြီးပါပြီ
+                            <div id="slipStatusBadge" class="mt-2 text-center text-xs font-bold text-emerald-600 hidden bg-emerald-50 border border-emerald-100 py-2 rounded-lg flex items-center justify-center gap-1">
+                                <i data-lucide="check-circle" class="w-4 h-4"></i> စလစ်ပုံ ထည့်သွင်းပြီးပါပြီ။
                             </div>
                         </div>
 
-                        <button type="submit" id="submitBtn" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition shadow-lg mt-2 flex items-center justify-center gap-2">
-                            <i data-lucide="check-circle" class="w-4 h-4"></i> ချက်ချင်းမှာယူမှုကို အတည်ပြုပါ
+                        <button type="submit" id="submitBtn" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition shadow-lg flex items-center justify-center gap-2">
+                            <i data-lucide="heart-handshake" class="w-4 h-4"></i> မှာယူမှုကို အပြီးသတ် အတည်ပြုမည်
                         </button>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
-        <div id="vendorModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border border-gray-100 flex flex-col max-h-[90vh]">
-            <div class="bg-gray-50 p-4 border-b border-gray-100 flex justify-between items-center">
-                <span class="text-xs font-bold text-gray-700 flex items-center gap-1"><i data-lucide="plus-circle" class="w-4 h-4 text-[#f57224]"></i> ရောင်းချမည့် ပစ္စည်းအသစ် တင်ပြခြင်း</span>
-                <button onclick="closeVendorModal()" class="text-gray-400 hover:text-gray-600 p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
-            </div>
-            <form id="vendorForm" onsubmit="handleVendorSubmit(event)" class="p-5 space-y-3 overflow-y-auto hide-scrollbar text-xs md:text-sm flex-1">
-                <div>
-                    <label class="block font-bold text-gray-700 mb-1">ပစ္စည်းအမည် *</label>
-                    <input type="text" id="vTitle" required class="w-full p-2.5 border rounded-xl bg-gray-50 outline-none">
-                </div>
-                <div>
-                    <label class="block font-bold text-gray-700 mb-1">ရောင်းဈေး (MMK) *</label>
-                    <input type="number" id="vPrice" required class="w-full p-2.5 border rounded-xl bg-gray-50 outline-none">
-                </div>
-                <div>
-                    <label class="block font-bold text-gray-700 mb-1">ဓာတ်ပုံ (Image File) *</label>
-                    <input type="file" id="vImg" accept="image/*" required class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-orange-50 file:text-[#f57224] cursor-pointer">
-                </div>
-                <div>
-                    <label class="block font-bold text-gray-700 mb-1">အကြောင်းအရာ အသေးစိတ်ဖော်ပြချက် *</label>
-                    <textarea id="vDesc" rows="3" required class="w-full p-2.5 border rounded-xl bg-gray-50 outline-none"></textarea>
-                </div>
-                <button type="submit" class="w-full bg-[#1a274c] text-white py-3 rounded-xl font-bold hover:bg-indigo-950 transition shadow-md mt-2">
-                    ခွင့်ပြုချက်တောင်းခံရန် တင်သွင်းမည်
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <div id="aiChatWindow" style="display: none;" class="fixed bottom-6 right-6 z-50 w-[350px] md:w-[400px] h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden">
-        <div class="bg-gradient-to-r from-[#1a274c] to-[#f57224] p-4 text-white flex items-center justify-between border-b-2 border-[#D4AF37]">
-            <div class="flex items-center gap-2">
-                <div class="relative">
-                    <div class="bg-white/20 p-1.5 rounded-xl border border-white/20"><i data-lucide="bot" class="w-5 h-5 text-yellow-400"></i></div>
-                    <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></span>
-                </div>
-                <div>
-                    <h4 class="font-bold text-xs md:text-sm tracking-wide">TSPK AI Assistant</h4>
-                    <p class="text-[10px] text-gray-300">Online အမြဲရှိနေပါသည်</p>
-                </div>
-            </div>
-            <button onclick="minimizeChat()" class="p-1 hover:bg-white/10 rounded-full transition"><i data-lucide="minus" class="w-5 h-5"></i></button>
-        </div>
-        <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50/50 hide-scrollbar text-xs md:text-sm"></div>
-        <form onsubmit="handleSendMessage(event)" class="p-3 bg-white border-t border-gray-100 flex gap-2 items-center">
-            <input type="text" id="chatInputField" placeholder="မေးမြန်းလိုသည်များကို ရိုက်ထည့်ပါ..." required class="flex-1 px-3 py-2 border rounded-xl text-xs bg-gray-50 outline-none">
-            <button type="submit" class="bg-[#1a274c] text-white p-2.5 rounded-xl transition shadow-md"><i data-lucide="send" class="w-4 h-4"></i></button>
-        </form>
-    </div>
-
-    <button id="aiChatIconTrigger" style="display: none;" onclick="maximizeChat()" class="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-[#f57224] to-[#1a274c] text-white p-4 rounded-full shadow-2xl border-2 border-[#D4AF37] flex items-center justify-center">
-        <i data-lucide="message-square" class="w-6 h-6 text-white"></i>
-    </button>
         <script>
-        // ==========================================
-        // TELEGRAM BOT API CREDENTIALS (VERIFIED)
-        // ==========================================
-        const TELEGRAM_BOT_TOKEN = "8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI"; 
-        const TELEGRAM_CHAT_ID = "6917040501"; 
+        // TELEGRAM CREDENTIALS
+        const TELEGRAM_BOT_TOKEN = "8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI";
+        const TELEGRAM_CHAT_ID = "6917040501";
 
-        // Global Variables
-        let checkoutTimerInterval = null;
-        let activeSlipFile = null;
+        // Global Application Variables
+        let timerCountdownInterval = null;
+        let selectedSlipFile = null;
+        let selectedProductForMedia = null;
 
-        // Core State Engine (ပစ္စည်းမျိုးစုံ ၁၂ မျိုး အသင့်ထည့်သွင်းပြီး)
+        // Premium Products List (ပုံ၊ ဗီဒီယိုဖိုင်၊ ယူကျုလင့်ခ်များ အစုံအလင် ပါဝင်ပါသည်)
+        const productsDatabase = [
+            { id: "tspk_01", title: "JM Solution Calming Cica XL Toner", price: 22000, category: "electronics", img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500", video: "https://www.w3schools.com/html/mov_bbb.mp4", youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ", desc: "JM Solution ရဲ့ အရောင်းရဆုံး မျက်နှာသစ်တိုနာ ဖြစ်ပါတယ်။ အသားအရေကို စိုပြေအေးမြစေပြီး နီမြန်းခြင်းများကို သက်သာစေပါတယ်။", vendor: "TSPK Official Mall" },
+            { id: "tspk_02", title: "Klairs Supple Preparation Unscented Toner", price: 5000, category: "fashion", img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500", video: "https://www.w3schools.com/html/movie.mp4", youtube: "https://www.youtube.com/embed/tgbNymZ7vqY", desc: "အနံ့မပါဘဲ Sensitive Skin သမားများအတွက် အထူးသင့်လျော်တဲ့ နာမည်ကြီးတိုနာဖြစ်ပါတယ်။ ရေဓာတ်ပြည့်ဝစေပါတယ်။", vendor: "TSPK Official Mall" },
+            { id: "tspk_03", title: "Tonymoly Wonder Teatree Pore Fresh Toner", price: 20000, category: "home", img: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=500", video: "https://www.w3schools.com/html/mov_bbb.mp4", youtube: "", desc: "Teatree ပါဝင်လို့ ဝက်ခြံထွက်တတ်သူများအတွက် အထူးကောင်းမွန်ပြီး ချွေးပေါက်များကို ကျဉ်းစေကာ အဆီပြန်ခြင်းကို ထိန်းပေးပါတယ်။", vendor: "TSPK Official Mall" },
+            { id: "tspk_04", title: "Bioderma Sensibio H2O Micellar Water", price: 38400, category: "electronics", img: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=500", video: "", youtube: "", desc: "ပြင်သစ်နိုင်ငံထုတ် အဆင့်မြင့်မိတ်ကပ်ဖျက်ရေဖြစ်ပြီး အသားအရေကို မထိခိုက်စေဘဲ ဖုန်မှုန့်နဲ့ မိတ်ကပ်များကို အမြန်ဆုံး သန့်စင်ပေးပါတယ်။", vendor: "TSPK Beauty" }
+        ];
+
+        // Global State Memory
         const state = {
-            products: [
-                { id: "p1", title: "Premium Cotton Shirt", price: 25000, img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400", desc: "အရည်အသွေးမြင့် ချည်သားစစ်စစ်ဖြင့် ချုပ်လုပ်ထားသော ခေတ်မီရှပ်အင်္ကျီ ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" },
-                { id: "p2", title: "Wireless Bluetooth Earbuds", price: 35000, img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400", desc: "အသံထွက်ကြည်လင်ပြီး Battery ခံနိုင်ရည်အလွန်ကောင်းမွန်သော Wireless နားကြပ် ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" },
-                { id: "p3", title: "Smart Sports Watch V2", price: 58000, img: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=400", desc: "နှလုံးခုန်နှုန်းနှင့် လမ်းလျှောက်မှုခြေလှမ်းများကို တိကျစွာတိုင်းတာပေးမည့် Smart နာရီ ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" },
-                { id: "p4", title: "Luxury Leather Wallet", price: 18000, img: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=400", desc: "သားရေစစ်စစ်ဖြင့် ပြုလုပ်ထားပြီး ကတ်မျိုးစုံနှင့် ငွေစက္ကူများကို သပ်ရပ်စွာ ထည့်နိုင်သော ပိုက်ဆံအိတ် ဖြစ်ပါတယ်။", vendor: "TSPK Official" },
-                { id: "p5", title: "Minimalist Coffee Mug", price: 12000, img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400", desc: "ရုံးခန်းနှင့် အိမ်သုံးအတွက် အလွန်လှပဆန်းပြားသော ကြွေကော်ဖီခွက် ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" },
-                { id: "p6", title: "Ergonomic Office Chair", price: 145000, img: "https://images.unsplash.com/photo-1505797149-43b0069ec26b?w=400", desc: "ခါးနာသက်သာစေပြီး အကြာကြီးထိုင်လို့ကောင်းမွန်တဲ့ ရုံးသုံး၊ ဂိမ်းကစားသုံး အဆင့်မြင့် ကုလားထိုင် ဖြစ်ပါတယ်။", vendor: "TSPK Official" },
-                { id: "p7", title: "Portable Power Bank 20k", price: 45000, img: "https://images.unsplash.com/photo-1609592424109-dd9892f1b17c?w=400", desc: "20,000 mAh အပြည့်ပါဝင်ပြီး Fast Charging စနစ်ထောက်ပံ့ထားသော အိတ်ဆောင် Power Bank ဖြစ်ပါတယ်။", vendor: "TSPK Official" },
-                { id: "p8", title: "Mechanical Gaming Keyboard", price: 55000, img: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400", desc: "RGB မီးအလှစုံလင်စွာပါဝင်ပြီး ရိုက်ရတာ သွက်လက်ပေါ့ပါးတဲ့ Gaming Mechanical ကီးဘုတ် ဖြစ်ပါတယ်။", vendor: "TSPK Official" },
-                { id: "p9", title: "Stainless Thermal Flask", price: 16500, img: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400", desc: "ရေပူ၊ ရေအေး ဓာတ်ဘူးဖြစ်ပြီး ၂၄ နာရီတိတိ အပူအအေး ထိန်းသိမ်းပေးနိုင်သော စတီးဘူး ဖြစ်ပါတယ်။", vendor: "TSPK Official" },
-                { id: "p10", title: "Unisex Canvas Backpack", price: 28000, img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400", desc: "ကျောင်းသုံး၊ ခရီးသွားသုံး ပစ္စည်းဆံ့ပြီး ရေစိုခံနိုင်စွမ်းရှိသော ကင်းဗတ်ကျောပိုးအိတ် ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" },
-                { id: "p11", title: "Aromatic Essential Diffuser", price: 23000, img: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=400", desc: "အခန်းတွင်း လေထုကို သန့်စင်စေပြီး စိတ်ရွှင်လန်းစေမည့် အနံ့မွှေး ရေငွေ့ပျံစက် ဖြစ်ပါတယ်။", vendor: "TSPK Official" },
-                { id: "p12", title: "Premium Bluetooth Speaker", price: 42000, img: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400", desc: "Bass သံ အလွန်ကောင်းမွန်ပြီး သယ်ဆောင်ရလွယ်ကူသော ရေစိုခံ Bluetooth စပီကာ ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" }
-            ],
-            cart: {}, 
-            searchQuery: "",
-            adminActive: false
+            cart: {},
+            orders: [], // မှာယူထားသည့် အော်ဒါများသိမ်းရန်
+            currentCategory: "all",
+            searchFilter: ""
         };
 
-        function refreshIcons() { if (typeof lucide !== 'undefined') { lucide.createIcons(); } }
+        function refreshLucideIcons() { if (typeof lucide !== 'undefined') { lucide.createIcons(); } }
 
-        function showToast(msg, type = "success") {
+        function showToast(text, type = "success") {
             const container = document.getElementById('toastContainer');
-            if (!container) return;
             const toast = document.createElement('div');
-            toast.className = `p-3 rounded-xl shadow-lg border text-xs font-bold text-white flex items-center gap-2 pointer-events-auto transition duration-300 bg-slate-900 border-slate-800`;
-            if (type === "error") toast.className = `p-3 rounded-xl shadow-lg border text-xs font-bold text-white flex items-center gap-2 pointer-events-auto transition duration-300 bg-rose-600 border-rose-500`;
-            toast.innerText = msg;
+            toast.className = `p-3 rounded-xl shadow-xl border text-xs font-bold text-white transition duration-300 transform translate-y-2 bg-slate-900 border-slate-800`;
+            if (type === "error") toast.className = `p-3 rounded-xl shadow-xl border text-xs font-bold text-white transition duration-300 transform translate-y-2 bg-rose-600 border-rose-500`;
+            toast.innerText = text;
             container.appendChild(toast);
-            setTimeout(() => { toast.remove(); }, 4000);
+            setTimeout(() => { toast.remove(); }, 3500);
         }
 
-        // LOCALSTORAGE MEMORY SYNC ENGINE (ခြင်းတောင်းသိမ်းစနစ်)
-        function saveCartToStorage() {
-            localStorage.setItem('tspk_cart', JSON.stringify(state.cart));
-        }
-
-        function loadCartFromStorage() {
-            const savedCart = localStorage.getItem('tspk_cart');
-            if (savedCart) {
-                try { state.cart = JSON.parse(savedCart); } catch (e) { state.cart = {}; }
+        // SWAPPING BETWEEN ACTIVE VIEW TABS (Home သို့မဟုတ် Order Tracking)
+        function switchTab(tabId) {
+            document.getElementById('tab-home').classList.add('hidden');
+            document.getElementById('tab-orders').classList.add('hidden');
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            
+            // Search Control Display
+            const searchBox = document.getElementById('mobileSearchWrapper');
+            if (tabId === 'orders') {
+                searchBox.classList.add('hidden');
+                renderOrdersTrackingList();
+            } else {
+                searchBox.classList.remove('hidden');
             }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function handleSlipSelected(mode) {
-            const cameraInput = document.getElementById('custSlipCamera');
-            const galleryInput = document.getElementById('custSlipGallery');
-            const badge = document.getElementById('slipStatusBadge');
-
-            if (mode === 'camera' && cameraInput.files.length > 0) {
-                activeSlipFile = cameraInput.files[0];
-                galleryInput.value = ""; 
-                badge.classList.remove('hidden');
-            } else if (mode === 'gallery' && galleryInput.files.length > 0) {
-                activeSlipFile = galleryInput.files[0];
-                cameraInput.value = ""; 
-                badge.classList.remove('hidden');
-            }
-            refreshIcons();
-        }
-                         function renderProductsGrid() {
+        // RENDER CENTRAL PRODUCTS GRID
+        function renderProductsGrid() {
             const grid = document.getElementById('productsGrid');
-            if (!grid) return;
-            const filtered = state.products.filter(p => p.title.toLowerCase().includes(state.searchQuery));
             grid.innerHTML = '';
 
+            let filtered = productsDatabase.filter(p => {
+                const matchCategory = state.currentCategory === 'all' || p.category === state.currentCategory;
+                const matchSearch = p.title.toLowerCase().includes(state.searchFilter.toLowerCase());
+                return matchCategory && matchSearch;
+            });
+
             if (filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full py-12 text-center text-gray-400 font-bold text-xs">ရှာဖွေနေသော ပစ္စည်း မရှိပါရှင်။</div>`;
+                grid.innerHTML = `<div class="col-span-full py-12 text-center text-gray-400 text-xs font-bold">ရှာဖွေနေသော ပစ္စည်းလတ်တလော မရှိသေးပါရှင်။</div>`;
                 return;
             }
 
             filtered.forEach(p => {
-                const card = document.createElement('div');
-                card.className = "bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col cursor-pointer group relative";
-                card.setAttribute('onclick', `openDetailModal('${p.id}')`);
-                card.innerHTML = `
-                    <div class="relative overflow-hidden bg-gray-50 pt-[100%] border-b border-gray-100">
-                        <img src="${p.img}" alt="Product" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                const el = document.createElement('div');
+                el.className = "bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 flex flex-col cursor-pointer group";
+                el.setAttribute('onclick', `openProductMediaDetail('${p.id}')`);
+                el.innerHTML = `
+                    <div class="relative pt-[100%] bg-gray-50 overflow-hidden border-b">
+                        <img src="${p.img}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                        ${p.video || p.youtube ? `<span class="absolute top-2 right-2 bg-black/60 backdrop-blur-sm text-white p-1 rounded-lg text-[9px] font-bold flex items-center gap-0.5"><i data-lucide="play" class="w-3 h-3 text-amber-400"></i> VIDEO</span>` : ''}
                     </div>
                     <div class="p-2.5 flex-1 flex flex-col justify-between space-y-2">
                         <div>
-                            <h3 class="text-[11px] md:text-xs font-bold text-gray-800 line-clamp-2 leading-snug group-hover:text-[#f57224] transition">${p.title}</h3>
-                            <div class="mt-1 text-[#f57224] text-xs font-black">${p.price.toLocaleString()} MMK</div>
+                            <h4 class="text-[11px] md:text-xs font-bold text-gray-800 line-clamp-2 leading-snug group-hover:text-[#f57224] transition">${p.title}</h4>
+                            <div class="text-[#f57224] text-xs font-black mt-1">${p.price.toLocaleString()} MMK</div>
                         </div>
-                        <button onclick="event.stopPropagation(); addToCart('${p.id}', '${p.title.replace(/'/g, "\\'")}', ${p.price})" class="w-full bg-[#1a274c] hover:bg-indigo-950 text-white text-[10px] py-1.5 rounded-lg font-bold transition flex items-center justify-center gap-1 shadow-sm">
+                        <button onclick="event.stopPropagation(); addItemToCart('${p.id}')" class="w-full bg-[#1a274c] hover:bg-indigo-950 text-white text-[10px] py-1.5 rounded-lg font-bold transition flex items-center justify-center gap-1 shadow-sm">
                             ခြင်းတောင်းထဲထည့်
                         </button>
                     </div>
                 `;
-                grid.appendChild(card);
+                grid.appendChild(el);
             });
-            refreshIcons();
+            refreshLucideIcons();
         }
 
-        function addToCart(productId, name, price) {
-            if (state.cart[productId]) { state.cart[productId].qty += 1; } 
-            else { state.cart[productId] = { id: productId, name: name, price: parseInt(price), qty: 1 }; }
-            saveCartToStorage(); 
-            updateCartUI();
-            showToast(`"${name}" ကို စျေးဝယ်ခြင်းတောင်းထဲ ထည့်ပြီးပါပြီ။`);
+        function filterCategory(catName) {
+            state.currentCategory = catName;
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.className = "category-btn px-4 py-2 bg-white text-gray-600 border rounded-xl text-xs font-bold whitespace-nowrap hover:bg-gray-50";
+            });
+            event.target.className = "category-btn px-4 py-2 bg-[#1a274c] text-white rounded-xl text-xs font-bold whitespace-nowrap shadow-sm";
+            renderProductsGrid();
         }
 
-        function updateCartUI() {
-            const listContainer = document.getElementById('cartItemsList');
+        function handleSearch(val) {
+            state.searchFilter = val.trim();
+            renderProductsGrid();
+        }
+
+        // PRODUCT MEDIA DETAIL VIEWER (IMAGE & DUAL VIDEO PLAYER ENGINE)
+        function openProductMediaDetail(pId) {
+            const product = productsDatabase.find(p => p.id === pId);
+            if (!product) return;
+            selectedProductForMedia = product;
+
+            document.getElementById('modalProductName').innerText = product.title;
+            document.getElementById('modalProductPrice').innerText = `${product.price.toLocaleString()} MMK`;
+            document.getElementById('modalProductDesc').innerText = product.desc;
+            document.getElementById('modalCartBtn').setAttribute('onclick', `addItemToCart('${product.id}'); closeDetailModal();`);
+
+            // Check media availability tabs
+            const btnVideo = document.getElementById('mediaTabVideo');
+            const btnYoutube = document.getElementById('mediaTabYoutube');
+
+            if (!product.video) btnVideo.classList.add('opacity-40', 'pointer-events-none');
+            else btnVideo.classList.remove('opacity-40', 'pointer-events-none');
+
+            if (!product.youtube) btnYoutube.classList.add('opacity-40', 'pointer-events-none');
+            else btnYoutube.classList.remove('opacity-40', 'pointer-events-none');
+
+            // Reset Default View to Image
+            switchMediaMode('image');
+            document.getElementById('detailModal').classList.remove('hidden');
+        }
+
+        function switchMediaMode(mode) {
+            const imgEl = document.getElementById('modalImgView');
+            const vidEl = document.getElementById('modalVideoView');
+            const ytEl = document.getElementById('modalYoutubeView');
+
+            // Stop all current playing video states
+            vidEl.pause();
+            vidEl.src = "";
+            ytEl.src = "";
+
+            imgEl.classList.add('hidden');
+            vidEl.classList.add('hidden');
+            ytEl.classList.add('hidden');
+
+            // Reset active style tags buttons
+            document.querySelectorAll('#mediaTabImg, #mediaTabVideo, #mediaTabYoutube').forEach(b => {
+                b.className = "p-2 border rounded-xl font-bold flex items-center justify-center gap-1 text-gray-500 hover:bg-gray-50 text-[11px]";
+            });
+
+            if (mode === 'image') {
+                imgEl.src = selectedProductForMedia.img;
+                imgEl.classList.remove('hidden');
+                document.getElementById('mediaTabImg').className = "p-2 border rounded-xl font-bold flex items-center justify-center gap-1 bg-indigo-50 border-indigo-500 text-indigo-700 text-[11px]";
+            } else if (mode === 'video' && selectedProductForMedia.video) {
+                vidEl.src = selectedProductForMedia.video;
+                vidEl.classList.remove('hidden');
+                vidEl.play();
+                document.getElementById('mediaTabVideo').className = "p-2 border rounded-xl font-bold flex items-center justify-center gap-1 bg-orange-50 border-orange-500 text-orange-700 text-[11px]";
+            } else if (mode === 'youtube' && selectedProductForMedia.youtube) {
+                ytEl.src = selectedProductForMedia.youtube;
+                ytEl.classList.remove('hidden');
+                document.getElementById('mediaTabYoutube').className = "p-2 border rounded-xl font-bold flex items-center justify-center gap-1 bg-red-50 border-red-500 text-red-700 text-[11px]";
+            }
+            refreshLucideIcons();
+        }
+
+        function closeDetailModal() {
+            document.getElementById('modalVideoView').pause();
+            document.getElementById('modalYoutubeView').src = "";
+            document.getElementById('detailModal').classList.add('hidden');
+        }
+
+        // SHOPPING BASKET CART ENGINE WITH STORAGE
+        function addItemToCart(id) {
+            const product = productsDatabase.find(p => p.id === id);
+            if (!product) return;
+            if (state.cart[id]) state.cart[id].qty += 1;
+            else state.cart[id] = { id: product.id, name: product.title, price: product.price, qty: 1 };
+            
+            saveAppStateToLocalStorage();
+            updateCartInterfaceUI();
+            showToast(`"${product.title}" ကို ထည့်ပြီးပါပြီ။`);
+        }
+
+        function updateCartInterfaceUI() {
+            const list = document.getElementById('cartItemsList');
             const badge = document.getElementById('cartBadge');
-            const totalPriceText = document.getElementById('cartTotalPrice');
-            if (!listContainer) return;
+            const priceSumText = document.getElementById('cartTotalPrice');
+            list.innerHTML = '';
 
-            listContainer.innerHTML = '';
-            let totalItemsCount = 0;
-            let totalPriceSum = 0;
+            let totalItems = 0;
+            let totalAmountCost = 0;
 
             Object.values(state.cart).forEach(item => {
-                totalItemsCount += item.qty;
-                totalPriceSum += (item.price * item.qty);
+                totalItems += item.qty;
+                totalAmountCost += (item.price * item.qty);
 
-                const itemRow = document.createElement('div');
-                itemRow.className = "flex items-center justify-between p-2.5 bg-gray-50 rounded-xl border border-gray-100 text-xs";
-                itemRow.innerHTML = `
+                const row = document.createElement('div');
+                row.className = "flex items-center justify-between p-2.5 bg-gray-50 rounded-xl border text-xs";
+                row.innerHTML = `
                     <div class="flex-1 pr-2">
                         <h5 class="font-bold text-gray-800 line-clamp-1">${item.name}</h5>
                         <span class="text-[11px] font-bold text-[#f57224]">${item.price.toLocaleString()} MMK</span>
                     </div>
-                    <div class="flex items-center gap-1.5 bg-white border border-gray-200 rounded-lg p-0.5 shadow-sm">
-                        <button onclick="updateCartQty('${item.id}', -1)" class="w-5 h-5 flex items-center justify-center font-bold text-gray-500 hover:bg-gray-100 rounded">-</button>
+                    <div class="flex items-center gap-1.5 bg-white border rounded-lg p-0.5 shadow-sm">
+                        <button onclick="changeCartQuantity('${item.id}', -1)" class="w-5 h-5 flex items-center justify-center font-bold text-gray-500 hover:bg-gray-100 rounded">-</button>
                         <span class="text-[11px] font-bold w-4 text-center">${item.qty}</span>
-                        <button onclick="updateCartQty('${item.id}', 1)" class="w-5 h-5 flex items-center justify-center font-bold text-gray-500 hover:bg-gray-100 rounded">+</button>
+                        <button onclick="changeCartQuantity('${item.id}', 1)" class="w-5 h-5 flex items-center justify-center font-bold text-gray-500 hover:bg-gray-100 rounded">+</button>
                     </div>
                 `;
-                listContainer.appendChild(itemRow);
+                list.appendChild(row);
             });
 
-            if (totalItemsCount > 0) {
-                badge.innerText = totalItemsCount;
-                badge.classList.remove('hidden');
+            badge.innerText = totalItems;
+            if (totalItems > 0) badge.classList.remove('hidden');
+            else badge.classList.add('hidden');
+
+            priceSumText.innerText = `${totalAmountCost.toLocaleString()} MMK`;
+            if (totalItems === 0) {
+                list.innerHTML = `<div class="h-40 flex flex-col items-center justify-center text-gray-400 text-xs font-bold">ခြင်းတောင်းထဲတွင် ပစ္စည်းမရှိသေးပါရှင်။</div>`;
+            }
+        }
+
+        function changeCartQuantity(id, step) {
+            if (!state.cart[id]) return;
+            state.cart[id].qty += step;
+            if (state.cart[id].qty <= 0) delete state.cart[id];
+            saveAppStateToLocalStorage();
+            updateCartInterfaceUI();
+        }
+
+        function toggleCart(show) {
+            const dr = document.getElementById('cartDrawer');
+            if (show) {
+                dr.classList.remove('pointer-events-none', 'opacity-0');
+                dr.firstElementChild.classList.remove('translate-x-full');
             } else {
-                badge.classList.add('hidden');
-            }
-
-            totalPriceText.innerText = `${totalPriceSum.toLocaleString()} MMK`;
-            if (Object.keys(state.cart).length === 0) {
-                listContainer.innerHTML = `<div class="h-40 flex flex-col items-center justify-center text-gray-400 text-xs font-bold">ခြင်းတောင်းထဲတွင် ပစ္စည်းမရှိသေးပါ</div>`;
-            }
-            refreshIcons();
-        }
-
-        function updateCartQty(productId, change) {
-            if (!state.cart[productId]) return;
-            state.cart[productId].qty += change;
-            if (state.cart[productId].qty <= 0) { delete state.cart[productId]; }
-            saveCartToStorage(); 
-            updateCartUI();
-        }
-
-        function toggleCart(open) {
-            const drawer = document.getElementById('cartDrawer');
-            if (!drawer) return;
-            const innerPanel = drawer.firstElementChild;
-            if (open) {
-                drawer.classList.remove('pointer-events-none', 'opacity-0');
-                innerPanel.classList.remove('translate-x-full');
-            } else {
-                drawer.classList.add('pointer-events-none', 'opacity-0');
-                innerPanel.classList.add('translate-x-full');
+                dr.classList.add('pointer-events-none', 'opacity-0');
+                dr.firstElementChild.classList.add('translate-x-full');
             }
         }
 
-        function openDetailModal(productId) {
-            const product = state.products.find(p => p.id === productId);
-            if (!product) return;
-            document.getElementById('modalProductImg').src = product.img;
-            document.getElementById('modalProductName').innerText = product.title;
-            document.getElementById('modalProductPrice').innerText = `${product.price.toLocaleString()} MMK`;
-            document.getElementById('modalProductDesc').innerText = product.desc;
-            document.getElementById('modalCartBtn').setAttribute('onclick', `addToCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.price}); closeDetailModal();`);
-            document.getElementById('detailModal').classList.remove('hidden');
-            refreshIcons();
-        }
-
-        function closeDetailModal() { document.getElementById('detailModal').classList.add('hidden'); }
-        function openVendorModal() { document.getElementById('vendorModal').classList.remove('hidden'); refreshIcons(); }
-        function closeVendorModal() { document.getElementById('vendorModal').classList.add('hidden'); }
-
+        // CHECKOUT FLOW MANAGEMENT
         function startCheckoutFlow() {
             if (Object.keys(state.cart).length === 0) {
-                showToast("ခြင်းတောင်းထဲတွင် ဝယ်ယူရန် ပစ္စည်းမရှိသေးပါရှင်။", "error");
+                showToast("ခြင်းတောင်းထဲတွင် ပစ္စည်းမရှိသေးပါရှင်။", "error");
                 return;
             }
             toggleCart(false);
             document.getElementById('checkoutStep1').classList.remove('hidden');
             document.getElementById('checkoutStep2').classList.add('hidden');
-            document.getElementById('checkoutStep3').classList.add('hidden');
-            let total = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
+            
+            let total = Object.values(state.cart).reduce((sum, i) => sum + (i.price * i.qty), 0);
             document.getElementById('checkoutTotalAmount').innerText = `${total.toLocaleString()} MMK`;
             document.getElementById('checkoutModal').classList.remove('hidden');
-            
-            activeSlipFile = null;
+
+            selectedSlipFile = null;
             document.getElementById('slipStatusBadge').classList.add('hidden');
         }
+            
+        function processToPaymentStep() {
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const addr = document.getElementById('custAddress').value.trim();
 
-        function goToCheckoutStep2() {
+            if (!name || !phone || !addr) {
+                showToast("အချက်အလက်များကို ပြည့်စုံစွာ ဖြည့်ပေးပါရှင်။", "error");
+                return;
+            }
             document.getElementById('checkoutStep1').classList.add('hidden');
             document.getElementById('checkoutStep2').classList.remove('hidden');
+            startCheckoutTimer();
         }
 
-        function goToCheckoutStep3() {
-            const name = document.getElementById('custName').value.trim();
-            const phone = document.getElementById('custPhone').value.trim();
-            const address = document.getElementById('custAddress').value.trim();
-            if (!name || !phone || !address) {
-                showToast("ကျေးဇူးပြု၍ အချက်အလက်များကို ပြည့်စုံစွာ ဖြည့်သွင်းပေးပါရှင်။", "error");
-                return;
-            }
-            document.getElementById('checkoutStep2').classList.add('hidden');
-            document.getElementById('checkoutStep3').classList.remove('hidden');
-            startOneHourCountdown();
-        }
-
-        // HIGH-SPEED MILLISECOND TIMER ENGINE (နာရီ:မိနစ်:စကန့်:မီလီစကန့်)
-        function startOneHourCountdown() {
-            if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
-            
-            let totalMilliseconds = 60 * 60 * 1000; 
+        function startCheckoutTimer() {
+            if (timerCountdownInterval) clearInterval(timerCountdownInterval);
+            let totalSeconds = 60 * 60; // 1 နာရီ မော်ဒယ်
             const display = document.getElementById('countdownDisplay');
-            
-            const startTime = Date.now();
-            const endTime = startTime + totalMilliseconds;
 
-            checkoutTimerInterval = setInterval(() => {
-                const timeLeft = endTime - Date.now();
-
-                if (timeLeft <= 0) {
-                    clearInterval(checkoutTimerInterval);
-                    if (display) display.innerText = "00:00:00:00";
+            timerCountdownInterval = setInterval(() => {
+                totalSeconds--;
+                if (totalSeconds <= 0) {
+                    clearInterval(timerCountdownInterval);
                     closeCheckoutModal();
-                    alert("ငွေလွှဲရန် အချိန်ပြည့်သွားသဖြင့် မှာယူမှုကို ပယ်ဖျက်လိုက်ပါပြီ။");
+                    alert("ငွေလွှဲချိန် ကျော်လွန်သွားသဖြင့် အော်ဒါကို ဖျက်လိုက်ပါပြီ။");
                     return;
                 }
-
-                let hours = Math.floor(timeLeft / (1000 * 60 * 60));
-                let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-                let milliseconds = Math.floor((timeLeft % 1000) / 10); 
-
-                hours = hours < 10 ? "0" + hours : hours;
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-                milliseconds = milliseconds < 10 ? "0" + milliseconds : milliseconds;
-
-                if (display) {
-                    display.innerText = `${hours}:${minutes}:${seconds}:${milliseconds}`;
-                }
-            }, 10); 
-        }
-
-        function closeCheckoutModal() {
-            if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
-            document.getElementById('checkoutModal').classList.add('hidden');
-        }
-
-        // DUAL-CHANNEL TELEGRAM SEND (၁၀၀% စာနှင့် ပုံ အသေအချာ ဝင်စေမည့်စနစ်)
-        async function handleCheckoutSubmit(e) {
-            e.preventDefault();
-            if (!activeSlipFile) {
-                showToast("ကျေးဇူးပြု၍ ငွေလွှဲစလစ်ပုံကို ရိုက်ထည့် သို့မဟုတ် ရွေးချယ်ပေးပါရှင်။", "error");
-                return;
-            }
-
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `ခဏစောင့်ပါရှင်...`;
-
-            if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
-
-            const name = document.getElementById('custName').value.trim();
-            const phone = document.getElementById('custPhone').value.trim();
-            const address = document.getElementById('custAddress').value.trim();
-
-            let totalPrice = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
-            let itemsString = Object.values(state.cart).map(item => `📦 ${item.name}\n🔹 ${item.price.toLocaleString()} x ${item.qty} ခု = ${(item.price * item.qty).toLocaleString()} MMK`).join('\n\n');
-
-            const messageText = `🛒 **မှာယူမှုအသစ် (TSPK Marketplace)**\n\n` +
-                                `👤 ဝယ်ယူသူ: ${name}\n` +
-                                `📞 ဖုန်းနံပါတ်: ${phone}\n` +
-                                `📍 လိပ်စာ: ${address}\n\n` +
-                                `🛍️ **ပစ္စည်းစာရင်း-**\n${itemsString}\n\n` +
-                                `💰 **စုစုပေါင်းကျသင့်ငွေ:** ${totalPrice.toLocaleString()} MMK`;
-
-            try {
-                // Channel 1 - စာသားကို အရင်ပို့သည်
-                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: messageText, parse_mode: 'Markdown' })
-                });
-
-                // Channel 2 - ပုံကို နောက်ကနေ လိုက်ပို့သည်
-                const formData = new FormData();
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('photo', activeSlipFile);
-                formData.append('caption', `🖼️ ဝယ်ယူသူ ${name} ၏ ငွေလွှဲစလစ်ပုံ ဖြစ်ပါတယ်ရှင်။`);
-
-                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: formData });
-            } catch (err) {
-                console.log("Telegram API Error:", err);
-            }
-
-            closeCheckoutModal();
-            showToast("မှာယူမှု အောင်မြင်ပါသည်။");
-            
-            document.getElementById('aiChatIconTrigger').style.display = 'flex';
-            document.getElementById('aiChatWindow').style.display = 'flex';
-            const chatMessages = document.getElementById('chatMessages');
-            chatMessages.innerHTML = `<div class="p-3 bg-white rounded-2xl border text-gray-700 max-w-[85%]">မင်္ဂလာပါရှင် <strong>${name}</strong>။ TSPK မှ ကြိုဆိုပါတယ်။ လူကြီးမင်းမှာယူမှုကို လက်ခံရရှိထားပြီး ဖြစ်ပါတယ်ရှင်။</div>`;
-
-            state.cart = {};
-            saveCartToStorage(); 
-            updateCartUI();
-        }
-
-        function minimizeChat() { document.getElementById('aiChatWindow').style.display = 'none'; }
-        function maximizeChat() { document.getElementById('aiChatWindow').style.display = 'flex'; }
-
-        async function handleSendMessage(e) {
-            e.preventDefault();
-            const inputField = document.getElementById('chatInputField');
-            const userText = inputField.value.trim();
-            if (!userText) return;
-            inputField.value = '';
-            
-            const container = document.getElementById('chatMessages');
-            const userBubble = document.createElement('div');
-            userBubble.className = "p-2.5 bg-[#f57224] text-white rounded-2xl max-w-[85%] ml-auto text-left";
-            userBubble.innerText = userText;
-            container.appendChild(userBubble);
-            container.scrollTop = container.scrollHeight;
-
-            try {
-                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: `💬 **ဝယ်သူထံမှ ချက်တင်**\n\n📝 စာသား: ${userText}`, parse_mode: 'Markdown' })
-                });
-            } catch (tErr) {}
-
-            setTimeout(() => {
-                const aiBubble = document.createElement('div');
-                aiBubble.className = "p-2.5 bg-white text-gray-700 rounded-2xl border max-w-[85%]";
-                aiBubble.innerText = "မှာယူထားတဲ့ ပစ္စည်းတွေကို အမြန်ဆုံး စစ်ဆေးပြီး ပို့ဆောင်ပေးနိုင်ဖို့ လုပ်ဆောင်နေပါတယ်ရှင်။";
-                container.appendChild(aiBubble);
-                container.scrollTop = container.scrollHeight;
+                let m = Math.floor(totalSeconds / 60);
+                let s = totalSeconds % 60;
+                display.innerText = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
             }, 1000);
         }
 
-        async function handleVendorSubmit(e) {
+        function handleFilePicked() {
+            const c = document.getElementById('custSlipCamera');
+            const g = document.getElementById('custSlipGallery');
+            if (c.files.length > 0) selectedSlipFile = c.files[0];
+            else if (g.files.length > 0) selectedSlipFile = g.files[0];
+
+            if (selectedSlipFile) {
+                document.getElementById('slipStatusBadge').classList.remove('hidden');
+            }
+        }
+
+        function closeCheckoutModal() {
+            if (timerCountdownInterval) clearInterval(timerCountdownInterval);
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
+
+        // DISPATCH REAL ORDER & WRITE TO LOCAL DELIVERY TRACKING SYSTEM
+        async function handleOrderSubmission(e) {
             e.preventDefault();
-            const title = document.getElementById('vTitle').value;
-            const price = parseInt(document.getElementById('vPrice').value);
-            const desc = document.getElementById('vDesc').value;
+            if (!selectedSlipFile) {
+                showToast("ငွေလွှဲစလစ်ပုံ တင်ပေးရန် လိုအပ်ပါတယ်ရှင်။", "error");
+                return;
+            }
 
-            let imgUrl = "https://images.unsplash.com/photo-1557683316-973673baf926?w=400";
-            const newProduct = { id: "p_" + Date.now(), title, price, img: imgUrl, desc, vendor: "User Vendor" };
-            state.products.push(newProduct);
-            renderProductsGrid();
-            closeVendorModal();
-            document.getElementById('vendorForm').reset();
-            showToast("ပစ္စည်းအသစ် တင်ပြမှု အောင်မြင်ပါသည်။");
-        }
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerText = "ခဏစောင့်ပါ၊ အော်ဒါတင်နေပါသည်...";
 
-        function toggleAdminPanel() {
-            const section = document.getElementById('adminDashboardSection');
-            if (section) section.classList.toggle('hidden');
-        }
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const addr = document.getElementById('custAddress').value.trim();
+            const totalSum = Object.values(state.cart).reduce((sum, i) => sum + (i.price * i.qty), 0);
+            const itemsText = Object.values(state.cart).map(i => `📦 ${i.name} (Qty: ${i.qty})`).join('\n');
 
-        function setupSearch() {
-            const handler = (e) => {
-                state.searchQuery = e.target.value.trim().toLowerCase();
-                renderProductsGrid();
+            const orderId = "TSPK-" + Math.floor(1000 + Math.random() * 9000);
+
+            // Create New Local Tracking Data Struct
+            const newOrderTrack = {
+                id: orderId,
+                date: new Date().toLocaleDateString(),
+                items: Object.values(state.cart),
+                total: totalSum,
+                status: "pending" // အဆင့်များ- pending -> process -> shipping -> completed
             };
-            document.getElementById('searchInput')?.addEventListener('input', handler);
-            document.getElementById('mobileSearchInput')?.addEventListener('input', handler);
+
+            // Post dispatch info text data channel to Telegram Telegram
+            const textFormat = `🛒 **မှာယူမှုအသစ် ရရှိပါပြီ (${orderId})**\n\n👤 အမည်: ${name}\n📞 ဖုန်း: ${phone}\n📍 လိပ်စာ: ${addr}\n\n🧾 **ပစ္စည်းစာရင်း:**\n${itemsText}\n\n💰 **စုစုပေါင်းငွေ:** ${totalSum.toLocaleString()} MMK`;
+
+            try {
+                // Channel 1 Text Dispatch
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: textFormat })
+                });
+
+                // Channel 2 Photo Dispatched
+                const fData = new FormData();
+                fData.append('chat_id', TELEGRAM_CHAT_ID);
+                fData.append('photo', selectedSlipFile);
+                fData.append('caption', `🧾 အော်ဒါကုဒ် ${orderId} ၏ ငွေလွှဲစလစ်ပုံ ဖြစ်ပါသည်။`);
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: fData });
+
+                // Add to active delivery trace memory array state
+                state.orders.unshift(newOrderTrack);
+                saveAppStateToLocalStorage();
+
+                closeCheckoutModal();
+                showToast("မှာယူမှု အောင်မြင်ပြီး အော်ဒါမှတ်တမ်းထဲ ထည့်သွင်းပြီးပါပြီ။");
+                
+                // Clear cart state
+                state.cart = {};
+                saveAppStateToLocalStorage();
+                updateCartInterfaceUI();
+
+                // View Order screen immediately
+                switchTab('orders');
+
+            } catch (err) {
+                showToast("စနစ်ချို့ယွင်းချက်ဖြစ်ပေါ်လာပါသဖြင့် ပြန်လည်ကြိုးစားပါ", "error");
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "မှာယူမှုကို အပြီးသတ် အတည်ပြုမည်";
+            }
         }
 
-        // CORE LOADER ENGINE WITH LOCALSTORAGE RESCUE
-        window.addEventListener('DOMContentLoaded', () => {
-            loadCartFromStorage(); 
-            setupSearch();
-            renderProductsGrid();
-            updateCartUI();
+        // RENDER DYNAMIC TRACKING DELIVERY TIMELINE LIST
+        function renderOrdersTrackingList() {
+            const box = document.getElementById('ordersHistoryList');
+            const badge = document.getElementById('orderBadge');
+            box.innerHTML = '';
 
-            if (window.location.search.includes('step2003')) {
-                const adminBtn = document.getElementById('secretAdminBtn');
-                if (adminBtn) adminBtn.style.display = 'flex';
+            if (state.orders.length === 0) {
+                badge.classList.add('hidden');
+                box.innerHTML = `
+                    <div class="bg-white rounded-2xl p-8 text-center text-gray-400 border border-dashed">
+                        <i data-lucide="package" class="w-10 h-10 mx-auto mb-2 text-gray-300"></i>
+                        <p class="text-xs font-bold">ယခုဖုန်းတွင် ဝယ်ယူထားဖူးသော အော်ဒါမှတ်တမ်း မရှိသေးပါရှင်။</p>
+                    </div>`;
+                return;
+            }
+
+            badge.innerText = state.orders.length;
+            badge.classList.remove('hidden');
+
+            state.orders.forEach(ord => {
+                const itemNames = ord.items.map(i => `${i.name} (x${i.qty})`).join(', ');
+
+                // Check active status stage
+                let step1Class = "text-indigo-600 font-bold", step2Class = "text-gray-400", step3Class = "text-gray-400", step4Class = "text-gray-400";
+                let progressWidth = "w-1/4";
+
+                if (ord.status === "process") { step2Class = "text-amber-500 font-bold"; progressWidth = "w-1/2"; }
+                else if (ord.status === "shipping") { step2Class = "text-amber-500"; step3Class = "text-orange-500 font-bold"; progressWidth = "w-3/4"; }
+                else if (ord.status === "completed") { step2Class = "text-amber-500"; step3Class = "text-orange-500"; step4Class = "text-emerald-600 font-bold"; progressWidth = "w-full"; }
+
+                const card = document.createElement('div');
+                card.className = "bg-white p-4 rounded-2xl border shadow-sm space-y-3 text-xs";
+                card.innerHTML = `
+                    <div class="flex justify-between items-center bg-slate-50 p-2 rounded-xl border">
+                        <div>
+                            <div class="font-black text-[#1a274c]">ID: ${ord.id}</div>
+                            <div class="text-[10px] text-gray-400">${ord.date}</div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-gray-500 font-bold">ကျသင့်ငွေ: </span>
+                            <span class="font-black text-[#f57224]">${ord.total.toLocaleString()} MMK</span>
+                        </div>
+                    </div>
+
+                    <div class="text-gray-600 font-medium"><span class="font-bold text-gray-800">ဝယ်ယူခဲ့သောပစ္စည်း-</span> ${itemNames}</div>
+
+                    <div class="space-y-2 pt-2">
+                        <div class="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-gradient-to-r from-indigo-500 via-orange-500 to-emerald-500 h-full ${progressWidth} transition-all duration-500"></div>
+                        </div>
+                        <div class="grid grid-cols-4 text-[9px] md:text-[10px] text-center font-bold">
+                            <div class="${step1Class}">📝 စလစ်စစ်ဆဲ</div>
+                            <div class="${step2Class}">⚙️ အော်ဒါပြင်ဆင်ဆဲ</div>
+                            <div class="${step3Class}">🚚 ပို့ဆောင်နေဆဲ</div>
+                            <div class="${step4Class}">🎉 ရောက်ရှိပြီ</div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 border-t flex justify-end gap-1.5">
+                        <span class="text-[10px] text-gray-400 flex items-center">အခြေအနေစမ်းသပ်ရန်-</span>
+                        <button onclick="simulateOrderStatus('${ord.id}', 'process')" class="bg-amber-100 text-amber-700 font-bold px-2 py-1 rounded text-[10px]">ပြင်ဆင်</button>
+                        <button onclick="simulateOrderStatus('${ord.id}', 'shipping')" class="bg-orange-100 text-orange-700 font-bold px-2 py-1 rounded text-[10px]">လမ်းကြောင်းပေါ်</button>
+                        <button onclick="simulateOrderStatus('${ord.id}', 'completed')" class="bg-emerald-100 text-emerald-700 font-bold px-2 py-1 rounded text-[10px]">ရောက်ပြီ</button>
+                    </div>
+                `;
+                box.appendChild(card);
+            });
+            refreshLucideIcons();
+                }
+                    // STATUS SIMULATOR FOR TESTING PURPOSES
+        function simulateOrderStatus(id, newStatus) {
+            const target = state.orders.find(o => o.id === id);
+            if (target) {
+                target.status = newStatus;
+                saveAppStateToLocalStorage();
+                renderOrdersTrackingList();
+                showToast(`အော်ဒါ ID ${id} ကို "${newStatus}" အဆင့်သို့ ပြောင်းလဲလိုက်ပါပြီ။`);
+            }
+        }
+
+        // BROWSER LOCAL STORAGE SYNC HOOKS
+        function saveAppStateToLocalStorage() {
+            localStorage.setItem('tspk_app_cart_v3', JSON.stringify(state.cart));
+            localStorage.setItem('tspk_app_orders_v3', JSON.stringify(state.orders));
+        }
+
+        function loadAppStateFromLocalStorage() {
+            const localCart = localStorage.getItem('tspk_app_cart_v3');
+            const localOrders = localStorage.getItem('tspk_app_orders_v3');
+            if (localCart) { try { state.cart = JSON.parse(localCart); } catch(e){} }
+            if (localOrders) { try { state.orders = JSON.parse(localOrders); } catch(e){} }
+        }
+
+        // APP INITIALIZER BOOTSTRAP
+        window.addEventListener('DOMContentLoaded', () => {
+            loadAppStateFromLocalStorage();
+            renderProductsGrid();
+            updateCartInterfaceUI();
+            
+            // Check order badge number on startup
+            if (state.orders.length > 0) {
+                document.getElementById('orderBadge').innerText = state.orders.length;
+                document.getElementById('orderBadge').classList.remove('hidden');
             }
         });
     </script>
 </body>
 </html>
-
