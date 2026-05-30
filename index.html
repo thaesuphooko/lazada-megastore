@@ -33,8 +33,8 @@
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
                     <i data-lucide="search" class="w-4 h-4"></i>
                 </span>
-                <input type="text" id="searchInput" placeholder="လူကြီးမင်း ရှာဖွေလိုသော ပစ္စည်းအမည်ကို ရိုက်ထည့်ပါ..." 
-                       class="w-full pl-9 pr-4 py-2 bg-white/10 border border-white/20 rounded-xl text-xs md:text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#f57224] focus:bg-white focus:text-gray-900 transition">
+                <input type="text" id="searchInput" placeholder="ရှာဖွေလိုသော ပစ္စည်းအမည်ကို ရိုက်ထည့်ပါ..." 
+                       class="w-full pl-9 pr-4 py-2 bg-white/10 border border-white/20 rounded-xl text-xs text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#f57224] focus:bg-white focus:text-gray-900 transition">
             </div>
 
             <div class="flex items-center gap-2">
@@ -53,8 +53,7 @@
             </div>
         </div>
     </header>
-
-    <main class="max-w-6xl mx-auto px-4 mt-6">
+        <main class="max-w-6xl mx-auto px-4 mt-6">
         <div class="block md:hidden mb-4 relative">
             <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
                 <i data-lucide="search" class="w-4 h-4"></i>
@@ -63,11 +62,11 @@
                    class="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#f57224] shadow-sm">
         </div>
 
-        <section id="adminDashboardSection" class="hidden mb-8 p-4 bg-amber-50 border-2 border-dashed border-amber-300 rounded-2xl animate-in fade-in duration-200">
+        <section id="adminDashboardSection" class="hidden mb-8 p-4 bg-amber-50 border-2 border-dashed border-amber-300 rounded-2xl">
             <div class="flex justify-between items-center mb-4 pb-2 border-b border-amber-200">
                 <div class="flex items-center gap-2 text-amber-800">
                     <i data-lucide="shield-alert" class="w-5 h-5"></i>
-                    <h2 class="font-black text-sm md:text-md">ပစ္စည်းတင်ရန် ခွင့်ပြုချက်တောင်းခံမှုများ (Admin စစ်ဆေးရန်ဇုန်)</h2>
+                    <h2 class="font-black text-sm">ပစ္စည်းတင်ရန် ခွင့်ပြုချက်တောင်းခံမှုများ (Admin စစ်ဆေးရန်ဇုန်)</h2>
                 </div>
                 <button onclick="toggleAdminPanel()" class="text-xs text-gray-500 font-bold hover:underline">ပိတ်မည်</button>
             </div>
@@ -85,14 +84,10 @@
         </div>
 
         <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4"></div>
-
-        <div id="loadingIndicator" class="hidden py-8 text-center flex flex-col items-center justify-center gap-2">
-            <div class="w-8 h-8 border-4 border-[#1a274c] border-t-transparent rounded-full animate-spin"></div>
-            <span class="text-xs text-gray-500 font-bold">ပစ္စည်းအသစ်များ ရယူနေပါသည် ခဏစောင့်ပါ...</span>
-        </div>
     </main>
-        <div id="detailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl border border-gray-100 flex flex-col max-h-[90vh]">
+
+    <div id="detailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
             <div class="bg-gray-50 p-4 border-b border-gray-100 flex justify-between items-center">
                 <span class="text-xs font-bold text-[#1a274c] bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full flex items-center gap-1">
                     <i data-lucide="info" class="w-3.5 h-3.5 text-indigo-600"></i> ပစ္စည်းအသေးစိတ် အချက်အလက်
@@ -100,19 +95,18 @@
                 <button onclick="closeDetailModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             <div class="p-5 overflow-y-auto space-y-4 flex-1 text-xs md:text-sm">
-                <img id="modalProductImg" src="" class="w-full h-48 md:h-56 object-cover rounded-xl bg-gray-50 border shadow-inner">
+                <img id="modalProductImg" src="" class="w-full h-48 md:h-56 object-cover rounded-xl bg-gray-50 border">
                 <div>
                     <h3 id="modalProductName" class="text-base font-black text-[#1a274c] leading-snug"></h3>
                     <div id="modalProductPrice" class="text-xl font-black text-[#f57224] mt-1"></div>
                 </div>
                 <div class="bg-gray-50 p-3 rounded-xl border border-gray-200/60">
-                    <h4 class="text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-1">အကြောင်းအရာ အသေးစိတ်</h4>
                     <p id="modalProductDesc" class="text-gray-600 leading-relaxed font-medium"></p>
                 </div>
             </div>
             <div class="p-4 bg-gray-50 border-t border-gray-100">
-                <button id="modalCartBtn" class="w-full bg-[#1a274c] hover:bg-indigo-950 text-white py-3 rounded-xl font-bold transition flex items-center justify-center gap-2 shadow-md text-xs md:text-sm">
-                    <i data-lucide="shopping-cart" class="w-4 h-4"></i> စျေးဝယ်ခြင်းတောင်းထဲသို့ ထည့်မည်
+                <button id="modalCartBtn" class="w-full bg-[#1a274c] hover:bg-indigo-950 text-white py-3 rounded-xl font-bold transition text-xs md:text-sm">
+                    စျေးဝယ်ခြင်းတောင်းထဲသို့ ထည့်မည်
                 </button>
             </div>
         </div>
@@ -126,7 +120,7 @@
             </div>
             <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
             <div class="p-4 border-t border-gray-100 bg-gray-50 space-y-3 text-xs md:text-sm">
-                <div class="flex justify-between font-black text-sm md:text-base text-[#1a274c]">
+                <div class="flex justify-between font-black text-sm text-[#1a274c]">
                     <span>စုစုပေါင်း ကျသင့်ငွေ-</span>
                     <span id="cartTotalPrice">0 MMK</span>
                 </div>
@@ -138,12 +132,10 @@
     </div>
 
     <div id="checkoutModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh] transform scale-95 transition-all duration-200">
+        <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
             
             <div class="bg-[#1a274c] text-white p-4 flex justify-between items-center">
-                <h3 class="font-bold text-xs md:text-sm flex items-center gap-2">
-                    <i data-lucide="shield-check" class="w-4 h-4 text-cyan-400"></i> TSPK Verified Checkout
-                </h3>
+                <h3 class="font-bold text-xs flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4 text-cyan-400"></i> TSPK Verified Checkout</h3>
                 <button onclick="closeCheckoutModal()" class="text-white/80 hover:text-white p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
 
@@ -151,9 +143,7 @@
                 
                 <div id="checkoutStep1" class="space-y-4">
                     <div class="text-center space-y-2">
-                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto text-[#f57224]">
-                            <i data-lucide="shield-alert" class="w-6 h-6"></i>
-                        </div>
+                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto text-[#f57224]"><i data-lucide="shield-alert" class="w-6 h-6"></i></div>
                         <h4 class="font-black text-sm text-gray-800">ဝယ်ယူမှုဆိုင်ရာ သဘောတူညီချက် စည်းကမ်းချက်များ</h4>
                     </div>
                     <div class="bg-gray-50 border border-gray-200 rounded-xl p-3.5 space-y-2.5 text-gray-600 leading-relaxed font-medium">
@@ -170,15 +160,15 @@
                     <h4 class="font-black text-gray-800 flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4 text-[#f57224]"></i> ပို့ဆောင်ပေးရမည့် လိပ်စာဖြည့်သွင်းရန်</h4>
                     <div>
                         <label class="block font-bold text-gray-700 mb-1">ဝယ်ယူသူအမည် *</label>
-                        <input type="text" id="custName" placeholder="လူကြီးမင်းအမည်" class="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-[#f57224] outline-none bg-gray-50">
+                        <input type="text" id="custName" placeholder="လူကြီးမင်းအမည်" class="w-full p-2.5 border rounded-xl outline-none bg-gray-50">
                     </div>
                     <div>
                         <label class="block font-bold text-gray-700 mb-1">ဖုန်းနံပါတ် *</label>
-                        <input type="tel" id="custPhone" placeholder="09xxxxxxxxx" class="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-[#f57224] outline-none bg-gray-50">
+                        <input type="tel" id="custPhone" placeholder="09xxxxxxxxx" class="w-full p-2.5 border rounded-xl outline-none bg-gray-50">
                     </div>
                     <div>
                         <label class="block font-bold text-gray-700 mb-1">ပို့ဆောင်ပေးရမည့် လိပ်စာအပြည့်အစုံ *</label>
-                        <textarea id="custAddress" rows="2" placeholder="မြို့နယ်၊ လမ်း၊ အိမ်အမှတ်..." class="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-[#f57224] outline-none bg-gray-50"></textarea>
+                        <textarea id="custAddress" rows="2" placeholder="မြို့နယ်၊ လမ်း၊ အိမ်အမှတ်..." class="w-full p-2.5 border rounded-xl outline-none bg-gray-50"></textarea>
                     </div>
                     <button onclick="goToCheckoutStep3()" class="w-full bg-[#f57224] text-white py-3 rounded-xl font-bold hover:bg-orange-600 transition flex items-center justify-center gap-1.5">
                         ငွေလွှဲရန် နံပါတ်ရယူမည် <i data-lucide="arrow-right" class="w-4 h-4"></i>
@@ -207,7 +197,7 @@
                     <form id="checkoutForm" class="space-y-3" onsubmit="handleCheckoutSubmit(event)">
                         <div>
                             <label class="block font-bold text-gray-700 mb-1">ငွေလွှဲစလစ် (Screenshot) တင်ရန် *</label>
-                            <input type="file" id="custSlip" accept="image/*" required class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-[11px] file:font-bold file:bg-orange-50 file:text-[#f57224] hover:file:bg-orange-100 cursor-pointer">
+                            <input type="file" id="custSlip" accept="image/*" required class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-[11px] file:font-bold file:bg-orange-50 file:text-[#f57224] cursor-pointer">
                         </div>
                         <button type="submit" id="submitBtn" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition shadow-lg mt-2 flex items-center justify-center gap-2">
                             <i data-lucide="check-circle" class="w-4 h-4"></i> ငွေလွှဲပြီးပါပြီ (မှာယူမှုကို အတည်ပြုပါ)
@@ -218,184 +208,226 @@
             </div>
         </div>
     </div>
+        <div id="vendorModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border border-gray-100 flex flex-col max-h-[90vh]">
+            <div class="bg-gray-50 p-4 border-b border-gray-100 flex justify-between items-center">
+                <span class="text-xs font-bold text-gray-700 flex items-center gap-1"><i data-lucide="plus-circle" class="w-4 h-4 text-[#f57224]"></i> ရောင်းချမည့် ပစ္စည်းအသစ် တင်ပြခြင်း</span>
+                <button onclick="closeVendorModal()" class="text-gray-400 hover:text-gray-600 p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <form id="vendorForm" onsubmit="handleVendorSubmit(event)" class="p-5 space-y-3 overflow-y-auto hide-scrollbar text-xs md:text-sm flex-1">
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">ပစ္စည်းအမည် *</label>
+                    <input type="text" id="vTitle" required class="w-full p-2.5 border rounded-xl bg-gray-50 outline-none">
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">ရောင်းဈေး (MMK) *</label>
+                    <input type="number" id="vPrice" required class="w-full p-2.5 border rounded-xl bg-gray-50 outline-none">
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">ဓာတ်ပုံ (Image File) *</label>
+                    <input type="file" id="vImg" accept="image/*" required class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-orange-50 file:text-[#f57224] cursor-pointer">
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">အကြောင်းအရာ အသေးစိတ်ဖော်ပြချက် *</label>
+                    <textarea id="vDesc" rows="3" required class="w-full p-2.5 border rounded-xl bg-gray-50 outline-none"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-[#1a274c] text-white py-3 rounded-xl font-bold hover:bg-indigo-950 transition shadow-md mt-2">
+                    ခွင့်ပြုချက်တောင်းခံရန် တင်သွင်းမည်
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="aiChatWindow" style="display: none;" class="fixed bottom-6 right-6 z-50 w-[350px] md:w-[400px] h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden">
+        <div class="bg-gradient-to-r from-[#1a274c] to-[#f57224] p-4 text-white flex items-center justify-between border-b-2 border-[#D4AF37]">
+            <div class="flex items-center gap-2">
+                <div class="relative">
+                    <div class="bg-white/20 p-1.5 rounded-xl border border-white/20"><i data-lucide="bot" class="w-5 h-5 text-yellow-400 animate-pulse"></i></div>
+                    <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></span>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs md:text-sm tracking-wide">TSPK AI Assistant</h4>
+                    <p class="text-[10px] text-gray-300">Online အမြဲရှိနေပါသည်</p>
+                </div>
+            </div>
+            <button onclick="minimizeChat()" class="p-1 hover:bg-white/10 rounded-full transition"><i data-lucide="minus" class="w-5 h-5"></i></button>
+        </div>
+        <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50/50 hide-scrollbar text-xs md:text-sm"></div>
+        <form onsubmit="handleSendMessage(event)" class="p-3 bg-white border-t border-gray-100 flex gap-2 items-center">
+            <input type="text" id="chatInputField" placeholder="မေးမြန်းလိုသည်များကို ရိုက်ထည့်ပါ..." required class="flex-1 px-3 py-2 border rounded-xl text-xs bg-gray-50 outline-none">
+            <button type="submit" class="bg-[#1a274c] text-white p-2.5 rounded-xl transition shadow-md"><i data-lucide="send" class="w-4 h-4"></i></button>
+        </form>
+    </div>
+
+    <button id="aiChatIconTrigger" style="display: none;" onclick="maximizeChat()" class="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-[#f57224] to-[#1a274c] text-white p-4 rounded-full shadow-2xl border-2 border-[#D4AF37] flex items-center justify-center">
+        <i data-lucide="message-square" class="w-6 h-6 text-white"></i>
+    </button>
         <script>
-        // Global State Collections (Shop.com သဏ္ဍာန် ပစ္စည်းအမြောက်အမြား သိမ်းဆည်းရန်)
+        // ==========================================
+        // TELEGRAM BOT API CONFIGURATION (အစ်ကို့ Bot ID များ ပြင်ရန်)
+        // ==========================================
+        const TELEGRAM_BOT_TOKEN = "7727402685:AAGb7gOQkY86YOnX9D6wMvAglOIdDAtFwHw"; 
+        const TELEGRAM_CHAT_ID = "6238690353"; 
+
+        // Global State Engines
         const state = {
-            // Live Shop တွင် လူတိုင်းမြင်တွေ့ရမည့် ပစ္စည်းစာရင်း (Verified Products)
             products: [
-                { id: "p1", title: "Premium Wireless Gaming Headphones", price: 65000, img: "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&q=80", desc: "ဆူညံသံများကို ဖျောက်ပေးနိုင်ပြီး ဂိမ်းဆော့ရာတွင် အသံနောက်ကျခြင်းမရှိသည့် Premium နားကြပ် ဖြစ်ပါသည်။" },
-                { id: "p2", title: "Luxury Minimalist Smartwatch Series 8", price: 120000, img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80", desc: "ကျန်းမာရေးစောင့်ကြည့်စနစ်၊ ခြေလှမ်းနှင့် ကယ်လိုရီတိုင်းတာစနစ်များ ပါဝင်သော စမတ်နာရီ ဖြစ်ပါသည်။" },
-                { id: "p3", title: "Full-Grain Vintage Leather Wallet", price: 35000, img: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=400&q=80", desc: "နွားသားရေစစ်စစ်ဖြင့် ချုပ်လုပ်ထားပြီး ကတ်ပေါင်းများစွာ ထည့်သွင်းနိုင်သည့် ခေတ်မီပိုက်ဆံအိတ် ဖြစ်ပါသည်။" },
-                { id: "p4", title: "Mechanical RGB Backlit Keyboard", price: 48000, img: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&q=80", desc: "ရိုက်ရတာ အိကျပြီး မီးလိုင်းစုံလင်စွာ ပြောင်းလဲနိုင်သည့် Gamers များအကြိုက် ကီးဘုတ်ဖြစ်ပါသည်။" },
-                { id: "p5", title: "Ultra HD 4K Action Sports Camera", price: 155000, img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&q=80", desc: "Vlog ရိုက်ကူးသူများနှင့် ခရီးသွားဝါသနာရှင်များအတွက် ရေစိုခံ၊ တုန်ခါမှုထိန်းစနစ်ပါဝင်သော ကင်မရာ ဖြစ်ပါသည်။" },
-                { id: "p6", title: "Ergonomic Vertical Wireless Mouse", price: 18000, img: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=400&q=80", desc: "ကွန်ပျူတာ အသုံးများသူများအတွက် လက်ကောက်ဝတ်မနာစေရန် အထူးဒီဇိုင်းထုတ်ထားသော Mouse ဖြစ်ပါသည်။" },
-                { id: "p7", title: "Stainless Steel Smart Thermos Bottle", price: 15000, img: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&q=80", desc: "ရေအပူချိန်ကို အပေါ်မျက်နှာပြင်တွင် LED ဖြင့် ပြသပေးနိုင်သော ကီလိုဂရမ်အဆင့်မြင့် ရေနွေးဓာတ်ဘူး ဖြစ်ပါသည်။" },
-                { id: "p8", title: "Portable High-Fidelity Bluetooth Speaker", price: 32000, img: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&q=80", desc: "ဘက်ထရီခံပြီး Bass သံပြင်းပြင်းနှင့် အခန်းတွင်း သီချင်းနားထောင်ရန် အလွန်ကောင်းမွန်သော စပီကာ ဖြစ်ပါသည်။" }
+                { id: "p1", title: "Premium Cotton Shirt", price: 25000, img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400", desc: "အရည်အသွေးမြင့် ချည်သားစစ်စစ်ဖြင့် ချုပ်လုပ်ထားသော ခေတ်မီရှပ်အင်္ကျီ ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" },
+                { id: "p2", title: "Wireless Bluetooth Earbuds", price: 35000, img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400", desc: "အသံထွက်ကြည်လင်ပြီး Battery ခံနိုင်ရည်အလွန်ကောင်းမွန်သော Wireless နားကြပ် ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" },
+                { id: "p3", title: "Smart Sports Watch V2", price: 58000, img: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=400", desc: "နှလုံးခုန်နှုန်းနှင့် လမ်းလျှောက်မှုခြေလှမ်းများကို တိကျစွာတိုင်းတာပေးမည့် Smart နာရီ ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" }
             ],
-            
-            // သူများတွေ လာတင်ထားပြီး Admin ခွင့်ပြုချက်ကို စောင့်ဆိုင်းနေသည့် ပစ္စည်းများ (Pending Approvals)
-            pendingProducts: [],
-            
-            // ခြင်းတောင်းထဲက ပစ္စည်းများ
             cart: {},
             searchQuery: "",
-            isAdminMode: false
+            adminActive: false
         };
 
-        // Telegram API configuration Setup (စလစ်ဖိုင် ပို့ရန်)
-        const TELEGRAM_BOT_TOKEN = "7718055416:AAFl1X4wS96fbyTfXvT2nS9rQ0Xf0O8nCsc";
-        const TELEGRAM_CHAT_ID = "6541530962";
-
-        // Global Lucide Icons Auto Loader
-        function refreshIcons() {
-            if (typeof lucide !== 'undefined') { lucide.createIcons(); }
+        function refreshIcons() { if (typeof lucide !== 'undefined') { lucide.createIcons(); } }
+        function fileToBlob(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
         }
 
-        // Custom Toast Notifications
-        function showToast(message, type = "success") {
+        function showToast(msg, type = "success") {
             const container = document.getElementById('toastContainer');
             if (!container) return;
             const toast = document.createElement('div');
-            toast.className = `flex items-center gap-2.5 p-3.5 rounded-xl shadow-xl text-white font-bold text-xs transform transition duration-300 translate-x-10 opacity-0 pointer-events-auto min-w-[250px] ${
-                type === "success" ? "bg-emerald-600 border border-emerald-500" : "bg-rose-600 border border-rose-500"
-            }`;
-            const icon = type === "success" ? "check-circle" : "alert-circle";
-            toast.innerHTML = `<i data-lucide="${icon}" class="w-4 h-4 shrink-0"></i> <span>${message}</span>`;
+            toast.className = `p-3 rounded-xl shadow-lg border text-xs font-bold text-white flex items-center gap-2 pointer-events-auto transition duration-300 bg-slate-900 border-slate-800`;
+            if (type === "error") toast.className = `p-3 rounded-xl shadow-lg border text-xs font-bold text-white flex items-center gap-2 pointer-events-auto transition duration-300 bg-rose-600 border-rose-500`;
+            toast.innerText = msg;
             container.appendChild(toast);
-            refreshIcons();
-            
-            setTimeout(() => { toast.classList.remove('translate-x-10', 'opacity-0'); }, 10);
-            setTimeout(() => {
-                toast.classList.add('translate-x-10', 'opacity-0');
-                setTimeout(() => { toast.remove(); }, 300);
-            }, 3000);
-        }
-
-        // Search Input Synchronizer Logic
-        function setupSearch() {
-            const handler = (e) => {
-                state.searchQuery = e.target.value.trim().toLowerCase();
-                renderProductsGrid();
-            };
-            document.getElementById('searchInput')?.addEventListener('input', handler);
-            document.getElementById('mobileSearchInput')?.addEventListener('input', handler);
+            setTimeout(() => { toast.remove(); }, 4000);
         }
 
         // ==========================================
-        // VENDOR & MERCHANT UPLOAD MANAGEMENT LOGIC
+        // DYNAMIC SHOP GRID RENDERER
         // ==========================================
-        function openVendorModal() { document.getElementById('vendorModal').classList.remove('hidden'); }
-        function closeVendorModal() { document.getElementById('vendorModal').classList.add('hidden'); }
+        function renderProductsGrid() {
+            const grid = document.getElementById('productsGrid');
+            if (!grid) return;
 
-        // သူများတွေ ပစ္စည်းလာတင်တဲ့အခါ အလုပ်လုပ်မည့် Form Handler
-        function handleVendorSubmit(e) {
-            e.preventDefault();
-            const title = document.getElementById('vProdTitle').value.trim();
-            const price = parseInt(document.getElementById('vProdPrice').value);
-            const img = document.getElementById('vProdImg').value.trim();
-            const desc = document.getElementById('vProdDesc').value.trim();
+            const filtered = state.products.filter(p => p.title.toLowerCase().includes(state.searchQuery));
+            grid.innerHTML = '';
 
-            // ပစ္စည်းအသစ်ကို ID အသစ်တစ်ခုထုတ်ပြီး ခွင့်ပြုချက်စောင့်ဆိုင်းစာရင်း (Pending Queue) ထဲသို့ ထည့်လိုက်သည်
-            const newPendingItem = {
-                id: "pending_" + Date.now(),
-                title: title,
-                price: price,
-                img: img,
-                desc: desc
-            };
-
-            state.pendingProducts.push(newPendingItem);
-            
-            // UI နှင့် Form ကို Update ပြုလုပ်သည်
-            document.getElementById('vendorProductForm').reset();
-            closeVendorModal();
-            renderAdminDeck();
-            
-            showToast("ပစ္စည်းတင်ပြမှု အောင်မြင်ပါသည်။ ဆိုင်ရှင်(Admin) ခွင့်ပြုပေးရန် စောင့်ဆိုင်းနေပါသည်ရှင်။", "success");
-        }
-
-        // ==========================================
-        // ADMIN DASHBOARD PANELS (APPROVE ENGINE)
-        // ==========================================
-        function toggleAdminPanel() {
-            // Admin Panel ခလုတ်နှိပ်လျှင် ပေါ်လာ/ဝှက်သွားစေမည့် စနစ်
-            state.isAdminMode = !state.isAdminMode;
-            const panel = document.getElementById('adminDashboardSection');
-            if (state.isAdminMode) {
-                panel.classList.remove('hidden');
-                renderAdminDeck();
-                showToast("Admin Panel သို့ ဝင်ရောက်ပြီးပါပြီ။", "success");
-            } else {
-                panel.classList.add('hidden');
-            }
-        }
-
-        // Admin Deck ထဲရှိ ပစ္စည်းများကို Render လုပ်ပေးသည့် စနစ်
-        function renderAdminDeck() {
-            const deck = document.getElementById('adminPendingDeck');
-            const emptyState = document.getElementById('adminEmptyState');
-            if (!deck) return;
-
-            deck.innerHTML = '';
-            if (state.pendingProducts.length === 0) {
-                emptyState.classList.remove('hidden');
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-12 text-center text-gray-400 font-bold text-xs">ရှာဖွေနေသော ပစ္စည်း မရှိပါရှင်။</div>`;
                 return;
             }
-            emptyState.classList.add('hidden');
 
-            state.pendingProducts.forEach((p, index) => {
+            filtered.forEach(p => {
                 const card = document.createElement('div');
-                card.className = "bg-white p-3 rounded-xl border border-amber-200 shadow-sm flex flex-col justify-between space-y-3";
+                card.className = "bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col cursor-pointer group relative";
+                card.setAttribute('onclick', `openDetailModal('${p.id}')`);
                 card.innerHTML = `
-                    <div class="flex gap-3">
-                        <img src="${p.img}" class="w-16 h-16 object-cover rounded-lg bg-gray-100 border shrink-0">
-                        <div class="space-y-0.5">
-                            <h4 class="font-bold text-xs text-gray-800 line-clamp-1">${p.title}</h4>
-                            <p class="text-xs font-black text-[#f57224]">${p.price.toLocaleString()} MMK</p>
-                            <p class="text-[10px] text-gray-500 line-clamp-2">${p.desc}</p>
-                        </div>
+                    <div class="relative overflow-hidden bg-gray-50 pt-[100%] border-b border-gray-100">
+                        <img src="${p.img}" alt="Product" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-300">
                     </div>
-                    <div class="grid grid-cols-2 gap-2 text-[11px]">
-                        <button onclick="approveProduct('${p.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 rounded-lg transition flex items-center justify-center gap-1">
-                            <i data-lucide="check" class="w-3.5 h-3.5"></i> ခွင့်ပြုမည် (Approve)
-                        </button>
-                        <button onclick="rejectProduct('${p.id}')" class="bg-rose-600 hover:bg-rose-700 text-white font-bold py-1.5 rounded-lg transition flex items-center justify-center gap-1">
-                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> ပယ်ဖျက်မည်
+                    <div class="p-2.5 flex-1 flex flex-col justify-between space-y-2">
+                        <div>
+                            <h3 class="text-[11px] md:text-xs font-bold text-gray-800 line-clamp-2 leading-snug group-hover:text-[#f57224] transition">${p.title}</h3>
+                            <div class="mt-1 text-[#f57224] text-xs font-black">${p.price.toLocaleString()} MMK</div>
+                        </div>
+                        <button onclick="event.stopPropagation(); addToCart('${p.id}', '${p.title.replace(/'/g, "\\'")}', ${p.price})" class="w-full bg-[#1a274c] hover:bg-indigo-950 text-white text-[10px] py-1.5 rounded-lg font-bold transition flex items-center justify-center gap-1 shadow-sm">
+                            ခြင်းတောင်းထဲထည့်
                         </button>
                     </div>
                 `;
-                deck.appendChild(card);
+                grid.appendChild(card);
             });
             refreshIcons();
         }
 
-        // အစ်ကိုက "ခွင့်ပြုမည် (Approve)" နှိပ်လိုက်ရင် Live Shop ရောင်းတန်းထဲသို့ ရောက်သွားမည့် စနစ်
-        function approveProduct(id) {
-            const itemIndex = state.pendingProducts.findIndex(p => p.id === id);
-            if (itemIndex === -1) return;
-
-            const approvedItem = state.pendingProducts[itemIndex];
-            
-            // Pending ထဲမှ ဖယ်ထုတ်ပြီး Live Products စာရင်းထဲသို့ ကူးပြောင်းထည့်သွင်းသည်
-            state.pendingProducts.splice(itemIndex, 1);
-            state.products.unshift(approvedItem); // ပစ္စည်းအသစ်ကို ထိပ်ဆုံးမှာ ပြသရန်
-            
-            renderAdminDeck();
-            renderProductsGrid();
-            showToast(`"${approvedItem.title}" ကို ဆိုင်မျက်နှာစာတွင် ရောင်းချရန် ခွင့်ပြုလိုက်ပါပြီရှင်။`, "success");
+        function addToCart(productId, name, price) {
+            if (state.cart[productId]) { state.cart[productId].qty += 1; } 
+            else { state.cart[productId] = { id: productId, name: name, price: parseInt(price), qty: 1 }; }
+            updateCartUI();
+            showToast(`"${name}" ကို စျေးဝယ်ခြင်းတောင်းထဲ ထည့်ပြီးပါပြီ။`);
         }
 
-        // "ပယ်ဖျက်မည်" နှိပ်လျှင် စာရင်းထဲမှ လုံးဝဖယ်ထုတ်ပစ်မည့် စနစ်
-        function rejectProduct(id) {
-            state.pendingProducts = state.pendingProducts.filter(p => p.id !== id);
-            renderAdminDeck();
-            showToast("ပစ္စည်းတင်ပြမှုကို ပယ်ဖျက်လိုက်ပါပြီ။", "error");
+        function updateCartUI() {
+            const listContainer = document.getElementById('cartItemsList');
+            const badge = document.getElementById('cartBadge');
+            const totalPriceText = document.getElementById('cartTotalPrice');
+            if (!listContainer) return;
+
+            listContainer.innerHTML = '';
+            let totalItemsCount = 0;
+            let totalPriceSum = 0;
+
+            Object.values(state.cart).forEach(item => {
+                totalItemsCount += item.qty;
+                totalPriceSum += (item.price * item.qty);
+
+                const itemRow = document.createElement('div');
+                itemRow.className = "flex items-center justify-between p-2.5 bg-gray-50 rounded-xl border border-gray-100 text-xs";
+                itemRow.innerHTML = `
+                    <div class="flex-1 pr-2">
+                        <h5 class="font-bold text-gray-800 line-clamp-1">${item.name}</h5>
+                        <span class="text-[11px] font-bold text-[#f57224]">${item.price.toLocaleString()} MMK</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 bg-white border border-gray-200 rounded-lg p-0.5 shadow-sm">
+                        <button onclick="updateCartQty('${item.id}', -1)" class="w-5 h-5 flex items-center justify-center font-bold text-gray-500 hover:bg-gray-100 rounded">-</button>
+                        <span class="text-[11px] font-bold w-4 text-center">${item.qty}</span>
+                        <button onclick="updateCartQty('${item.id}', 1)" class="w-5 h-5 flex items-center justify-center font-bold text-gray-500 hover:bg-gray-100 rounded">+</button>
+                    </div>
+                `;
+                listContainer.appendChild(itemRow);
+            });
+
+            if (totalItemsCount > 0) {
+                badge.innerText = totalItemsCount;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            totalPriceText.innerText = `${totalPriceSum.toLocaleString()} MMK`;
+            if (Object.keys(state.cart).length === 0) {
+                listContainer.innerHTML = `<div class="h-40 flex flex-col items-center justify-center text-gray-400 text-xs font-bold">ခြင်းတောင်းထဲတွင် ပစ္စည်းမရှိသေးပါ</div>`;
+            }
+            refreshIcons();
         }
-                    // Global Dynamic Timer Variable Reference
-        let checkoutTimerInterval = null;
+
+        function updateCartQty(productId, change) {
+            if (!state.cart[productId]) return;
+            state.cart[productId].qty += change;
+            if (state.cart[productId].qty <= 0) { delete state.cart[productId]; }
+            updateCartUI();
+        }
+
+        function toggleCart(open) {
+            const drawer = document.getElementById('cartDrawer');
+            if (!drawer) return;
+            const innerPanel = drawer.firstElementChild;
+            if (open) {
+                drawer.classList.remove('pointer-events-none', 'opacity-0');
+                innerPanel.classList.remove('translate-x-full');
+            } else {
+                drawer.classList.add('pointer-events-none', 'opacity-0');
+                innerPanel.classList.add('translate-x-full');
+            }
+        }
+                    function openDetailModal(productId) {
+            const product = state.products.find(p => p.id === productId);
+            if (!product) return;
+            document.getElementById('modalProductImg').src = product.img;
+            document.getElementById('modalProductName').innerText = product.title;
+            document.getElementById('modalProductPrice').innerText = `${product.price.toLocaleString()} MMK`;
+            document.getElementById('modalProductDesc').innerText = product.desc;
+            document.getElementById('modalCartBtn').setAttribute('onclick', `addToCart('${product.id}', '${product.title.replace(/'/g, "\\'")}', ${product.price}); closeDetailModal();`);
+            document.getElementById('detailModal').classList.remove('hidden');
+            refreshIcons();
+        }
+
+        function closeDetailModal() { document.getElementById('detailModal').classList.add('hidden'); }
+        function openVendorModal() { document.getElementById('vendorModal').classList.remove('hidden'); refreshIcons(); }
+        function closeVendorModal() { document.getElementById('vendorModal').classList.add('hidden'); }
 
         // ==========================================
-        // MULTI-STEP CHECKOUT MANAGEMENT ENGINES
+        // CHECKOUT FLOW CONTROL ENGINE
         // ==========================================
         function startCheckoutFlow() {
             if (Object.keys(state.cart).length === 0) {
@@ -403,11 +435,9 @@
                 return;
             }
             toggleCart(false);
-            
             document.getElementById('checkoutStep1').classList.remove('hidden');
             document.getElementById('checkoutStep2').classList.add('hidden');
             document.getElementById('checkoutStep3').classList.add('hidden');
-            
             let total = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
             document.getElementById('checkoutTotalAmount').innerText = `${total.toLocaleString()} MMK`;
             document.getElementById('checkoutModal').classList.remove('hidden');
@@ -422,15 +452,12 @@
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
             const address = document.getElementById('custAddress').value.trim();
-
             if (!name || !phone || !address) {
                 showToast("ကျေးဇူးပြု၍ အချက်အလက်များကို ပြည့်စုံစွာ ဖြည့်သွင်းပေးပါရှင်။", "error");
                 return;
             }
-
             document.getElementById('checkoutStep2').classList.add('hidden');
             document.getElementById('checkoutStep3').classList.remove('hidden');
-            
             startOneHourCountdown();
         }
 
@@ -438,24 +465,17 @@
             if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
             let timeRemaining = 3600; 
             const display = document.getElementById('countdownDisplay');
-
             checkoutTimerInterval = setInterval(() => {
                 let minutes = Math.floor(timeRemaining / 60);
                 let seconds = timeRemaining % 60;
-
                 minutes = minutes < 10 ? "0" + minutes : minutes;
                 seconds = seconds < 10 ? "0" + seconds : seconds;
-
                 if (display) display.innerText = `${minutes}:${seconds}`;
-
-                if (timeRemaining === 60) {
-                    showToast("သတိပေးချက်: မှာယူမှုပြီးဆုံးရန် ၁ မိနစ်သာ ကျန်ပါတော့သည်။ ငွေလွှဲယူမှုအား အဆုံးသတ်ပေးပါရှင်။", "error");
-                }
-
+                if (timeRemaining === 60) { showToast("မှာယူမှုပြီးဆုံးရန် ၁ မိနစ်သာ ကျန်ပါတော့သည်။", "error"); }
                 if (timeRemaining <= 0) {
                     clearInterval(checkoutTimerInterval);
                     closeCheckoutModal();
-                    alert("ငွေလွှဲရန် ပေးထားသော အချိန် ၁ နာရီ ပြည့်သွားသဖြင့် သင်၏ မှာယူမှုကို စနစ်မှ အလိုအလျောက် ပယ်ဖျက်လိုက်ပါပြီရှင်။");
+                    alert("ငွေလွှဲရန် အချိန်ပြည့်သွားသဖြင့် မှာယူမှုကို ပယ်ဖျက်လိုက်ပါပြီ။");
                 }
                 timeRemaining--;
             }, 1000);
@@ -467,13 +487,13 @@
         }
 
         // ==========================================
-        // TELEGRAM DISPATCH AUTOMATION (FIXED & SECURED)
+        // TELEGRAM DISPATCH AND CHAT SYSTEM
         // ==========================================
         async function handleCheckoutSubmit(e) {
             e.preventDefault();
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
-            submitBtn.innerHTML = `<span class="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"></span> ခဏစောင့်ပါရှင်...`;
+            submitBtn.innerHTML = `ခဏစောင့်ပါရှင်...`;
 
             if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
 
@@ -490,65 +510,41 @@
                                 `📞 ဖုန်းနံပါတ်: ${phone}\n` +
                                 `📍 လိပ်စာ: ${address}\n\n` +
                                 `🛍️ **ပစ္စည်းစာရင်း-**\n${itemsString}\n\n` +
-                                `💰 **စုစုပေါင်းကျသင့်ငွေ:** ${totalPrice.toLocaleString()} MMK\n\n` +
-                                `💳 Wave Pay ဖြင့် Ngwe Hwဲပြီးပါပြီ။`;
+                                `💰 **စုစုပေါင်းကျသင့်ငွေ:** ${totalPrice.toLocaleString()} MMK`;
 
             let imgDataUrl = "https://images.unsplash.com/photo-1557683316-973673baf926?w=400";
-            try {
-                if (fileInput) { imgDataUrl = await fileToBlob(fileInput); }
-            } catch(pErr) { console.log(pErr); }
+            try { if (fileInput) { imgDataUrl = await fileToBlob(fileInput); } } catch(pErr) {}
 
             try {
                 const formData = new FormData();
                 formData.append('chat_id', TELEGRAM_CHAT_ID);
                 formData.append('caption', messageText);
-                if (fileInput) {
-                    formData.append('photo', fileInput);
-                }
-
-                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
-                    method: 'POST',
-                    body: formData
-                });
-            } catch (err) {
-                console.log("Telegram network bypass applied.");
-            }
+                if (fileInput) formData.append('photo', fileInput);
+                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: formData });
+            } catch (err) {}
 
             closeCheckoutModal();
-            showToast("မှာယူမှု အောင်မြင်ပါသည်။ AI ဆိုင်အကူအား ညာဘက်အောက်ခြေတွင် ဖွင့်လှစ်ပေးလိုက်ပါပြီ။", "success");
-            
+            showToast("မှာယူမှု အောင်မြင်ပါသည်။");
             triggerChatSystemActivation(name, totalPrice, imgDataUrl);
 
             state.cart = {};
             updateCartUI();
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i> ငွေလွှဲပြီးပါပြီ (မှာယူမှုကို အတည်ပြုပါ)`;
-            refreshIcons();
         }
 
-        // ==========================================
-        // CONDITIONAL CHAT SYSTEM ACTIVATION ENGINE
-        // ==========================================
         function triggerChatSystemActivation(name, total, imgDataUrl) {
             document.getElementById('aiChatIconTrigger').style.display = 'flex';
-            const chatWin = document.getElementById('aiChatWindow');
-            chatWin.style.display = 'flex';
-
+            document.getElementById('aiChatWindow').style.display = 'flex';
             const chatMessages = document.getElementById('chatMessages');
             chatMessages.innerHTML = ''; 
 
             const welcomeBubble = document.createElement('div');
-            welcomeBubble.className = "p-3 bg-white rounded-2xl rounded-tl-none border border-gray-100 shadow-sm text-gray-700 leading-relaxed max-w-[85%]";
-            welcomeBubble.innerHTML = `မင်္ဂလာပါရှင် <strong>${name}</strong>။ TSPK Marketplace မှ ကြိုဆိုပါတယ်ရှင်။ လူကြီးမင်း ပေးပို့ထားသော စလစ်နှင့် မှာယူမှုအချက်အလက်များကို ရရှိထားပြီး ဖြစ်ပါတယ်ရှင်။ မေးမြန်းလိုသည်များကို စိတ်ကြိုက် မေးမြန်းနိုင်ပါတယ်ရှင်။`;
+            welcomeBubble.className = "p-3 bg-white rounded-2xl border text-gray-700 max-w-[85%]";
+            welcomeBubble.innerHTML = `မင်္ဂလာပါရှင် <strong>${name}</strong>။ TSPK မှ ကြိုဆိုပါတယ်။ စလစ်ပုံ ရရှိပါပြီရှင်။ သိလိုသည်များကို စိတ်ကြိုက်မေးမြန်းနိုင်ပါတယ်ရှင်။`;
             chatMessages.appendChild(welcomeBubble);
 
             const receiptBubble = document.createElement('div');
-            receiptBubble.className = "p-2.5 bg-[#1a274c] text-white rounded-2xl rounded-tr-none shadow-md space-y-1 max-w-[85%] ml-auto text-right text-xs";
-            receiptBubble.innerHTML = `
-                <p class="font-bold text-amber-400 text-[11px] flex items-center gap-1 justify-end">လက်ခံရရှိသော စလစ်ဖိုင်</p>
-                <p class="text-[11px] opacity-90">စုစုပေါင်း: ${total.toLocaleString()} MMK</p>
-                <img src="${imgDataUrl}" class="w-full max-h-24 object-cover rounded-lg border border-white/10 mt-1">
-            `;
+            receiptBubble.className = "p-2.5 bg-[#1a274c] text-white rounded-2xl max-w-[85%] ml-auto text-right text-xs space-y-1";
+            receiptBubble.innerHTML = `<p class="font-bold text-amber-400">တင်ပြပြီးသော စလစ်</p><p>${total.toLocaleString()} MMK</p><img src="${imgDataUrl}" class="w-full max-h-24 object-cover rounded-lg">`;
             chatMessages.appendChild(receiptBubble);
             chatMessages.scrollTop = chatMessages.scrollHeight;
             refreshIcons();
@@ -557,58 +553,61 @@
         function minimizeChat() { document.getElementById('aiChatWindow').style.display = 'none'; }
         function maximizeChat() { document.getElementById('aiChatWindow').style.display = 'flex'; }
 
-        // ==========================================
-        // TELEGRAM SYNCER & GEMINI ASSISTANT ENGINE (CHAT FLOW)
-        // ==========================================
-        const offlinePredefinedResponses = [
-            "ရှင်၊ မှာယူထားတဲ့ ပစ္စည်းတွေကို အမြန်ဆုံး စစ်ဆေးပြီး ပို့ဆောင်ပေးနိုင်ဖို့ ကျွန်မတို့ လုပ်ဆောင်နေပါတယ်ရှင်။ စိတ်ချရတဲ့ TSPK Marketplace ဖြစ်ပါတယ်ရှင်။",
-            "TSPK Marketplace က ပစ္စည်းမှန်၊ ဈေးနှုန်းမှန်တာမို့ လူကြီးမင်းတို့ စိတ်ချယုံကြည်စွာ အမြဲအားပေးနိုင်ပါတယ်ရှင်။ တခြား ဘာများ ထပ်မံကူညီပေးရမလဲရှင်။"
-        ];
-
         async function handleSendMessage(e) {
             e.preventDefault();
             const inputField = document.getElementById('chatInputField');
             const userText = inputField.value.trim();
             if (!userText) return;
-
             inputField.value = '';
             
             const container = document.getElementById('chatMessages');
             const userBubble = document.createElement('div');
-            userBubble.className = "p-2.5 bg-[#f57224] text-white rounded-2xl rounded-tr-none shadow-sm max-w-[85%] ml-auto text-left leading-relaxed";
+            userBubble.className = "p-2.5 bg-[#f57224] text-white rounded-2xl max-w-[85%] ml-auto text-left";
             userBubble.innerText = userText;
             container.appendChild(userBubble);
             container.scrollTop = container.scrollHeight;
 
-            const loadBubble = document.createElement('div');
-            loadBubble.className = "flex items-center gap-1.5 p-2.5 bg-gray-200 text-gray-500 rounded-2xl rounded-tl-none max-w-[50%] text-xs font-semibold tracking-wide";
-            loadBubble.innerHTML = `<span class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce"></span><span class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style="animation-delay:0.15s"></span>`;
-            container.appendChild(loadBubble);
-            container.scrollTop = container.scrollHeight;
-
             try {
-                const liveChatLog = `💬 **ဝယ်သူထံမှ ချက်တင်မက်ဆေ့ခ်ျ**\n\n📝 စာသား: ${userText}`;
                 fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: liveChatLog,
-                        parse_mode: 'Markdown'
-                    })
+                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: `💬 **ဝယ်သူထံမှ ချက်တင်**\n\n📝 စာသား: ${userText}`, parse_mode: 'Markdown' })
                 });
-            } catch (tErr) { console.log(tErr); }
+            } catch (tErr) {}
 
             setTimeout(() => {
-                loadBubble.remove();
-                let aiText = offlinePredefinedResponses[Math.floor(Math.random() * offlinePredefinedResponses.length)];
-                
                 const aiBubble = document.createElement('div');
-                aiBubble.className = "p-2.5 bg-white text-gray-700 rounded-2xl rounded-tl-none border border-gray-100 shadow-sm max-w-[85%] leading-relaxed";
-                aiBubble.innerHTML = aiText.replace(/\n/g, '<br>');
+                aiBubble.className = "p-2.5 bg-white text-gray-700 rounded-2xl border max-w-[85%]";
+                aiBubble.innerText = "မှာယူထားတဲ့ ပစ္စည်းတွေကို အမြန်ဆုံး စစ်ဆေးပြီး ပို့ဆောင်ပေးနိုင်ဖို့ လုပ်ဆောင်နေပါတယ်ရှင်။";
                 container.appendChild(aiBubble);
                 container.scrollTop = container.scrollHeight;
             }, 1000);
+        }
+
+        // ==========================================
+        // VENDOR PRODUCT UPLOAD REGISTRATION LOGIC
+        // ==========================================
+        async function handleVendorSubmit(e) {
+            e.preventDefault();
+            const title = document.getElementById('vTitle').value;
+            const price = parseInt(document.getElementById('vPrice').value);
+            const fileInput = document.getElementById('vImg').files[0];
+            const desc = document.getElementById('vDesc').value;
+
+            let imgUrl = "https://images.unsplash.com/photo-1557683316-973673baf926?w=400";
+            if (fileInput) { imgUrl = await fileToBlob(fileInput); }
+
+            const newProduct = { id: "p_" + Date.now(), title, price, img: imgUrl, desc, vendor: "User Vendor" };
+            state.products.push(newProduct);
+            renderProductsGrid();
+            closeVendorModal();
+            document.getElementById('vendorForm').reset();
+            showToast("ပစ္စည်းအသစ် တင်ပြမှု အောင်မြင်ပါသည်။");
+        }
+
+        function toggleAdminPanel() {
+            const section = document.getElementById('adminDashboardSection');
+            if (section) section.classList.toggle('hidden');
         }
 
         function setupSearch() {
@@ -620,262 +619,15 @@
             document.getElementById('mobileSearchInput')?.addEventListener('input', handler);
         }
 
-        // ==========================================
-        // CRITICAL FIX: SAFE INITIALIZATION ON WINDOW LOAD
-        // ဝက်ဘ်ဆိုက် စာမျက်နှာ အားလုံး Loading ပြည့်စုံစွာ တက်လာပြီးမှ ပစ္စည်းများကို Render လုပ်ပေးသည့် လုံခြုံသော စနစ်
-        // ==========================================
+        // Window Safely Loader Engine
         window.addEventListener('DOMContentLoaded', () => {
             setupSearch();
             renderProductsGrid();
-
             if (window.location.search.includes('step2003')) {
                 const adminBtn = document.getElementById('secretAdminBtn');
                 if (adminBtn) adminBtn.style.display = 'flex';
             }
         });
-    </script>
-</body>
-</html>
-
-                    // Global Dynamic Timer Variable Reference
-        let checkoutTimerInterval = null;
-
-        // ==========================================
-        // MULTI-STEP CHECKOUT MANAGEMENT ENGINES
-        // ==========================================
-        function startCheckoutFlow() {
-            if (Object.keys(state.cart).length === 0) {
-                showToast("ခြင်းတောင်းထဲတွင် ဝယ်ယူရန် ပစ္စည်းမရှိသေးပါရှင်။", "error");
-                return;
-            }
-            toggleCart(false);
-            
-            // Step အဟောင်းများကို Reset လုပ်ပြီး ပထမဆုံး စည်းကမ်းချက်များကို အရင်ပြသည်
-            document.getElementById('checkoutStep1').classList.remove('hidden');
-            document.getElementById('checkoutStep2').classList.add('hidden');
-            document.getElementById('checkoutStep3').classList.add('hidden');
-            
-            let total = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
-            document.getElementById('checkoutTotalAmount').innerText = `${total.toLocaleString()} MMK`;
-            document.getElementById('checkoutModal').classList.remove('hidden');
-        }
-
-        function goToCheckoutStep2() {
-            document.getElementById('checkoutStep1').classList.add('hidden');
-            document.getElementById('checkoutStep2').classList.remove('hidden');
-        }
-
-        function goToCheckoutStep3() {
-            const name = document.getElementById('custName').value.trim();
-            const phone = document.getElementById('custPhone').value.trim();
-            const address = document.getElementById('custAddress').value.trim();
-
-            if (!name || !phone || !address) {
-                showToast("ကျေးဇူးပြု၍ အချက်အလက်များကို ပြည့်စုံစွာ ဖြည့်သွင်းပေးပါရှင်။", "error");
-                return;
-            }
-
-            document.getElementById('checkoutStep2').classList.add('hidden');
-            document.getElementById('checkoutStep3').classList.remove('hidden');
-            
-            // Start The One-Hour Realtime Countdown Timer System
-            startOneHourCountdown();
-        }
-
-        // ၁ နာရီ Countdown Engine မောင်းနှင်သည့် စနစ်
-        function startOneHourCountdown() {
-            if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
-            let timeRemaining = 3600; // 1 Hour = 3600 Seconds
-            const display = document.getElementById('countdownDisplay');
-
-            checkoutTimerInterval = setInterval(() => {
-                let minutes = Math.floor(timeRemaining / 60);
-                let seconds = timeRemaining % 60;
-
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                display.innerText = `${minutes}:${seconds}`;
-
-                // ၁ မိနစ်ပဲ ကျန်တော့ချိန် ဝယ်သူ မေ့မသွားစေရန် အသိပေးချက် (Notification Alert) ပို့ပေးသည်
-                if (timeRemaining === 60) {
-                    showToast("သတိပေးချက်: မှာယူမှုပြီးဆုံးရန် ၁ မိနစ်သာ ကျန်ပါတော့သည်။ ငွေလွှဲယူမှုအား အဆုံးသတ်ပေးပါရှင်။", "error");
-                }
-
-                if (timeRemaining <= 0) {
-                    clearInterval(checkoutTimerInterval);
-                    closeCheckoutModal();
-                    alert("ငွေလွှဲရန် ပေးထားသော အချိန် ၁ နာရီ ပြည့်သွားသဖြင့် သင်၏ မှာယူမှုကို စနစ်မှ အလိုအလျောက် ပယ်ဖျက်လိုက်ပါပြီရှင်။");
-                }
-                timeRemaining--;
-            }, 1000);
-        }
-
-        function closeCheckoutModal() {
-            if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
-            document.getElementById('checkoutModal').classList.add('hidden');
-            document.getElementById('checkoutForm').reset();
-            document.getElementById('custName').value = '';
-            document.getElementById('custPhone').value = '';
-            document.getElementById('custAddress').value = '';
-        }
-
-        // ==========================================
-        // TELEGRAM DISPATCH AUTOMATION LOGIC
-        // ==========================================
-        async function handleCheckoutSubmit(e) {
-            e.preventDefault();
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `<span class="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"></span> ခဏစောင့်ပါရှင်...`;
-
-            if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
-
-            const name = document.getElementById('custName').value;
-            const phone = document.getElementById('custPhone').value;
-            const address = document.getElementById('custAddress').value;
-            const fileInput = document.getElementById('custSlip').files[0];
-
-            let totalPrice = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
-            let itemsString = Object.values(state.cart).map(item => `📦 ${item.name}\n🔹 ${item.price.toLocaleString()} x ${item.qty} ခု = ${(item.price * item.qty).toLocaleString()} MMK`).join('\n\n');
-
-            const messageText = `🛒 **မှာယူမှုအသစ် (Verified Marketplace)**\n\n` +
-                                `👤 ဝယ်ယူသူ: ${name}\n` +
-                                `📞 ဖုန်းနံပါတ်: ${phone}\n` +
-                                `📍 လိပ်စာ: ${address}\n\n` +
-                                `🛍️ **ပစ္စည်းစာရင်း-**\n${itemsString}\n\n` +
-                                `💰 **စုစုပေါင်းကျသင့်ငွေ:** ${totalPrice.toLocaleString()} MMK\n\n` +
-                                `💳 Wave Pay ဖြင့် ငွေလွှဲအပ်နှံပြီးပါပြီ။`;
-
-            try {
-                const formData = new FormData();
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('caption', messageText);
-                formData.append('photo', fileInput);
-
-                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                closeCheckoutModal();
-                showToast("ငွေလွှဲစလစ် တင်ပြမှု အောင်မြင်ပါသည်။ AI ချက်တင်အား ဖွင့်လှစ်ပေးလိုက်ပါပြီ။", "success");
-                
-                // စလစ်တင်ပြီးမှ ချက်တင်ဘောက်ကို တန်းပွင့်စေသည်
-                triggerChatSystemActivation(name, totalPrice, fileInput);
-
-                state.cart = {};
-                updateCartUI();
-
-            } catch (err) {
-                closeCheckoutModal();
-                showToast("မှာယူမှု အဆင်ပြေသွားပါပြီ။ လူကြီးမင်းအား ကျေးဇူးတင်ပါတယ်ရှင်။", "success");
-                triggerChatSystemActivation(name, totalPrice, fileInput);
-                state.cart = {};
-                updateCartUI();
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i> ငွေလွှဲပြီးပါပြီ (မှာယူမှုကို အတည်ပြုပါ)`;
-                refreshIcons();
-            }
-        }
-
-        // ==========================================
-        // CONDITIONAL CHAT SYSTEM ACTIVATION ENGINE
-        // ==========================================
-        async function triggerChatSystemActivation(name, total, fileObj) {
-            document.getElementById('aiChatIconTrigger').style.display = 'flex';
-            const chatWin = document.getElementById('aiChatWindow');
-            chatWin.style.display = 'flex';
-
-            const chatMessages = document.getElementById('chatMessages');
-            let imgDataUrl = await fileToBlob(fileObj);
-
-            const welcomeBubble = document.createElement('div');
-            welcomeBubble.className = "p-3 bg-white rounded-2xl rounded-tl-none border border-gray-100 shadow-sm text-gray-700 leading-relaxed max-w-[85%]";
-            welcomeBubble.innerHTML = `မင်္ဂလာပါရှင် <strong>${name}</strong>။ TSPK Marketplace မှ လှိုက်လှဲစွာ ကြိုဆိုပါတယ်ရှင်။ လူကြီးမင်း စနစ်တကျ လွှဲပြောင်းပေးပို့ထားသော စလစ်နှင့် မှာယူမှုအချက်အလက်များကို ကျွန်မတို့ သိမ်းဆည်းရရှိထားပြီး ဖြစ်ပါတယ်ရှင်။ မှာယူမှုနှင့် ပတ်သက်၍ဖြစ်စေ၊ တခြားပစ္စည်းများအကြောင်း ဖြစ်စေ မေးမြန်းလိုသည်များကို စိတ်ကြိုက် မေးမြန်းနိုင်ပါတယ်ရှင်။`;
-            chatMessages.appendChild(welcomeBubble);
-
-            const receiptBubble = document.createElement('div');
-            receiptBubble.className = "p-2.5 bg-[#1a274c] text-white rounded-2xl rounded-tr-none shadow-md space-y-1 max-w-[85%] ml-auto text-right text-xs";
-            receiptBubble.innerHTML = `
-                <p class="font-bold text-amber-400 text-[11px] flex items-center gap-1 justify-end"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> လက်ခံရရှိသော စလစ်ဖိုင်</p>
-                <p class="text-[11px] opacity-90">စုစုပေါင်း: ${total.toLocaleString()} MMK</p>
-                <img src="${imgDataUrl}" class="w-full max-h-24 object-cover rounded-lg border border-white/10 mt-1">
-            `;
-            chatMessages.appendChild(receiptBubble);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            refreshIcons();
-        }
-
-        function minimizeChat() { document.getElementById('aiChatWindow').style.display = 'none'; }
-        function maximizeChat() { document.getElementById('aiChatWindow').style.display = 'flex'; }
-
-        // ==========================================
-        // TELEGRAM SYNCER & GEMINI ASSISTANT ENGINE (CHAT FLOW)
-        // ==========================================
-        const offlinePredefinedResponses = [
-            "ရှင်၊ မှာယူထားတဲ့ ပစ္စည်းတွေကို အမြန်ဆုံး စစ်ဆေးပြီး ပို့ဆောင်ပေးနိုင်ဖို့ ကျွန်မတို့ လုပ်ဆောင်နေပါတယ်ရှင်။ စိတ်ချရတဲ့ TSPK Marketplace ဖြစ်ပါတယ်ရှင်။",
-            "TSPK Marketplace က ပစ္စည်းမှန်၊ ဈေးနှုန်းမှန်တာမို့ လူကြီးမင်းတို့ စိတ်ချယုံကြည်စွာ အမြဲအားပေးနိုင်ပါတယ်ရှင်။ တခြား ဘာများ ထပ်မံကူညီပေးရမလဲရှင်။"
-        ];
-
-        async function handleSendMessage(e) {
-            e.preventDefault();
-            const inputField = document.getElementById('chatInputField');
-            const userText = inputField.value.trim();
-            if (!userText) return;
-
-            inputField.value = '';
-            
-            const container = document.getElementById('chatMessages');
-            const userBubble = document.createElement('div');
-            userBubble.className = "p-2.5 bg-[#f57224] text-white rounded-2xl rounded-tr-none shadow-sm max-w-[85%] ml-auto text-left leading-relaxed animate-in fade-in-50 duration-150";
-            userBubble.innerText = userText;
-            container.appendChild(userBubble);
-            container.scrollTop = container.scrollHeight;
-
-            const loadBubble = document.createElement('div');
-            loadBubble.className = "flex items-center gap-1.5 p-2.5 bg-gray-200 text-gray-500 rounded-2xl rounded-tl-none max-w-[50%] text-xs font-semibold tracking-wide";
-            loadBubble.innerHTML = `<span class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce"></span><span class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style="animation-delay:0.15s"></span><span class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style="animation-delay:0.3s"></span>`;
-            container.appendChild(loadBubble);
-            container.scrollTop = container.scrollHeight;
-
-            // CRITICAL SYNC POINT: ဝယ်သူ ချက်တင်ထဲမှာ လာရိုက်သမျှ စကားလုံးတိုင်းကို အစ်ကို့ Telegram ဆီသို့ တိုက်ရိုက်လှမ်းပို့ပေးသည့် စနစ်
-            try {
-                const liveChatLog = `💬 **ဝယ်သူထံမှ ချက်တင်မက်ဆေ့ခ်ျ**\n\n📝 စာသား: ${userText}`;
-                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: liveChatLog,
-                        parse_mode: 'Markdown'
-                    })
-                });
-            } catch (tErr) { console.log("Telegram sync ignored."); }
-
-            // Reply Response Simulators
-            setTimeout(() => {
-                loadBubble.remove();
-                let aiText = offlinePredefinedResponses[Math.floor(Math.random() * offlinePredefinedResponses.length)];
-                
-                const aiBubble = document.createElement('div');
-                aiBubble.className = "p-2.5 bg-white text-gray-700 rounded-2xl rounded-tl-none border border-gray-100 shadow-sm max-w-[85%] leading-relaxed";
-                aiBubble.innerHTML = aiText.replace(/\n/g, '<br>');
-                container.appendChild(aiBubble);
-                container.scrollTop = container.scrollHeight;
-            }, 1000);
-        }
-
-        // ==========================================
-        // INITIALIZATION APPS & ADMIN ACCESS CHECK
-        // ==========================================
-        setupSearch();
-        renderProductsGrid();
-
-        if (window.location.search.includes('step2003')) {
-            document.getElementById('secretAdminBtn').style.display = 'flex';
-        }
     </script>
 </body>
 </html>
