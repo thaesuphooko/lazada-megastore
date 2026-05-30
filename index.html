@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TSPK Multi-Vendor Marketplace</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap');
@@ -17,13 +15,10 @@
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased min-h-screen pb-24">
 
-    <!-- Global Floating Toast Notification Container -->
     <div id="toastContainer" class="fixed top-5 right-5 z-[100] flex flex-col gap-3 pointer-events-none max-w-sm w-full"></div>
 
-    <!-- Premium Sticky Header Navigation -->
     <header class="sticky top-0 z-40 bg-gradient-to-r from-[#1a274c] to-[#0f172a] text-white shadow-md border-b border-[#D4AF37]/30">
         <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-            <!-- Brand Logo -->
             <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.reload()">
                 <div class="bg-gradient-to-br from-[#f57224] to-amber-500 p-2 rounded-xl border border-white/20 shadow-inner">
                     <i data-lucide="store" class="w-6 h-6 text-white"></i>
@@ -34,7 +29,6 @@
                 </div>
             </div>
 
-            <!-- Global Search Filter Input Bar -->
             <div class="flex-1 max-w-md relative hidden md:block">
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
                     <i data-lucide="search" class="w-4 h-4"></i>
@@ -43,14 +37,15 @@
                        class="w-full pl-9 pr-4 py-2 bg-white/10 border border-white/20 rounded-xl text-xs md:text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#f57224] focus:bg-white focus:text-gray-900 transition">
             </div>
 
-            <!-- Action Controllers (Cart, Vendor Post, Admin Login) -->
             <div class="flex items-center gap-2">
                 <button onclick="openVendorModal()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1 shadow-md">
                     <i data-lucide="plus-circle" class="w-4 h-4"></i> ပစ္စည်းရောင်းရန်
                 </button>
-                <button onclick="toggleAdminPanel()" class="bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1 shadow-md">
-                    <i data-lucide="shield-check" class="w-4 h-4"></i> Admin ဝင်ရန်
+                
+                <button id="secretAdminBtn" style="display: none;" onclick="toggleAdminPanel()" class="bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1 shadow-md">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i> Admin Panel
                 </button>
+
                 <button onclick="toggleCart(true)" class="relative p-2.5 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl transition shadow-inner">
                     <i data-lucide="shopping-cart" class="w-5 h-5 text-white"></i>
                     <span id="cartBadge" class="absolute -top-1.5 -right-1.5 bg-[#f57224] text-white text-[10px] font-black px-1.5 py-0.5 rounded-full border border-white hidden">0</span>
@@ -59,9 +54,7 @@
         </div>
     </header>
 
-    <!-- Main Dynamic Category & Showcase Layout Container -->
     <main class="max-w-6xl mx-auto px-4 mt-6">
-        <!-- Mobile Search Input Box Component -->
         <div class="block md:hidden mb-4 relative">
             <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
                 <i data-lucide="search" class="w-4 h-4"></i>
@@ -70,7 +63,6 @@
                    class="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#f57224] shadow-sm">
         </div>
 
-        <!-- Dynamic Admin Pending Approvals Dashboard Container (Hidden by default) -->
         <section id="adminDashboardSection" class="hidden mb-8 p-4 bg-amber-50 border-2 border-dashed border-amber-300 rounded-2xl animate-in fade-in duration-200">
             <div class="flex justify-between items-center mb-4 pb-2 border-b border-amber-200">
                 <div class="flex items-center gap-2 text-amber-800">
@@ -79,16 +71,12 @@
                 </div>
                 <button onclick="toggleAdminPanel()" class="text-xs text-gray-500 font-bold hover:underline">ပိတ်မည်</button>
             </div>
-            <!-- Dynamic Waiting List Deck -->
-            <div id="adminPendingDeck" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <!-- Javascript will render rows dynamically here -->
-            </div>
+            <div id="adminPendingDeck" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
             <div id="adminEmptyState" class="text-center py-6 text-xs text-amber-700 font-bold">
                 ခွင့်ပြုချက်တောင်းခံထားသော ပစ္စည်းအသစ် လတ်တလောမရှိသေးပါရှင်။
             </div>
         </section>
 
-        <!-- Dynamic Grid Title Banner Component -->
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-xs md:text-sm font-black text-gray-700 uppercase tracking-widest flex items-center gap-1.5">
                 <span class="w-2.5 h-2.5 bg-[#f57224] rounded-full animate-ping"></span>
@@ -96,12 +84,8 @@
             </h2>
         </div>
 
-        <!-- Main Realtime Product Responsive Grid Framework -->
-        <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
-            <!-- Dynamic Content Injected here by Javascript Renderer Engine -->
-        </div>
+        <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4"></div>
 
-        <!-- Global Infinite Async Loading Interceptor -->
         <div id="loadingIndicator" class="hidden py-8 text-center flex flex-col items-center justify-center gap-2">
             <div class="w-8 h-8 border-4 border-[#1a274c] border-t-transparent rounded-full animate-spin"></div>
             <span class="text-xs text-gray-500 font-bold">ပစ္စည်းအသစ်များ ရယူနေပါသည် ခဏစောင့်ပါ...</span>
@@ -630,6 +614,12 @@
                 refreshIcons();
             }
         }
+                    // URL ထဲတွင် ?step2003 ဟု ရိုက်ထည့်မှသာ Admin Panel ခလုတ်ကို ဖော်ပေးမည့် စနစ်
+        // စမ်းသပ်ရန် Link ပုံစံ - index.html?step2003
+        if (window.location.search.includes('step2003')) {
+            document.getElementById('secretAdminBtn').style.display = 'flex';
+        }
+            
 
         // ==========================================
         // INITIALIZATION APPS baseline
