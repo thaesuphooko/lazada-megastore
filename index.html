@@ -53,7 +53,8 @@
             </div>
         </div>
     </header>
-        <main class="max-w-6xl mx-auto px-4 mt-6">
+
+    <main class="max-w-6xl mx-auto px-4 mt-6">
         <div class="block md:hidden mb-4 relative">
             <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
                 <i data-lucide="search" class="w-4 h-4"></i>
@@ -66,7 +67,7 @@
             <div class="flex justify-between items-center mb-4 pb-2 border-b border-amber-200">
                 <div class="flex items-center gap-2 text-amber-800">
                     <i data-lucide="shield-alert" class="w-5 h-5"></i>
-                    <h2 class="font-black text-sm">ပစ္စည်းတင်ရန် ခွင့်ပြုချက်တောင်းခံမှုများ (Admin စစ်ဆေးရန်ဇုန်)</h2>
+                    <h2 class="font-black text-sm">ပစ္စည်းတင်ရန် ခွင့်ပြုချက်တောင်းခံမှုများ (Admin ဇုန်)</h2>
                 </div>
                 <button onclick="toggleAdminPanel()" class="text-xs text-gray-500 font-bold hover:underline">ပိတ်မည်</button>
             </div>
@@ -148,7 +149,7 @@
                     </div>
                     <div class="bg-gray-50 border border-gray-200 rounded-xl p-3.5 space-y-2.5 text-gray-600 leading-relaxed font-medium">
                         <p class="text-emerald-700 font-bold flex items-center gap-1"><i data-lucide="check" class="w-4 h-4"></i> စနစ်အတွင်း လိမ်လည်မှုမရှိစေရန် Wave Pay (တိုက်ရိုက်ငွေလွှဲ) စနစ်တစ်ခုတည်းကိုသာ လက်ခံပါသည်။</p>
-                        <p class="text-amber-700 font-bold flex items-center gap-1"><i data-lucide="clock" class="w-4 h-4"></i> အော်ဒါတင်ပြီးပါက ငွေလွှဲရန် အချိန် (၁) နာရီတိတိ ပေးပါမည်။</p>
+                        <p class="text-amber-700 font-bold flex items-center gap-1"><i data-lucide="clock" class="w-4 h-4"></i> အော်ဒါတင်ပြီးပါက Ngwe လွှဲရန် အချိန် (၁) နာရီတိတိ ပေးပါမည်။</p>
                         <p class="text-rose-600 font-bold flex items-center gap-1"><i data-lucide="alert-triangle" class="w-4 h-4"></i> ၁ နာရီအတွင်း ငွေလွှဲစလစ် မတင်ပါက မှာယူမှုကို အလိုအလျောက် ပယ်ဖျက်သွားပါမည်။</p>
                     </div>
                     <button onclick="goToCheckoutStep2()" class="w-full bg-[#1a274c] text-white py-3 rounded-xl font-bold hover:bg-indigo-950 transition flex items-center justify-center gap-1.5">
@@ -175,13 +176,11 @@
                     </button>
                 </div>
 
-                <!-- STEP 3: COUNTDOWN TIMER & SLIP UPLOAD (CAMERA & GALLERY SEPARATION) -->
-<div id="checkoutStep3" class="hidden space-y-4">
-    <div class="bg-rose-50 border border-rose-200 p-3 rounded-xl flex items-center justify-between text-rose-800 font-bold">
-        <span class="flex items-center gap-1 text-[11px]"><i data-lucide="timer" class="w-4 h-4 animate-spin text-rose-600"></i> ငွေလွှဲရန် ကျန်ရှိချိန်-</span>
-        <!-- နာရီ၊ မိနစ်၊ စကန့်၊ မီလီစကန့် ပုံစံသစ် -->
-        <span id="countdownDisplay" class="text-sm font-black bg-rose-600 text-white px-2.5 py-1 rounded-lg tracking-wider font-mono">01:00:00:00</span>
-    </div>
+                <div id="checkoutStep3" class="hidden space-y-4">
+                    <div class="bg-rose-50 border border-rose-200 p-3 rounded-xl flex items-center justify-between text-rose-800 font-bold">
+                        <span class="flex items-center gap-1 text-[11px]"><i data-lucide="timer" class="w-4 h-4 animate-spin text-rose-600"></i> ငွေလွှဲရန် ကျန်ရှိချိန်-</span>
+                        <span id="countdownDisplay" class="text-sm font-black bg-rose-600 text-white px-2.5 py-1 rounded-lg tracking-wider font-mono">01:00:00:00</span>
+                    </div>
 
                     <div class="bg-blue-50 border-l-4 border-blue-600 p-3.5 rounded-r-xl">
                         <p class="text-[11px] text-blue-800 font-bold mb-1">အောက်ပါ Wave Pay အကောင့်သို့ ငွေလွှဲပေးပါရန်-</p>
@@ -196,13 +195,31 @@
                         <span id="checkoutTotalAmount" class="text-base font-black text-[#f57224]">0 MMK</span>
                     </div>
 
-                    <form id="checkoutForm" class="space-y-3" onsubmit="handleCheckoutSubmit(event)">
+                    <form id="checkoutForm" class="space-y-4" onsubmit="handleCheckoutSubmit(event)">
+                        <input type="file" id="custSlipCamera" accept="image/*" capture="environment" class="hidden" onchange="handleSlipSelected('camera')">
+                        <input type="file" id="custSlipGallery" accept="image/*" class="hidden" onchange="handleSlipSelected('gallery')">
+
                         <div>
-                            <label class="block font-bold text-gray-700 mb-1">ငွေလွှဲစလစ် (Screenshot) တင်ရန် *</label>
-                            <input type="file" id="custSlip" accept="image/*" required class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-[11px] file:font-bold file:bg-orange-50 file:text-[#f57224] cursor-pointer">
+                            <label class="block font-bold text-gray-700 mb-2">ငွေလွှဲစလစ် (Screenshot သို့မဟုတ် ဓာတ်ပုံ) တင်ရန် *</label>
+                            
+                            <div class="grid grid-cols-2 gap-3">
+                                <button type="button" onclick="document.getElementById('custSlipCamera').click()" class="bg-indigo-50 border border-indigo-200 text-[#1a274c] p-3 rounded-xl font-bold flex flex-col items-center justify-center gap-1 hover:bg-indigo-100 transition">
+                                    <i data-lucide="camera" class="w-5 h-5 text-indigo-600"></i>
+                                    <span>📷 ပုံရိုက်မည်</span>
+                                </button>
+                                <button type="button" onclick="document.getElementById('custSlipGallery').click()" class="bg-orange-50 border border-orange-200 text-[#f57224] p-3 rounded-xl font-bold flex flex-col items-center justify-center gap-1 hover:bg-orange-100 transition">
+                                    <i data-lucide="image" class="w-5 h-5 text-[#f57224]"></i>
+                                    <span>🖼️ ပုံထည့်မည်</span>
+                                </button>
+                            </div>
+                            
+                            <div id="slipStatusBadge" class="mt-2 text-center text-xs font-bold text-emerald-600 hidden bg-emerald-50 border border-emerald-100 py-1.5 rounded-lg flex items-center justify-center gap-1">
+                                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> စလစ်ပုံ ရွေးချယ်ပြီးပါပြီ
+                            </div>
                         </div>
+
                         <button type="submit" id="submitBtn" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition shadow-lg mt-2 flex items-center justify-center gap-2">
-                            <i data-lucide="check-circle" class="w-4 h-4"></i> ငွေလွှဲပြီးပါပြီ (မှာယူမှုကို အတည်ပြုပါ)
+                            <i data-lucide="check-circle" class="w-4 h-4"></i> ချက်ချင်းမှာယူမှုကို အတည်ပြုပါ
                         </button>
                     </form>
                 </div>
@@ -210,7 +227,8 @@
             </div>
         </div>
     </div>
-        <div id="vendorModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+
+    <div id="vendorModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border border-gray-100 flex flex-col max-h-[90vh]">
             <div class="bg-gray-50 p-4 border-b border-gray-100 flex justify-between items-center">
                 <span class="text-xs font-bold text-gray-700 flex items-center gap-1"><i data-lucide="plus-circle" class="w-4 h-4 text-[#f57224]"></i> ရောင်းချမည့် ပစ္စည်းအသစ် တင်ပြခြင်း</span>
@@ -244,7 +262,7 @@
         <div class="bg-gradient-to-r from-[#1a274c] to-[#f57224] p-4 text-white flex items-center justify-between border-b-2 border-[#D4AF37]">
             <div class="flex items-center gap-2">
                 <div class="relative">
-                    <div class="bg-white/20 p-1.5 rounded-xl border border-white/20"><i data-lucide="bot" class="w-5 h-5 text-yellow-400 animate-pulse"></i></div>
+                    <div class="bg-white/20 p-1.5 rounded-xl border border-white/20"><i data-lucide="bot" class="w-5 h-5 text-yellow-400"></i></div>
                     <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></span>
                 </div>
                 <div>
@@ -264,34 +282,31 @@
     <button id="aiChatIconTrigger" style="display: none;" onclick="maximizeChat()" class="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-[#f57224] to-[#1a274c] text-white p-4 rounded-full shadow-2xl border-2 border-[#D4AF37] flex items-center justify-center">
         <i data-lucide="message-square" class="w-6 h-6 text-white"></i>
     </button>
-        <script>
+
+    <script>
         // ==========================================
-        // TELEGRAM BOT API CONFIGURATION (အစ်ကို့ Bot ID များ ပြင်ရန်)
+        // TELEGRAM BOT API CREDENTIALS
         // ==========================================
         const TELEGRAM_BOT_TOKEN = "7727402685:AAGb7gOQkY86YOnX9D6wMvAglOIdDAtFwHw"; 
         const TELEGRAM_CHAT_ID = "6238690353"; 
 
-        // Global State Engines
+        // Global Variables
+        let checkoutTimerInterval = null;
+        let activeSlipFile = null;
+
+        // Core State Engine
         const state = {
             products: [
                 { id: "p1", title: "Premium Cotton Shirt", price: 25000, img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400", desc: "အရည်အသွေးမြင့် ချည်သားစစ်စစ်ဖြင့် ချုပ်လုပ်ထားသော ခေတ်မီရှပ်အင်္ကျီ ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" },
                 { id: "p2", title: "Wireless Bluetooth Earbuds", price: 35000, img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400", desc: "အသံထွက်ကြည်လင်ပြီး Battery ခံနိုင်ရည်အလွန်ကောင်းမွန်သော Wireless နားကြပ် ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" },
                 { id: "p3", title: "Smart Sports Watch V2", price: 58000, img: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=400", desc: "နှလုံးခုန်နှုန်းနှင့် လမ်းလျှောက်မှုခြေလှမ်းများကို တိကျစွာတိုင်းတာပေးမည့် Smart နာရီ ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" }
             ],
-            cart: {},
+            cart: {}, // LocalStorage မှတစ်ဆင့် ပြန်ဖတ်မည်
             searchQuery: "",
             adminActive: false
         };
 
         function refreshIcons() { if (typeof lucide !== 'undefined') { lucide.createIcons(); } }
-        function fileToBlob(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-        }
 
         function showToast(msg, type = "success") {
             const container = document.getElementById('toastContainer');
@@ -305,12 +320,43 @@
         }
 
         // ==========================================
-        // DYNAMIC SHOP GRID RENDERER
+        // LOCALSTORAGE MEMORY SYNC ENGINE (အမြဲမှတ်မိစေမည့်စနစ်)
         // ==========================================
+        function saveCartToStorage() {
+            localStorage.setItem('tspk_cart', JSON.stringify(state.cart));
+        }
+
+        function loadCartFromStorage() {
+            const savedCart = localStorage.getItem('tspk_cart');
+            if (savedCart) {
+                try {
+                    state.cart = JSON.parse(savedCart);
+                } catch (e) {
+                    state.cart = {};
+                }
+            }
+        }
+
+        function handleSlipSelected(mode) {
+            const cameraInput = document.getElementById('custSlipCamera');
+            const galleryInput = document.getElementById('custSlipGallery');
+            const badge = document.getElementById('slipStatusBadge');
+
+            if (mode === 'camera' && cameraInput.files.length > 0) {
+                activeSlipFile = cameraInput.files[0];
+                galleryInput.value = ""; 
+                badge.classList.remove('hidden');
+            } else if (mode === 'gallery' && galleryInput.files.length > 0) {
+                activeSlipFile = galleryInput.files[0];
+                cameraInput.value = ""; 
+                badge.classList.remove('hidden');
+            }
+            refreshIcons();
+        }
+
         function renderProductsGrid() {
             const grid = document.getElementById('productsGrid');
             if (!grid) return;
-
             const filtered = state.products.filter(p => p.title.toLowerCase().includes(state.searchQuery));
             grid.innerHTML = '';
 
@@ -345,6 +391,7 @@
         function addToCart(productId, name, price) {
             if (state.cart[productId]) { state.cart[productId].qty += 1; } 
             else { state.cart[productId] = { id: productId, name: name, price: parseInt(price), qty: 1 }; }
+            saveCartToStorage(); // Memory ထဲသိမ်းသည်
             updateCartUI();
             showToast(`"${name}" ကို စျေးဝယ်ခြင်းတောင်းထဲ ထည့်ပြီးပါပြီ။`);
         }
@@ -397,6 +444,7 @@
             if (!state.cart[productId]) return;
             state.cart[productId].qty += change;
             if (state.cart[productId].qty <= 0) { delete state.cart[productId]; }
+            saveCartToStorage(); // Memory Update လုပ်သည်
             updateCartUI();
         }
 
@@ -412,7 +460,8 @@
                 innerPanel.classList.add('translate-x-full');
             }
         }
-                    function openDetailModal(productId) {
+
+        function openDetailModal(productId) {
             const product = state.products.find(p => p.id === productId);
             if (!product) return;
             document.getElementById('modalProductImg').src = product.img;
@@ -428,9 +477,6 @@
         function openVendorModal() { document.getElementById('vendorModal').classList.remove('hidden'); refreshIcons(); }
         function closeVendorModal() { document.getElementById('vendorModal').classList.add('hidden'); }
 
-        // ==========================================
-        // CHECKOUT FLOW CONTROL ENGINE
-        // ==========================================
         function startCheckoutFlow() {
             if (Object.keys(state.cart).length === 0) {
                 showToast("ခြင်းတောင်းထဲတွင် ဝယ်ယူရန် ပစ္စည်းမရှိသေးပါရှင်။", "error");
@@ -443,6 +489,9 @@
             let total = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
             document.getElementById('checkoutTotalAmount').innerText = `${total.toLocaleString()} MMK`;
             document.getElementById('checkoutModal').classList.remove('hidden');
+            
+            activeSlipFile = null;
+            document.getElementById('slipStatusBadge').classList.add('hidden');
         }
 
         function goToCheckoutStep2() {
@@ -463,60 +512,59 @@
             startOneHourCountdown();
         }
 
-// ========================================================
-// HIGH-SPEED MILLISECOND TIMER ENGINE (နာရီ:မိနစ်:စကန့်:မီလီစကန့်)
-// ========================================================
-function startOneHourCountdown() {
-    if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
-    
-    // စုစုပေါင်း အချိန် ၁ နာရီ (မီလီစကန့်ဖြင့် = ၆၀ မိနစ် x ၆၀ စကန့် x ၁၀၀၀ မီလီစကန့်)
-    let totalMilliseconds = 60 * 60 * 1000; 
-    const display = document.getElementById('countdownDisplay');
-    
-    const startTime = Date.now();
-    const endTime = startTime + totalMilliseconds;
+        // ========================================================
+        // HIGH-SPEED MILLISECOND TIMER ENGINE (နာရီ:မိနစ်:စကန့်:မီလီစကန့်)
+        // ========================================================
+        function startOneHourCountdown() {
+            if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
+            
+            let totalMilliseconds = 60 * 60 * 1000; 
+            const display = document.getElementById('countdownDisplay');
+            
+            const startTime = Date.now();
+            const endTime = startTime + totalMilliseconds;
 
-    // တစ်စက္ကန့်ကို အကြိမ် ၁၀၀ နှုန်း (10ms တိုင်း) ပုံမှန် Update လုပ်ပေးမည့် စနစ်
-    checkoutTimerInterval = setInterval(() => {
-        const timeLeft = endTime - Date.now();
+            checkoutTimerInterval = setInterval(() => {
+                const timeLeft = endTime - Date.now();
 
-        if (timeLeft <= 0) {
-            clearInterval(checkoutTimerInterval);
-            if (display) display.innerText = "00:00:00:00";
-            closeCheckoutModal();
-            alert("ငွေလွှဲရန် အချိန်ပြည့်သွားသဖြင့် မှာယူမှုကို ပယ်ဖျက်လိုက်ပါပြီ။");
-            return;
+                if (timeLeft <= 0) {
+                    clearInterval(checkoutTimerInterval);
+                    if (display) display.innerText = "00:00:00:00";
+                    closeCheckoutModal();
+                    alert("ငွေလွှဲရန် အချိန်ပြည့်သွားသဖြင့် မှာယူမှုကို ပယ်ဖျက်လိုက်ပါပြီ။");
+                    return;
+                }
+
+                let hours = Math.floor(timeLeft / (1000 * 60 * 60));
+                let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                let milliseconds = Math.floor((timeLeft % 1000) / 10); 
+
+                hours = hours < 10 ? "0" + hours : hours;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                milliseconds = milliseconds < 10 ? "0" + milliseconds : milliseconds;
+
+                if (display) {
+                    display.innerText = `${hours}:${minutes}:${seconds}:${milliseconds}`;
+                }
+            }, 10); 
         }
 
-        // နာရီ၊ မိနစ်၊ စကန့် နှင့် မီလီစကန့် တွက်ချက်ခြင်း
-        let hours = Math.floor(timeLeft / (1000 * 60 * 60));
-        let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-        // မီလီစကန့်ကို ဂဏန်း ၂ လုံးတည်းပြရန် (ဥပမာ- ၀၀ မှ ၉၉ အထိ အမြန်ပြေးရန်)
-        let milliseconds = Math.floor((timeLeft % 1000) / 10); 
-
-        // ဂဏန်းတွေ ရှေ့ကနေ ၀ ခံပေးခြင်း
-        hours = hours < 10 ? "0" + hours : hours;
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-        milliseconds = milliseconds < 10 ? "0" + milliseconds : milliseconds;
-
-        // UI ပေါ်တွင် ဂဏန်း ၄ မျိုးလုံးကို ဒုန်းစိုင်းပြသပေးခြင်း
-        if (display) {
-            display.innerText = `${hours}:${minutes}:${seconds}:${milliseconds}`;
-        }
-    }, 10); // 10 Milliseconds တိုင်း Update လုပ်သည်
-}
-
+        function closeCheckoutModal() {
             if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
             document.getElementById('checkoutModal').classList.add('hidden');
         }
 
-        // ==========================================
-        // TELEGRAM DISPATCH AND CHAT SYSTEM
-        // ==========================================
+        // BACK-GROUND FAST DISPATCH (NO FREEZE)
         async function handleCheckoutSubmit(e) {
             e.preventDefault();
+            
+            if (!activeSlipFile) {
+                showToast("ကျေးဇူးပြု၍ ငွေလွှဲစလစ်ပုံကို ရိုက်ထည့် သို့မဟုတ် ရွေးချယ်ပေးပါရှင်။", "error");
+                return;
+            }
+
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
             submitBtn.innerHTML = `ခဏစောင့်ပါရှင်...`;
@@ -526,7 +574,6 @@ function startOneHourCountdown() {
             const name = document.getElementById('custName').value;
             const phone = document.getElementById('custPhone').value;
             const address = document.getElementById('custAddress').value;
-            const fileInput = document.getElementById('custSlip').files[0];
 
             let totalPrice = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
             let itemsString = Object.values(state.cart).map(item => `📦 ${item.name}\n🔹 ${item.price.toLocaleString()} x ${item.qty} ခု = ${(item.price * item.qty).toLocaleString()} MMK`).join('\n\n');
@@ -538,42 +585,29 @@ function startOneHourCountdown() {
                                 `🛍️ **ပစ္စည်းစာရင်း-**\n${itemsString}\n\n` +
                                 `💰 **စုစုပေါင်းကျသင့်ငွေ:** ${totalPrice.toLocaleString()} MMK`;
 
-            let imgDataUrl = "https://images.unsplash.com/photo-1557683316-973673baf926?w=400";
-            try { if (fileInput) { imgDataUrl = await fileToBlob(fileInput); } } catch(pErr) {}
-
             try {
                 const formData = new FormData();
                 formData.append('chat_id', TELEGRAM_CHAT_ID);
                 formData.append('caption', messageText);
-                if (fileInput) formData.append('photo', fileInput);
-                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: formData });
+                formData.append('photo', activeSlipFile);
+
+                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, { 
+                    method: 'POST', 
+                    body: formData 
+                });
             } catch (err) {}
 
             closeCheckoutModal();
             showToast("မှာယူမှု အောင်မြင်ပါသည်။");
-            triggerChatSystemActivation(name, totalPrice, imgDataUrl);
-
-            state.cart = {};
-            updateCartUI();
-        }
-
-        function triggerChatSystemActivation(name, total, imgDataUrl) {
+            
             document.getElementById('aiChatIconTrigger').style.display = 'flex';
             document.getElementById('aiChatWindow').style.display = 'flex';
             const chatMessages = document.getElementById('chatMessages');
-            chatMessages.innerHTML = ''; 
+            chatMessages.innerHTML = `<div class="p-3 bg-white rounded-2xl border text-gray-700 max-w-[85%]">မင်္ဂလာပါရှင် <strong>${name}</strong>။ TSPK မှ ကြိုဆိုပါတယ်။ လူကြီးမင်းမှာယူမှုကို လက်ခံရရှိထားပြီး ဖြစ်ပါတယ်ရှင်။</div>`;
 
-            const welcomeBubble = document.createElement('div');
-            welcomeBubble.className = "p-3 bg-white rounded-2xl border text-gray-700 max-w-[85%]";
-            welcomeBubble.innerHTML = `မင်္ဂလာပါရှင် <strong>${name}</strong>။ TSPK မှ ကြိုဆိုပါတယ်။ စလစ်ပုံ ရရှိပါပြီရှင်။ သိလိုသည်များကို စိတ်ကြိုက်မေးမြန်းနိုင်ပါတယ်ရှင်။`;
-            chatMessages.appendChild(welcomeBubble);
-
-            const receiptBubble = document.createElement('div');
-            receiptBubble.className = "p-2.5 bg-[#1a274c] text-white rounded-2xl max-w-[85%] ml-auto text-right text-xs space-y-1";
-            receiptBubble.innerHTML = `<p class="font-bold text-amber-400">တင်ပြပြီးသော စလစ်</p><p>${total.toLocaleString()} MMK</p><img src="${imgDataUrl}" class="w-full max-h-24 object-cover rounded-lg">`;
-            chatMessages.appendChild(receiptBubble);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            refreshIcons();
+                        state.cart = {};
+            saveCartToStorage(); // ခြင်းတောင်းကို Clear လုပ်ပြီး Memory ထဲပြန်သိမ်းသည်
+            updateCartUI();
         }
 
         function minimizeChat() { document.getElementById('aiChatWindow').style.display = 'none'; }
@@ -610,19 +644,13 @@ function startOneHourCountdown() {
             }, 1000);
         }
 
-        // ==========================================
-        // VENDOR PRODUCT UPLOAD REGISTRATION LOGIC
-        // ==========================================
         async function handleVendorSubmit(e) {
             e.preventDefault();
             const title = document.getElementById('vTitle').value;
             const price = parseInt(document.getElementById('vPrice').value);
-            const fileInput = document.getElementById('vImg').files[0];
             const desc = document.getElementById('vDesc').value;
 
             let imgUrl = "https://images.unsplash.com/photo-1557683316-973673baf926?w=400";
-            if (fileInput) { imgUrl = await fileToBlob(fileInput); }
-
             const newProduct = { id: "p_" + Date.now(), title, price, img: imgUrl, desc, vendor: "User Vendor" };
             state.products.push(newProduct);
             renderProductsGrid();
@@ -645,10 +673,13 @@ function startOneHourCountdown() {
             document.getElementById('mobileSearchInput')?.addEventListener('input', handler);
         }
 
-        // Window Safely Loader Engine
+        // SAFE LOADER WITH LOCALSTORAGE RESCUE
         window.addEventListener('DOMContentLoaded', () => {
+            loadCartFromStorage(); // ခြင်းတောင်းဟောင်းကို အရင်ဆွဲတင်သည်
             setupSearch();
             renderProductsGrid();
+            updateCartUI(); // UI ကိုပါ တစ်ခါတည်းဆွဲတင်သည်
+
             if (window.location.search.includes('step2003')) {
                 const adminBtn = document.getElementById('secretAdminBtn');
                 if (adminBtn) adminBtn.style.display = 'flex';
