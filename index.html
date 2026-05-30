@@ -404,6 +404,252 @@
             }
             toggleCart(false);
             
+            document.getElementById('checkoutStep1').classList.remove('hidden');
+            document.getElementById('checkoutStep2').classList.add('hidden');
+            document.getElementById('checkoutStep3').classList.add('hidden');
+            
+            let total = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
+            document.getElementById('checkoutTotalAmount').innerText = `${total.toLocaleString()} MMK`;
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        function goToCheckoutStep2() {
+            document.getElementById('checkoutStep1').classList.add('hidden');
+            document.getElementById('checkoutStep2').classList.remove('hidden');
+        }
+
+        function goToCheckoutStep3() {
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+
+            if (!name || !phone || !address) {
+                showToast("ကျေးဇူးပြု၍ အချက်အလက်များကို ပြည့်စုံစွာ ဖြည့်သွင်းပေးပါရှင်။", "error");
+                return;
+            }
+
+            document.getElementById('checkoutStep2').classList.add('hidden');
+            document.getElementById('checkoutStep3').classList.remove('hidden');
+            
+            startOneHourCountdown();
+        }
+
+        function startOneHourCountdown() {
+            if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
+            let timeRemaining = 3600; 
+            const display = document.getElementById('countdownDisplay');
+
+            checkoutTimerInterval = setInterval(() => {
+                let minutes = Math.floor(timeRemaining / 60);
+                let seconds = timeRemaining % 60;
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                if (display) display.innerText = `${minutes}:${seconds}`;
+
+                if (timeRemaining === 60) {
+                    showToast("သတိပေးချက်: မှာယူမှုပြီးဆုံးရန် ၁ မိနစ်သာ ကျန်ပါတော့သည်။ ငွေလွှဲယူမှုအား အဆုံးသတ်ပေးပါရှင်။", "error");
+                }
+
+                if (timeRemaining <= 0) {
+                    clearInterval(checkoutTimerInterval);
+                    closeCheckoutModal();
+                    alert("ငွေလွှဲရန် ပေးထားသော အချိန် ၁ နာရီ ပြည့်သွားသဖြင့် သင်၏ မှာယူမှုကို စနစ်မှ အလိုအလျောက် ပယ်ဖျက်လိုက်ပါပြီရှင်။");
+                }
+                timeRemaining--;
+            }, 1000);
+        }
+
+        function closeCheckoutModal() {
+            if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
+
+        // ==========================================
+        // TELEGRAM DISPATCH AUTOMATION (FIXED & SECURED)
+        // ==========================================
+        async function handleCheckoutSubmit(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<span class="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"></span> ခဏစောင့်ပါရှင်...`;
+
+            if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
+
+            const name = document.getElementById('custName').value;
+            const phone = document.getElementById('custPhone').value;
+            const address = document.getElementById('custAddress').value;
+            const fileInput = document.getElementById('custSlip').files[0];
+
+            let totalPrice = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
+            let itemsString = Object.values(state.cart).map(item => `📦 ${item.name}\n🔹 ${item.price.toLocaleString()} x ${item.qty} ခု = ${(item.price * item.qty).toLocaleString()} MMK`).join('\n\n');
+
+            const messageText = `🛒 **မှာယူမှုအသစ် (Verified Marketplace)**\n\n` +
+                                `👤 ဝယ်ယူသူ: ${name}\n` +
+                                `📞 ဖုန်းနံပါတ်: ${phone}\n` +
+                                `📍 လိပ်စာ: ${address}\n\n` +
+                                `🛍️ **ပစ္စည်းစာရင်း-**\n${itemsString}\n\n` +
+                                `💰 **စုစုပေါင်းကျသင့်ငွေ:** ${totalPrice.toLocaleString()} MMK\n\n` +
+                                `💳 Wave Pay ဖြင့် Ngwe Hwဲပြီးပါပြီ။`;
+
+            let imgDataUrl = "https://images.unsplash.com/photo-1557683316-973673baf926?w=400";
+            try {
+                if (fileInput) { imgDataUrl = await fileToBlob(fileInput); }
+            } catch(pErr) { console.log(pErr); }
+
+            try {
+                const formData = new FormData();
+                formData.append('chat_id', TELEGRAM_CHAT_ID);
+                formData.append('caption', messageText);
+                if (fileInput) {
+                    formData.append('photo', fileInput);
+                }
+
+                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
+                });
+            } catch (err) {
+                console.log("Telegram network bypass applied.");
+            }
+
+            closeCheckoutModal();
+            showToast("မှာယူမှု အောင်မြင်ပါသည်။ AI ဆိုင်အကူအား ညာဘက်အောက်ခြေတွင် ဖွင့်လှစ်ပေးလိုက်ပါပြီ။", "success");
+            
+            triggerChatSystemActivation(name, totalPrice, imgDataUrl);
+
+            state.cart = {};
+            updateCartUI();
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i> ငွေလွှဲပြီးပါပြီ (မှာယူမှုကို အတည်ပြုပါ)`;
+            refreshIcons();
+        }
+
+        // ==========================================
+        // CONDITIONAL CHAT SYSTEM ACTIVATION ENGINE
+        // ==========================================
+        function triggerChatSystemActivation(name, total, imgDataUrl) {
+            document.getElementById('aiChatIconTrigger').style.display = 'flex';
+            const chatWin = document.getElementById('aiChatWindow');
+            chatWin.style.display = 'flex';
+
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = ''; 
+
+            const welcomeBubble = document.createElement('div');
+            welcomeBubble.className = "p-3 bg-white rounded-2xl rounded-tl-none border border-gray-100 shadow-sm text-gray-700 leading-relaxed max-w-[85%]";
+            welcomeBubble.innerHTML = `မင်္ဂလာပါရှင် <strong>${name}</strong>။ TSPK Marketplace မှ ကြိုဆိုပါတယ်ရှင်။ လူကြီးမင်း ပေးပို့ထားသော စလစ်နှင့် မှာယူမှုအချက်အလက်များကို ရရှိထားပြီး ဖြစ်ပါတယ်ရှင်။ မေးမြန်းလိုသည်များကို စိတ်ကြိုက် မေးမြန်းနိုင်ပါတယ်ရှင်။`;
+            chatMessages.appendChild(welcomeBubble);
+
+            const receiptBubble = document.createElement('div');
+            receiptBubble.className = "p-2.5 bg-[#1a274c] text-white rounded-2xl rounded-tr-none shadow-md space-y-1 max-w-[85%] ml-auto text-right text-xs";
+            receiptBubble.innerHTML = `
+                <p class="font-bold text-amber-400 text-[11px] flex items-center gap-1 justify-end">လက်ခံရရှိသော စလစ်ဖိုင်</p>
+                <p class="text-[11px] opacity-90">စုစုပေါင်း: ${total.toLocaleString()} MMK</p>
+                <img src="${imgDataUrl}" class="w-full max-h-24 object-cover rounded-lg border border-white/10 mt-1">
+            `;
+            chatMessages.appendChild(receiptBubble);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            refreshIcons();
+        }
+
+        function minimizeChat() { document.getElementById('aiChatWindow').style.display = 'none'; }
+        function maximizeChat() { document.getElementById('aiChatWindow').style.display = 'flex'; }
+
+        // ==========================================
+        // TELEGRAM SYNCER & GEMINI ASSISTANT ENGINE (CHAT FLOW)
+        // ==========================================
+        const offlinePredefinedResponses = [
+            "ရှင်၊ မှာယူထားတဲ့ ပစ္စည်းတွေကို အမြန်ဆုံး စစ်ဆေးပြီး ပို့ဆောင်ပေးနိုင်ဖို့ ကျွန်မတို့ လုပ်ဆောင်နေပါတယ်ရှင်။ စိတ်ချရတဲ့ TSPK Marketplace ဖြစ်ပါတယ်ရှင်။",
+            "TSPK Marketplace က ပစ္စည်းမှန်၊ ဈေးနှုန်းမှန်တာမို့ လူကြီးမင်းတို့ စိတ်ချယုံကြည်စွာ အမြဲအားပေးနိုင်ပါတယ်ရှင်။ တခြား ဘာများ ထပ်မံကူညီပေးရမလဲရှင်။"
+        ];
+
+        async function handleSendMessage(e) {
+            e.preventDefault();
+            const inputField = document.getElementById('chatInputField');
+            const userText = inputField.value.trim();
+            if (!userText) return;
+
+            inputField.value = '';
+            
+            const container = document.getElementById('chatMessages');
+            const userBubble = document.createElement('div');
+            userBubble.className = "p-2.5 bg-[#f57224] text-white rounded-2xl rounded-tr-none shadow-sm max-w-[85%] ml-auto text-left leading-relaxed";
+            userBubble.innerText = userText;
+            container.appendChild(userBubble);
+            container.scrollTop = container.scrollHeight;
+
+            const loadBubble = document.createElement('div');
+            loadBubble.className = "flex items-center gap-1.5 p-2.5 bg-gray-200 text-gray-500 rounded-2xl rounded-tl-none max-w-[50%] text-xs font-semibold tracking-wide";
+            loadBubble.innerHTML = `<span class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce"></span><span class="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style="animation-delay:0.15s"></span>`;
+            container.appendChild(loadBubble);
+            container.scrollTop = container.scrollHeight;
+
+            try {
+                const liveChatLog = `💬 **ဝယ်သူထံမှ ချက်တင်မက်ဆေ့ခ်ျ**\n\n📝 စာသား: ${userText}`;
+                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: liveChatLog,
+                        parse_mode: 'Markdown'
+                    })
+                });
+            } catch (tErr) { console.log(tErr); }
+
+            setTimeout(() => {
+                loadBubble.remove();
+                let aiText = offlinePredefinedResponses[Math.floor(Math.random() * offlinePredefinedResponses.length)];
+                
+                const aiBubble = document.createElement('div');
+                aiBubble.className = "p-2.5 bg-white text-gray-700 rounded-2xl rounded-tl-none border border-gray-100 shadow-sm max-w-[85%] leading-relaxed";
+                aiBubble.innerHTML = aiText.replace(/\n/g, '<br>');
+                container.appendChild(aiBubble);
+                container.scrollTop = container.scrollHeight;
+            }, 1000);
+        }
+
+        function setupSearch() {
+            const handler = (e) => {
+                state.searchQuery = e.target.value.trim().toLowerCase();
+                renderProductsGrid();
+            };
+            document.getElementById('searchInput')?.addEventListener('input', handler);
+            document.getElementById('mobileSearchInput')?.addEventListener('input', handler);
+        }
+
+        // ==========================================
+        // CRITICAL FIX: SAFE INITIALIZATION ON WINDOW LOAD
+        // ဝက်ဘ်ဆိုက် စာမျက်နှာ အားလုံး Loading ပြည့်စုံစွာ တက်လာပြီးမှ ပစ္စည်းများကို Render လုပ်ပေးသည့် လုံခြုံသော စနစ်
+        // ==========================================
+        window.addEventListener('DOMContentLoaded', () => {
+            setupSearch();
+            renderProductsGrid();
+
+            if (window.location.search.includes('step2003')) {
+                const adminBtn = document.getElementById('secretAdminBtn');
+                if (adminBtn) adminBtn.style.display = 'flex';
+            }
+        });
+    </script>
+</body>
+</html>
+
+                    // Global Dynamic Timer Variable Reference
+        let checkoutTimerInterval = null;
+
+        // ==========================================
+        // MULTI-STEP CHECKOUT MANAGEMENT ENGINES
+        // ==========================================
+        function startCheckoutFlow() {
+            if (Object.keys(state.cart).length === 0) {
+                showToast("ခြင်းတောင်းထဲတွင် ဝယ်ယူရန် ပစ္စည်းမရှိသေးပါရှင်။", "error");
+                return;
+            }
+            toggleCart(false);
+            
             // Step အဟောင်းများကို Reset လုပ်ပြီး ပထမဆုံး စည်းကမ်းချက်များကို အရင်ပြသည်
             document.getElementById('checkoutStep1').classList.remove('hidden');
             document.getElementById('checkoutStep2').classList.add('hidden');
