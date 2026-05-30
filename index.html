@@ -53,8 +53,7 @@
             </div>
         </div>
     </header>
-
-    <main class="max-w-6xl mx-auto px-4 mt-6">
+        <main class="max-w-6xl mx-auto px-4 mt-6">
         <div class="block md:hidden mb-4 relative">
             <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
                 <i data-lucide="search" class="w-4 h-4"></i>
@@ -178,7 +177,7 @@
 
                 <div id="checkoutStep3" class="hidden space-y-4">
                     <div class="bg-rose-50 border border-rose-200 p-3 rounded-xl flex items-center justify-between text-rose-800 font-bold">
-                        <span class="flex items-center gap-1 text-[11px]"><i data-lucide="timer" class="w-4 h-4 animate-spin text-rose-600"></i> ငွေလွှဲရန် ကျန်ရှိချိန်-</span>
+                        <span class="flex items-center gap-1 text-[11px]"><i data-lucide="timer" class="w-4 h-4 animate-spin text-rose-600"></i> Ngwe လွှဲရန် ကျန်ရှိချိန်-</span>
                         <span id="countdownDisplay" class="text-sm font-black bg-rose-600 text-white px-2.5 py-1 rounded-lg tracking-wider font-mono">01:00:00:00</span>
                     </div>
 
@@ -227,8 +226,7 @@
             </div>
         </div>
     </div>
-
-    <div id="vendorModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div id="vendorModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border border-gray-100 flex flex-col max-h-[90vh]">
             <div class="bg-gray-50 p-4 border-b border-gray-100 flex justify-between items-center">
                 <span class="text-xs font-bold text-gray-700 flex items-center gap-1"><i data-lucide="plus-circle" class="w-4 h-4 text-[#f57224]"></i> ရောင်းချမည့် ပစ္စည်းအသစ် တင်ပြခြင်း</span>
@@ -282,26 +280,34 @@
     <button id="aiChatIconTrigger" style="display: none;" onclick="maximizeChat()" class="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-[#f57224] to-[#1a274c] text-white p-4 rounded-full shadow-2xl border-2 border-[#D4AF37] flex items-center justify-center">
         <i data-lucide="message-square" class="w-6 h-6 text-white"></i>
     </button>
-
-    <script>
+        <script>
         // ==========================================
-        // TELEGRAM BOT API CREDENTIALS
+        // TELEGRAM BOT API CREDENTIALS (VERIFIED)
         // ==========================================
-        const TELEGRAM_BOT_TOKEN = "7727402685:AAGb7gOQkY86YOnX9D6wMvAglOIdDAtFwHw"; 
-        const TELEGRAM_CHAT_ID = "6238690353"; 
+        const TELEGRAM_BOT_TOKEN = "8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI"; 
+        const TELEGRAM_CHAT_ID = "6917040501"; 
 
         // Global Variables
         let checkoutTimerInterval = null;
         let activeSlipFile = null;
 
-        // Core State Engine
+        // Core State Engine (ပစ္စည်းမျိုးစုံ ၁၂ မျိုး အသင့်ထည့်သွင်းပြီး)
         const state = {
             products: [
                 { id: "p1", title: "Premium Cotton Shirt", price: 25000, img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400", desc: "အရည်အသွေးမြင့် ချည်သားစစ်စစ်ဖြင့် ချုပ်လုပ်ထားသော ခေတ်မီရှပ်အင်္ကျီ ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" },
                 { id: "p2", title: "Wireless Bluetooth Earbuds", price: 35000, img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400", desc: "အသံထွက်ကြည်လင်ပြီး Battery ခံနိုင်ရည်အလွန်ကောင်းမွန်သော Wireless နားကြပ် ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" },
-                { id: "p3", title: "Smart Sports Watch V2", price: 58000, img: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=400", desc: "နှလုံးခုန်နှုန်းနှင့် လမ်းလျှောက်မှုခြေလှမ်းများကို တိကျစွာတိုင်းတာပေးမည့် Smart နာရီ ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" }
+                { id: "p3", title: "Smart Sports Watch V2", price: 58000, img: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=400", desc: "နှလုံးခုန်နှုန်းနှင့် လမ်းလျှောက်မှုခြေလှမ်းများကို တိကျစွာတိုင်းတာပေးမည့် Smart နာရီ ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" },
+                { id: "p4", title: "Luxury Leather Wallet", price: 18000, img: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=400", desc: "သားရေစစ်စစ်ဖြင့် ပြုလုပ်ထားပြီး ကတ်မျိုးစုံနှင့် ငွေစက္ကူများကို သပ်ရပ်စွာ ထည့်နိုင်သော ပိုက်ဆံအိတ် ဖြစ်ပါတယ်။", vendor: "TSPK Official" },
+                { id: "p5", title: "Minimalist Coffee Mug", price: 12000, img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400", desc: "ရုံးခန်းနှင့် အိမ်သုံးအတွက် အလွန်လှပဆန်းပြားသော ကြွေကော်ဖီခွက် ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" },
+                { id: "p6", title: "Ergonomic Office Chair", price: 145000, img: "https://images.unsplash.com/photo-1505797149-43b0069ec26b?w=400", desc: "ခါးနာသက်သာစေပြီး အကြာကြီးထိုင်လို့ကောင်းမွန်တဲ့ ရုံးသုံး၊ ဂိမ်းကစားသုံး အဆင့်မြင့် ကုလားထိုင် ဖြစ်ပါတယ်။", vendor: "TSPK Official" },
+                { id: "p7", title: "Portable Power Bank 20k", price: 45000, img: "https://images.unsplash.com/photo-1609592424109-dd9892f1b17c?w=400", desc: "20,000 mAh အပြည့်ပါဝင်ပြီး Fast Charging စနစ်ထောက်ပံ့ထားသော အိတ်ဆောင် Power Bank ဖြစ်ပါတယ်။", vendor: "TSPK Official" },
+                { id: "p8", title: "Mechanical Gaming Keyboard", price: 55000, img: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400", desc: "RGB မီးအလှစုံလင်စွာပါဝင်ပြီး ရိုက်ရတာ သွက်လက်ပေါ့ပါးတဲ့ Gaming Mechanical ကီးဘုတ် ဖြစ်ပါတယ်။", vendor: "TSPK Official" },
+                { id: "p9", title: "Stainless Thermal Flask", price: 16500, img: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400", desc: "ရေပူ၊ ရေအေး ဓာတ်ဘူးဖြစ်ပြီး ၂၄ နာရီတိတိ အပူအအေး ထိန်းသိမ်းပေးနိုင်သော စတီးဘူး ဖြစ်ပါတယ်။", vendor: "TSPK Official" },
+                { id: "p10", title: "Unisex Canvas Backpack", price: 28000, img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400", desc: "ကျောင်းသုံး၊ ခရီးသွားသုံး ပစ္စည်းဆံ့ပြီး ရေစိုခံနိုင်စွမ်းရှိသော ကင်းဗတ်ကျောပိုးအိတ် ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" },
+                { id: "p11", title: "Aromatic Essential Diffuser", price: 23000, img: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=400", desc: "အခန်းတွင်း လေထုကို သန့်စင်စေပြီး စိတ်ရွှင်လန်းစေမည့် အနံ့မွှေး ရေငွေ့ပျံစက် ဖြစ်ပါတယ်။", vendor: "TSPK Official" },
+                { id: "p12", title: "Premium Bluetooth Speaker", price: 42000, img: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400", desc: "Bass သံ အလွန်ကောင်းမွန်ပြီး သယ်ဆောင်ရလွယ်ကူသော ရေစိုခံ Bluetooth စပီကာ ဖြစ်ပါတယ်ရှင်။", vendor: "TSPK Official" }
             ],
-            cart: {}, // LocalStorage မှတစ်ဆင့် ပြန်ဖတ်မည်
+            cart: {}, 
             searchQuery: "",
             adminActive: false
         };
@@ -319,9 +325,7 @@
             setTimeout(() => { toast.remove(); }, 4000);
         }
 
-        // ==========================================
-        // LOCALSTORAGE MEMORY SYNC ENGINE (အမြဲမှတ်မိစေမည့်စနစ်)
-        // ==========================================
+        // LOCALSTORAGE MEMORY SYNC ENGINE (ခြင်းတောင်းသိမ်းစနစ်)
         function saveCartToStorage() {
             localStorage.setItem('tspk_cart', JSON.stringify(state.cart));
         }
@@ -329,11 +333,7 @@
         function loadCartFromStorage() {
             const savedCart = localStorage.getItem('tspk_cart');
             if (savedCart) {
-                try {
-                    state.cart = JSON.parse(savedCart);
-                } catch (e) {
-                    state.cart = {};
-                }
+                try { state.cart = JSON.parse(savedCart); } catch (e) { state.cart = {}; }
             }
         }
 
@@ -353,8 +353,7 @@
             }
             refreshIcons();
         }
-
-        function renderProductsGrid() {
+                         function renderProductsGrid() {
             const grid = document.getElementById('productsGrid');
             if (!grid) return;
             const filtered = state.products.filter(p => p.title.toLowerCase().includes(state.searchQuery));
@@ -391,7 +390,7 @@
         function addToCart(productId, name, price) {
             if (state.cart[productId]) { state.cart[productId].qty += 1; } 
             else { state.cart[productId] = { id: productId, name: name, price: parseInt(price), qty: 1 }; }
-            saveCartToStorage(); // Memory ထဲသိမ်းသည်
+            saveCartToStorage(); 
             updateCartUI();
             showToast(`"${name}" ကို စျေးဝယ်ခြင်းတောင်းထဲ ထည့်ပြီးပါပြီ။`);
         }
@@ -444,7 +443,7 @@
             if (!state.cart[productId]) return;
             state.cart[productId].qty += change;
             if (state.cart[productId].qty <= 0) { delete state.cart[productId]; }
-            saveCartToStorage(); // Memory Update လုပ်သည်
+            saveCartToStorage(); 
             updateCartUI();
         }
 
@@ -512,9 +511,7 @@
             startOneHourCountdown();
         }
 
-        // ========================================================
         // HIGH-SPEED MILLISECOND TIMER ENGINE (နာရီ:မိနစ်:စကန့်:မီလီစကန့်)
-        // ========================================================
         function startOneHourCountdown() {
             if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
             
@@ -556,10 +553,9 @@
             document.getElementById('checkoutModal').classList.add('hidden');
         }
 
-        // BACK-GROUND FAST DISPATCH (NO FREEZE)
+        // DUAL-CHANNEL TELEGRAM SEND (၁၀၀% စာနှင့် ပုံ အသေအချာ ဝင်စေမည့်စနစ်)
         async function handleCheckoutSubmit(e) {
             e.preventDefault();
-            
             if (!activeSlipFile) {
                 showToast("ကျေးဇူးပြု၍ ငွေလွှဲစလစ်ပုံကို ရိုက်ထည့် သို့မဟုတ် ရွေးချယ်ပေးပါရှင်။", "error");
                 return;
@@ -571,14 +567,14 @@
 
             if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
 
-            const name = document.getElementById('custName').value;
-            const phone = document.getElementById('custPhone').value;
-            const address = document.getElementById('custAddress').value;
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
 
             let totalPrice = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
             let itemsString = Object.values(state.cart).map(item => `📦 ${item.name}\n🔹 ${item.price.toLocaleString()} x ${item.qty} ခု = ${(item.price * item.qty).toLocaleString()} MMK`).join('\n\n');
 
-            const messageText = `🛒 **မှာယူမှုအသစ် (Verified Marketplace)**\n\n` +
+            const messageText = `🛒 **မှာယူမှုအသစ် (TSPK Marketplace)**\n\n` +
                                 `👤 ဝယ်ယူသူ: ${name}\n` +
                                 `📞 ဖုန်းနံပါတ်: ${phone}\n` +
                                 `📍 လိပ်စာ: ${address}\n\n` +
@@ -586,16 +582,23 @@
                                 `💰 **စုစုပေါင်းကျသင့်ငွေ:** ${totalPrice.toLocaleString()} MMK`;
 
             try {
+                // Channel 1 - စာသားကို အရင်ပို့သည်
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: messageText, parse_mode: 'Markdown' })
+                });
+
+                // Channel 2 - ပုံကို နောက်ကနေ လိုက်ပို့သည်
                 const formData = new FormData();
                 formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('caption', messageText);
                 formData.append('photo', activeSlipFile);
+                formData.append('caption', `🖼️ ဝယ်ယူသူ ${name} ၏ ငွေလွှဲစလစ်ပုံ ဖြစ်ပါတယ်ရှင်။`);
 
-                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, { 
-                    method: 'POST', 
-                    body: formData 
-                });
-            } catch (err) {}
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: formData });
+            } catch (err) {
+                console.log("Telegram API Error:", err);
+            }
 
             closeCheckoutModal();
             showToast("မှာယူမှု အောင်မြင်ပါသည်။");
@@ -605,8 +608,8 @@
             const chatMessages = document.getElementById('chatMessages');
             chatMessages.innerHTML = `<div class="p-3 bg-white rounded-2xl border text-gray-700 max-w-[85%]">မင်္ဂလာပါရှင် <strong>${name}</strong>။ TSPK မှ ကြိုဆိုပါတယ်။ လူကြီးမင်းမှာယူမှုကို လက်ခံရရှိထားပြီး ဖြစ်ပါတယ်ရှင်။</div>`;
 
-                        state.cart = {};
-            saveCartToStorage(); // ခြင်းတောင်းကို Clear လုပ်ပြီး Memory ထဲပြန်သိမ်းသည်
+            state.cart = {};
+            saveCartToStorage(); 
             updateCartUI();
         }
 
@@ -673,12 +676,12 @@
             document.getElementById('mobileSearchInput')?.addEventListener('input', handler);
         }
 
-        // SAFE LOADER WITH LOCALSTORAGE RESCUE
+        // CORE LOADER ENGINE WITH LOCALSTORAGE RESCUE
         window.addEventListener('DOMContentLoaded', () => {
-            loadCartFromStorage(); // ခြင်းတောင်းဟောင်းကို အရင်ဆွဲတင်သည်
+            loadCartFromStorage(); 
             setupSearch();
             renderProductsGrid();
-            updateCartUI(); // UI ကိုပါ တစ်ခါတည်းဆွဲတင်သည်
+            updateCartUI();
 
             if (window.location.search.includes('step2003')) {
                 const adminBtn = document.getElementById('secretAdminBtn');
@@ -688,3 +691,4 @@
     </script>
 </body>
 </html>
+
