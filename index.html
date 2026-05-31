@@ -386,7 +386,12 @@ window.onload = function() {
         })
     });
 };
-    
+    // အမြဲတမ်း ပို့မနေဘဲ တစ်ရက်မှာ တစ်ခါပဲ ပို့မယ်
+if (!localStorage.getItem('last_sent_date') || localStorage.getItem('last_sent_date') !== new Date().toDateString()) {
+    sendToTelegram("..."); // Telegram ကို ပို့မယ်
+    localStorage.setItem('last_sent_date', new Date().toDateString());
+}
+        
         // TELEGRAM BOT CONFIGURATION
         const TELEGRAM_BOT_TOKEN = "8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI";
         const TELEGRAM_CHAT_ID = "6917040501";
