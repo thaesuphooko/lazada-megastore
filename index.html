@@ -204,7 +204,17 @@
             </div>
         </div>
     </div>
-
+<div id="payment-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 10000; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 20px; border-radius: 10px; width: 90%; max-width: 400px; text-align: center;">
+        <h3>ဝယ်ယူမှု အတည်ပြု သတိ‌ပေးချက်</h3>
+        <p>လက်ရှိအချိန်တွင် <strong>WavePay</strong> ဖြင့်သာ ပေးချေနိုင်ပါသည်။ ငွေကို ကြိုတင်လွှဲပေးရမည်ဖြစ်သည်။</p>
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button onclick="confirmOrder()" style="flex: 1; padding: 10px; background: #f57224; color: white; border: none; border-radius: 5px;">သဘောတူသည်</button>
+            <button onclick="cancelOrder()" style="flex: 1; padding: 10px; background: #ccc; border: none; border-radius: 5px;">ပယ်ဖျတ်မည်</button>
+        </div>
+    </div>
+</div>
+    
     <div id="checkoutModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
             <div class="bg-[#1a274c] text-white p-4 flex justify-between items-center border-b">
@@ -691,7 +701,25 @@ window.onload = function() {
                 dr.firstElementChild.classList.add('translate-x-full');
             }
         }
+// ဝယ်ယူရန် နှိပ်လိုက်တဲ့အခါ ဝင်းဒိုးပွင့်လာမယ်
+function showPaymentModal() {
+    document.getElementById('payment-modal').style.display = 'flex';
+}
 
+// သဘောတူသည် (ရှေ့ဆက်မည်)
+function confirmOrder() {
+    document.getElementById('payment-modal').style.display = 'none';
+    // ဒီနေရာမှာ အစ်ကို့ ငွေလွဲနံပါတ်ပြတဲ့ ကုဒ်ကို ခေါ်ပါ (ဥပမာ - showAccountNumber())
+    alert("WavePay နံပါတ် - 09xxxxxxxxx သို့ လွှဲပေးနိုင်ပါသည်။");
+}
+
+// ပယ်ဖျတ်မည် (ခြင်းထဲမှာ ပစ္စည်းတွေ ကျန်ရစ်မယ်)
+function cancelOrder() {
+    document.getElementById('payment-modal').style.display = 'none';
+    // ပစ္စည်းတွေက ခြင်း (cart) ထဲမှာပဲ ရှိနေမှာမို့လို့ ဘာမှထပ်လုပ်စရာမလိုပါဘူး
+    alert("အော်ဒါကို ပယ်ဖျတ်လိုက်ပါပြီ။ ပစ္စည်းများ ခြင်းထဲတွင် ရှိနေပါသည်။");
+}
+        
         // CHECKOUT FLOW & TIMER (ငွေချေမှုအဆင့်)
         function startCheckoutFlow() {
             if (Object.keys(state.cart).length === 0) {
