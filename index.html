@@ -29,7 +29,39 @@
     <p style="font-size: 12px; margin-top: 10px; opacity: 0.8; text-align: center; padding: 0 40px;">မြန်မာနိုင်ငံ၏ အကြီးမားဆုံး online market ဖြစ်စေရန် ကြိုးစားနေပါသည်</p>
     <button onclick="skipSplash()" style="margin-top: 30px; border: 1px solid white; padding: 10px 30px; border-radius: 50px; font-size: 12px; background: transparent; color: white;">Skip</button>
 </div>
+<script>
+    // ယာယီစမ်းသပ်ရန် - အရင်က မှတ်ထားသမျှ အကုန်ဖျက်မယ်
+    // အလုပ်လုပ်ပြီဆိုမှ ဒီစာကြောင်းကို ဖျက်ပစ်လိုက်ပါ
+    // localStorage.removeItem('hasVisited'); 
 
+    window.addEventListener('load', function() {
+        const splash = document.getElementById('splash');
+        
+        // အမှတ်အသား ရှိမရှိ စစ်မယ်
+        if (!localStorage.getItem('hasVisited')) {
+            // မရှိရင် ပေါ်ပေးမယ်
+            splash.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            // ၁၀ စက္ကန့်နေရင် ပိတ်မယ်
+            setTimeout(function() {
+                skipSplash();
+            }, 10000);
+        } else {
+            // ရှိရင် ပိတ်ထားမယ်
+            splash.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    function skipSplash() {
+        const splash = document.getElementById('splash');
+        splash.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        localStorage.setItem('hasVisited', 'true');
+    }
+</script>
+    
 </script>
     
 <body class="bg-gray-50 text-gray-800 antialiased min-h-screen pb-24" onclick="initAudioOnFirstClick()">
