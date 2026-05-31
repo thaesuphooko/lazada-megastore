@@ -11,6 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop.com.mm Real Live Store</title>
     <style>
+    #auth-box { border: 1px solid #ccc; padding: 20px; border-radius: 10px; margin: 10px; }
+    
         body { font-family: sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
         .header { background: #f57224; color: white; padding: 15px; text-align: center; border-radius: 8px; margin-bottom: 20px; }
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
@@ -60,6 +62,13 @@
         }
     };
 </script>
+    <div id="auth-box">
+    <h2 id="auth-title">အကောင့်သစ်ဖွင့်ရန်</h2>
+    <input type="text" id="uname" placeholder="@username">
+    <input type="password" id="pword" placeholder="Password">
+    <button id="auth-btn" onclick="handleAuth()">အကောင့်ဖွင့်မည်</button>
+    <p onclick="toggleMode()" style="cursor:pointer; color:blue;">အကောင့်ရှိပြီးသားဆိုရင် ဝင်ရန်</p>
+    </div>
     
     <div id="yt-bg-player" class="hidden"></div>
 
@@ -1119,7 +1128,29 @@ function cancelOrder() {
             sessionStorage.setItem('isVisited', 'true');
         }
     });
-</script>
+    let isLogin = false;
+    function handleAuth() {
+        let u = document.getElementById('uname').value;
+        let p = document.getElementById('pword').value;
+        if (!isLogin) {
+            localStorage.setItem('tspk_user', JSON.stringify({username: u, password: p}));
+            alert("အကောင့်ဖွင့်ပြီးပါပြီ");
+        } else {
+            let saved = JSON.parse(localStorage.getItem('tspk_user'));
+            if (saved && saved.username === u && saved.password === p) {
+                alert("Login အောင်မြင်ပါသည်!");
+                document.getElementById('auth-box').style.display = 'none';
+            } else {
+                alert("Username သို့မဟုတ် Password မှားနေသည်");
+            }
+        }
+    }
+    function toggleMode() {
+        isLogin = !isLogin;
+        document.getElementById('auth-title').innerText = isLogin ? "အကောင့်ဝင်ရန်" : "အကောင့်သစ်ဖွင့်ရန်";
+        document.getElementById('auth-btn').innerText = isLogin ? "Login" : "Register";
+    }
+    </script>
     
 </body> 
 </html>
