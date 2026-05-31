@@ -28,28 +28,7 @@
     <button onclick="skipSplash()" style="margin-top: 30px; border: 1px solid white; padding: 10px 30px; border-radius: 50px; font-size: 12px; background: transparent; color: white;">Skip</button>
 </div>
 
-<script>
-    
-    // Skip နှိပ်ရင်ရော၊ အော်တိုပျောက်ရင်ရော အလုပ်လုပ်မယ့် Function
-    function skipSplash() {
-        document.getElementById('splash').style.display = 'none';
-        localStorage.setItem('hasVisited', 'true'); // ဒီနေရာမှာ မှတ်လိုက်ပြီ
-    }
 
-    // ဝင်လာတဲ့အချိန်မှာ စစ်မယ်
-    window.addEventListener('load', function() {
-        if (!localStorage.getItem('hasVisited')) {
-            // တစ်ခါမှ မဝင်ဖူးသေးရင်ပဲ ပြမယ်
-            document.getElementById('splash').style.display = 'flex';
-            
-            // ၁၀ စက္ကန့်နေရင် အော်တို ပိတ်မယ်
-            setTimeout(function() {
-                if (document.getElementById('splash').style.display === 'flex') {
-                    skipSplash();
-                }
-            }, 10000);
-        }
-    });
 </script>
     
 <body class="bg-gray-50 text-gray-800 antialiased min-h-screen pb-24" onclick="initAudioOnFirstClick()">
