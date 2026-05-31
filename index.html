@@ -198,8 +198,8 @@
                     </div>
                     <button onclick="processToPaymentStep()" class="w-full bg-[#f57224] text-white py-3 rounded-xl font-bold hover:bg-orange-600 transition flex items-center justify-center gap-1.5 shadow-md">
                         ငွေပေးချေမှု အဆင့်သို့ သွားမည် <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </button>
-            </div>
+                    </button>
+                </div>
 
                 <div id="checkoutStep2" class="hidden space-y-4">
                     <div class="bg-rose-50 border border-rose-200 p-3 rounded-xl flex items-center justify-between text-rose-800 font-bold">
@@ -499,6 +499,7 @@ window.onload = function() {
             const product = productsDatabase.find(p => p.id === pId);
             if (!product) return;
             selectedProductForMedia = product;
+
             document.getElementById('modalProductName').innerText = product.title;
             document.getElementById('modalProductPrice').innerText = `${product.price.toLocaleString()} MMK`;
             document.getElementById('modalProductDesc').innerText = product.desc;
@@ -658,7 +659,7 @@ window.onload = function() {
                 display.innerText = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
             }, 1000);
         }
-
+        
         function handleFilePicked() {
             const c = document.getElementById('custSlipCamera');
             const g = document.getElementById('custSlipGallery');
@@ -746,7 +747,6 @@ window.onload = function() {
         function triggerLiveChatWidgetEngine(customerName) {
             document.getElementById('aiChatIconTrigger').style.display = 'flex';
             document.getElementById('aiChatWindow').style.display = 'flex';
-        document.getElementById('aiChatWindow').style.display = 'flex';
 
             const chatMessages = document.getElementById('chatMessages');
             chatMessages.innerHTML = `
@@ -881,7 +881,7 @@ window.onload = function() {
                 `;
             });
             refreshLucideIcons();
-        }
+                }
 
         function modifyDeliveryStatusByAdmin(orderId, nextStatus) {
             const clientMatch = state.orders.find(o => o.id === orderId);
@@ -985,3 +985,4 @@ window.onload = function() {
     
 </body>
 </html>
+        
