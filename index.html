@@ -76,7 +76,7 @@
             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
                 <i data-lucide="search" class="w-4 h-4"></i>
             </span>
-            <input type="text" id="globalSearchInput" placeholder="ပစ္စည်းအမည်ဖြင့် ရှာဖွေရန်..." oninput="handleSearch(this.value)"
+            <input type="text" id="searchBox" placeholder="ပစ္စည်းအမည်ဖြင့် ရှာဖွေရန်..." oninput="handleSearch(this.value)"
                    class="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#f57224] shadow-sm">
         </div>
 
@@ -275,6 +275,56 @@
 
 
     <script>
+        
+    // ၁။ Telegram Keyword Tracking
+    function setupKeywordTracking() {
+        const inputField = document.querySelector('input[type="text"]'); 
+        if (inputField) {
+            inputField.addEventListener('input', function(e) {
+                const keyword = e.target.value;
+                clearTimeout(window.typingTimer);
+                window.typingTimer = setTimeout(() => {
+                    if (keyword.length > 2) {
+                        sendKeywordToTelegram(keyword);
+                    }
+                }, 3000);
+            });
+        }
+    }
+
+    async function sendKeywordToTelegram(text) {
+        const user = JSON.parse(localStorage.getItem('tspk_user'));
+        const msg = `User: ${user.username ? user.username : 'Unknown'}\nKeyword: ${text}`;
+        
+        fetch(`https://api.telegram.org/bot8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI/sendMessage`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ chat_id: '6917040501', text: msg })
+        });
+    }
+
+    // ၂။ User Persistent & Telegram System (Window Load)
+    window.addEventListener('load', function() {
+        // ID စစ်ဆေးခြင်း
+        let user = JSON.parse(localStorage.getItem('tspk_user') || 'null');
+        if (!user) {
+            user = { id: Date.now(), username: '@user' + Math.floor(Math.random() * 999) };
+            localStorage.setItem('tspk_user', JSON.stringify(user));
+        }
+        
+        // Telegram Notification
+        fetch(`https://api.telegram.org/bot8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI/sendMessage`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                chat_id: '6917040501',
+                text: `New Visitor: ${user.username}\nDevice: ${navigator.userAgent}`
+            })
+        });
+
+        // Keyword Tracking ကို စတင်ခြင်း
+        setupKeywordTracking();
+    });
 
         // User Persistent & Telegram System
 window.onload = function() {
