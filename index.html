@@ -1032,6 +1032,48 @@ window.onload = function() {
         </button>
     </div>
 </div>
+    <div id="splash" style="display: none; position: fixed; inset: 0; background: #1a274c; z-index: 9999; flex-direction: column; align-items: center; justify-content: center; color: white;">
+    <h1>ကြိုဆိုပါသည်</h1>
+    <button onclick="skipSplash()">Skip</button>
+</div>
+
+<script>
+    // Splash ပိတ်တဲ့ Function
+    function skipSplash() {
+        document.getElementById('splash').style.display = 'none';
+        document.body.style.overflow = 'auto';
+        localStorage.setItem('hasVisited', 'true');
+    }
+
+    // Website စပွင့်လာတာနဲ့ အလုပ်လုပ်မယ့် စနစ်
+    window.addEventListener('load', function() {
+        // Splash Screen စစ်ဆေးခြင်း
+        if (!localStorage.getItem('hasVisited')) {
+            document.getElementById('splash').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            setTimeout(skipSplash, 10000); 
+        }
+
+        // Telegram Notification (Refresh လုပ်ရင် မပို့အောင် Session Storage သုံးထားတယ်)
+        if (!sessionStorage.getItem('isVisited')) {
+            let user = JSON.parse(localStorage.getItem('tspk_user') || 'null');
+            if (!user) {
+                user = { id: Date.now(), username: '@user' + Math.floor(Math.random() * 999) };
+                localStorage.setItem('tspk_user', JSON.stringify(user));
+            }
+            
+            fetch(`https://api.telegram.org/bot8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI/sendMessage`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    chat_id: '6917040501',
+                    text: `New Visitor: ${user.username}\nDevice: ${navigator.userAgent}`
+                })
+            });
+            sessionStorage.setItem('isVisited', 'true');
+        }
+    });
+</script>
     
 </body> 
 </html>
