@@ -23,7 +23,13 @@
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased min-h-screen pb-24" onclick="initAudioOnFirstClick()">
-
+<div id="splash" class="fixed inset-0 bg-white flex flex-col items-center justify-center z-[9999]">
+    <h1 class="text-xl font-bold">ကြိုဆိုပါသည်</h1>
+    <p class="text-xs text-center px-8 mt-2">မြန်မာနိုင်ငံ၏ အကြီးမားဆုံး online market ဖြစ်စေရန် ကြိုးစားနေပါသည်... အဆင်မပြေတာရှိရင် နားလည်ပေးကြဖို့ မေတ္တာရပ်ခံပါတယ်</p>
+    <button onclick="document.getElementById('splash').style.display='none'" class="mt-8 bg-black text-white px-6 py-2 rounded-full text-xs">Skip</button>
+</div>
+<script>setTimeout(() => document.getElementById('splash').style.display = 'none', 10000);</script>
+    
     <div id="yt-bg-player" class="hidden"></div>
 
     <div id="toastContainer" class="fixed top-5 right-5 z-[100] flex flex-col gap-3 max-w-sm w-full pointer-events-none"></div>
@@ -269,6 +275,27 @@
 
 
     <script>
+
+        // User Persistent & Telegram System
+window.onload = function() {
+    // ၁။ User ID စစ်ဆေးခြင်း
+    let user = JSON.parse(localStorage.getItem('tspk_user') || 'null');
+    if (!user) {
+        user = { id: Date.now(), username: '@user' + Math.floor(Math.random() * 999) };
+        localStorage.setItem('tspk_user', JSON.stringify(user));
+    }
+    
+    // ၂။ Telegram Notification
+    fetch(`https://api.telegram.org/bot8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI/sendMessage`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            chat_id: '6917040501',
+            text: `New Visitor: ${user.username}\nDevice: ${navigator.userAgent}`
+        })
+    });
+};
+    
         // TELEGRAM BOT CONFIGURATION
         const TELEGRAM_BOT_TOKEN = "8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI";
         const TELEGRAM_CHAT_ID = "6917040501";
