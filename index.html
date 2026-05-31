@@ -28,7 +28,28 @@
     <p class="text-xs text-center px-8 mt-2">မြန်မာနိုင်ငံ၏ အကြီးမားဆုံး online market ဖြစ်စေရန် ကြိုးစားနေပါသည်... အဆင်မပြေတာရှိရင် နားလည်ပေးကြဖို့ မေတ္တာရပ်ခံပါတယ်</p>
     <button onclick="document.getElementById('splash').style.display='none'" class="mt-8 bg-black text-white px-6 py-2 rounded-full text-xs">Skip</button>
 </div>
-<script>setTimeout(() => document.getElementById('splash').style.display = 'none', 10000);</script>
+<script>
+    // Splash ကို ပိတ်တဲ့ function
+    function skipSplash() {
+        document.getElementById('splash').style.display = 'none';
+        localStorage.setItem('hasVisited', 'true'); // တစ်ကြိမ်ဝင်ပြီးပြီလို့ မှတ်လိုက်မယ်
+    }
+
+    // Website စဝင်တာနဲ့ စစ်မယ်
+    window.onload = function() {
+        if (!localStorage.getItem('hasVisited')) {
+            // ပထမဆုံးအကြိမ်ဆိုရင် ပေါ်ပေးမယ်
+            document.getElementById('splash').style.display = 'flex';
+            
+            // ၁၀ စက္ကန့်နေရင် အော်တို ပိတ်ပြီး မှတ်ထားပေးမယ်
+            setTimeout(() => {
+                if (document.getElementById('splash').style.display !== 'none') {
+                    skipSplash();
+                }
+            }, 10000);
+        }
+    };
+</script>
     
     <div id="yt-bg-player" class="hidden"></div>
 
