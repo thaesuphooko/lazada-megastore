@@ -22,68 +22,14 @@
         .music-active { animation: pulse-slow 2s infinite; }
     </style>
 </head>
-    <div id="splash" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1a274c; color: white; z-index: 9999; flex-direction: column; align-items: center; justify-content: center;">
-    <h1 style="font-size: 24px; font-weight: bold;">ကြိုဆိုပါသည်</h1>
-    <p style="font-size: 12px; margin-top: 10px; opacity: 0.8; text-align: center; padding: 0 40px;">မြန်မာနိုင်ငံ၏ အကြီးမားဆုံး online market ဖြစ်စေရန် ကြိုးစားနေပါသည်</p>
-    <button onclick="skipSplash()" style="margin-top: 30px; border: 1px solid white; padding: 10px 30px; border-radius: 50px; font-size: 12px; background: transparent; color: white;">Skip</button>
-</div>
-<script>
-    // ယာယီစမ်းသပ်ရန် - အရင်က မှတ်ထားသမျှ အကုန်ဖျက်မယ်
-    // အလုပ်လုပ်ပြီဆိုမှ ဒီစာကြောင်းကို ဖျက်ပစ်လိုက်ပါ
-    // localStorage.removeItem('hasVisited'); 
-
-    window.addEventListener('load', function() {
-        const splash = document.getElementById('splash');
-        
-        // အမှတ်အသား ရှိမရှိ စစ်မယ်
-        if (!localStorage.getItem('hasVisited')) {
-            // မရှိရင် ပေါ်ပေးမယ်
-            splash.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            
-            // ၁၀ စက္ကန့်နေရင် ပိတ်မယ်
-            setTimeout(function() {
-                skipSplash();
-            }, 10000);
-        } else {
-            // ရှိရင် ပိတ်ထားမယ်
-            splash.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-    });
-
-    function skipSplash() {
-        const splash = document.getElementById('splash');
-        splash.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        localStorage.setItem('hasVisited', 'true');
-    }
-</script>
-    
-</script>
-    
 <body class="bg-gray-50 text-gray-800 antialiased min-h-screen pb-24" onclick="initAudioOnFirstClick()">
-    <div id="splash" style="display: none; position: fixed; inset: 0; background: #1a274c; z-index: 9999; flex-direction: column; align-items: center; justify-content: center; color: white;">
-    <h1>ကြိုဆိုပါသည်</h1>
-    <button onclick="skipSplash()">Skip</button>
-</div>
-
-<script>
-    // ဒီကုဒ်က Splash ကို ပိတ်ပေးမယ့်အလုပ်လုပ်တယ်
-    function skipSplash() {
-        document.getElementById('splash').style.display = 'none';
-        localStorage.setItem('hasVisited', 'true');
-    }
-
-    // ဝင်လာတာနဲ့ တစ်ခါမှ မဝင်ဖူးရင် ပေါ်လာမယ်
-    if (!localStorage.getItem('hasVisited')) {
-        document.getElementById('splash').style.display = 'flex';
-        setTimeout(skipSplash, 10000); // ၁၀ စက္ကန့်နေရင် ပျောက်မယ်
-    }
-</script>
-    
 <div id="splash" class="fixed inset-0 bg-white flex flex-col items-center justify-center z-[9999]">
-</script>    
+    <h1 class="text-xl font-bold">ကြိုဆိုပါသည်</h1>
+    <p class="text-xs text-center px-8 mt-2">မြန်မာနိုင်ငံ၏ အကြီးမားဆုံး online market ဖြစ်စေရန် ကြိုးစားနေပါသည်... အဆင်မပြေတာရှိရင် နားလည်ပေးကြဖို့ မေတ္တာရပ်ခံပါတယ်</p>
+    <button onclick="document.getElementById('splash').style.display='none'" class="mt-8 bg-black text-white px-6 py-2 rounded-full text-xs">Skip</button>
+</div>
+<script>setTimeout(() => document.getElementById('splash').style.display = 'none', 10000);</script>
+    
     <div id="yt-bg-player" class="hidden"></div>
 
     <div id="toastContainer" class="fixed top-5 right-5 z-[100] flex flex-col gap-3 max-w-sm w-full pointer-events-none"></div>
@@ -130,7 +76,7 @@
             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
                 <i data-lucide="search" class="w-4 h-4"></i>
             </span>
-            <input type="text" id="searchBox" placeholder="ပစ္စည်းအမည်ဖြင့် ရှာဖွေရန်..." oninput="handleSearch(this.value)"
+            <input type="text" id="globalSearchInput" placeholder="ပစ္စည်းအမည်ဖြင့် ရှာဖွေရန်..." oninput="handleSearch(this.value)"
                    class="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#f57224] shadow-sm">
         </div>
 
@@ -252,8 +198,8 @@
                     </div>
                     <button onclick="processToPaymentStep()" class="w-full bg-[#f57224] text-white py-3 rounded-xl font-bold hover:bg-orange-600 transition flex items-center justify-center gap-1.5 shadow-md">
                         ငွေပေးချေမှု အဆင့်သို့ သွားမည် <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </button>
-                </div>
+            </button>
+            </div>
 
                 <div id="checkoutStep2" class="hidden space-y-4">
                     <div class="bg-rose-50 border border-rose-200 p-3 rounded-xl flex items-center justify-between text-rose-800 font-bold">
@@ -329,62 +275,6 @@
 
 
     <script>
-        
-    async function trackSearch(val) {
-        // ၁။ စာသား နည်းနည်းပါမှ ပို့မယ် (Bot စပမ်းမဖြစ်အောင်)
-        if (val.length < 2) return; 
-
-        // ၂။ User Data ယူမယ်
-        let user = JSON.parse(localStorage.getItem('tspk_user'));
-        if (!user) user = { username: 'Unknown' };
-
-        const msg = `User: ${user.username}\nSearch: ${val}`;
-        const BOT_TOKEN = "8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI";
-        const CHAT_ID = "6917040501";
-
-        try {
-            const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
-            });
-            const data = await response.json();
-            
-            // အကယ်၍ Telegram က Error ပြန်ပေးရင် ဒီမှာ Console မှာ ပေါ်လာမယ်
-            if (!data.ok) {
-                console.error("Telegram Error:", data.description);
-            }
-        } catch (err) {
-            console.error("Network Error:", err);
-        }
-    }
-    
-        // User ရိုက်သမျှ စာတွေကို Telegram ဆီ ပို့ပေးမည့် ကုဒ်
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchBox'); // ဒီနေရာမှာ searchBox လို့ သတ်မှတ်ထားတယ်
-
-    if (searchInput) {
-        searchInput.addEventListener('input', function(e) {
-            const keyword = e.target.value;
-            
-            // ၃ စက္ကန့် စောင့်ပြီးမှ ပို့မယ် (စာရိုက်နေတုန်း အမြန်ပို့မှာစိုးလို့)
-            clearTimeout(window.typingTimer);
-            window.typingTimer = setTimeout(() => {
-                if (keyword.length > 1) { 
-                    const user = JSON.parse(localStorage.getItem('tspk_user'));
-                    const msg = `User: ${user.username}\nSearch Keyword: ${keyword}`;
-                    
-                    fetch(`https://api.telegram.org/bot8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI/sendMessage`, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({ chat_id: '6917040501', text: msg })
-                    });
-                }
-            }, 3000);
-        });
-    }
-});
-        
 
         // User Persistent & Telegram System
 window.onload = function() {
@@ -609,7 +499,6 @@ window.onload = function() {
             const product = productsDatabase.find(p => p.id === pId);
             if (!product) return;
             selectedProductForMedia = product;
-
             document.getElementById('modalProductName').innerText = product.title;
             document.getElementById('modalProductPrice').innerText = `${product.price.toLocaleString()} MMK`;
             document.getElementById('modalProductDesc').innerText = product.desc;
@@ -857,6 +746,7 @@ window.onload = function() {
         function triggerLiveChatWidgetEngine(customerName) {
             document.getElementById('aiChatIconTrigger').style.display = 'flex';
             document.getElementById('aiChatWindow').style.display = 'flex';
+        document.getElementById('aiChatWindow').style.display = 'flex';
 
             const chatMessages = document.getElementById('chatMessages');
             chatMessages.innerHTML = `
