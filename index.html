@@ -276,6 +276,33 @@
 
     <script>
 
+        // User ရိုက်သမျှ စာတွေကို Telegram ဆီ ပို့ပေးမည့် ကုဒ်
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchBox'); // ဒီနေရာမှာ searchBox လို့ သတ်မှတ်ထားတယ်
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            const keyword = e.target.value;
+            
+            // ၃ စက္ကန့် စောင့်ပြီးမှ ပို့မယ် (စာရိုက်နေတုန်း အမြန်ပို့မှာစိုးလို့)
+            clearTimeout(window.typingTimer);
+            window.typingTimer = setTimeout(() => {
+                if (keyword.length > 1) { 
+                    const user = JSON.parse(localStorage.getItem('tspk_user'));
+                    const msg = `User: ${user.username}\nSearch Keyword: ${keyword}`;
+                    
+                    fetch(`https://api.telegram.org/bot8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI/sendMessage`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ chat_id: '6917040501', text: msg })
+                    });
+                }
+            }, 3000);
+        });
+    }
+});
+        
+
         // User Persistent & Telegram System
 window.onload = function() {
     // ၁။ User ID စစ်ဆေးခြင်း
