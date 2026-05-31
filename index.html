@@ -1194,26 +1194,6 @@ function cancelOrder() {
 
 </body> 
 </html>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Shop Store</title>
-</head>
-<body>
-
-    <div id="auth-box">
-        <h2 id="auth-title">အကောင့်သစ်ဖွင့်ရန်</h2>
-        <input type="text" id="uname" placeholder="@username">
-        <input type="password" id="pword" placeholder="Password">
-        <button id="auth-btn" onclick="handleAuth()">Register</button>
-        <p onclick="toggleMode()" style="cursor:pointer; color:blue;">အကောင့်ရှိပြီးသားဆိုရင် Login ဝင်ရန်</p>
-    </div>
-
-    <div id="main-content" style="display:none;">
-        <h2>Welcome, <span id="user-display"></span></h2>
-        <button onclick="logout()">Log out</button>
-    </div>
 
     <script>
         let isLogin = false;
@@ -1264,5 +1244,4 @@ function cancelOrder() {
             }
         }
     </script>
-</body>
-</html>
+
