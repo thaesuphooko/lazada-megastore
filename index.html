@@ -40,6 +40,55 @@
     <p class="text-xs text-center px-8 mt-2">မြန်မာနိုင်ငံ၏ အကြီးမားဆုံး online market ဖြစ်စေရန် ကြိုးစားနေပါသည်... အဆင်မပြေတာရှိရင် နားလည်ပေးကြဖို့ မေတ္တာရပ်ခံပါတယ်</p>
     <button onclick="document.getElementById('splash').style.display='none'" class="mt-8 bg-black text-white px-6 py-2 rounded-full text-xs">Skip</button>
 </div>
+    <h1>Amazon Products</h1>
+    <div id="product-container" style="display: flex; flex-wrap: wrap; gap: 20px;"></div>
+
+    <script>
+        // ၁။ CSV ၁၅ ခုလုံးကို Data ယူတဲ့ လုပ်ငန်းစဉ်
+        async function loadAllProducts() {
+            const container = document.getElementById('product-container');
+            let allProducts = [];
+
+            for (let i = 1; i <= 15; i++) {
+                try {
+                    const response = await fetch(data/amazon_products-${i}.csv);
+                    if (response.ok) {
+                        const csvData = await response.text();
+                        const parsed = Papa.parse(csvData, { header: true });
+                        allProducts = allProducts.concat(parsed.data);
+                    }
+                } catch (error) {
+                    console.error(Error loading file ${i}:, error);
+                }
+            }
+            displayProducts(allProducts);
+        }
+
+        // ၂။ Product တွေကို HTML ထဲ ထည့်ပြတဲ့ လုပ်ငန်းစဉ်
+        function displayProducts(products) {
+            const container = document.getElementById('product-container');
+            container.innerHTML = ''; 
+            
+            products.forEach(product => {
+                if (product.title) { // title ရှိတဲ့ data တွေကိုပဲ ပြမယ်
+                    container.innerHTML += 
+                        <div class="product-card" style="border: 1px solid #ccc; padding: 15px; width: 250px; border-radius: 8px; font-family: sans-serif;">
+                            <img src="${product.imgUrl}" alt="${product.title}" style="width: 100%; height: 180px; object-fit: contain;">
+                            <h3 style="font-size: 16px; margin: 10px 0;">${product.title}</h3>
+                            <p style="color: #B12704; font-weight: bold; font-size: 18px;">Price: $${product.price}</p>
+                            <p style="font-size: 14px;">List Price: <span style="text-decoration: line-through;">$${product.listPrice}</span></p>
+                            <p style="font-size: 14px;">Rating: ⭐ ${product.stars} | Reviews: ${product.reviews}</p>
+                            <p style="font-size: 12px; color: #555;">Category ID: ${product.category_id}</p>
+                            <p style="font-size: 12px;">Best Seller: ${product.isBestSeller}</p>
+                            <a href="${product.productURL}" target="_blank" style="display: block; text-align: center; padding: 10px; background: #FF9900; color: white; text-decoration: none; border-radius: 5px; margin-top: 10px;">View on Amazon</a>
+                        </div>;
+                }
+            });
+        }
+
+        // စတင်အလုပ်လုပ်စေခြင်း
+        loadAllProducts();
+                    </script>
 <script>
     // Splash ကို ပိတ်တဲ့ function
     function skipSplash() {
