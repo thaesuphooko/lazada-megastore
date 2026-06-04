@@ -32,18 +32,43 @@
             50% { transform: scale(1.1); opacity: 1; }
         }
         .music-active { animation: pulse-slow 2s infinite; }
+<link rel="manifest" href="manifest.json">
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased min-h-screen pb-24" onclick="initAudioOnFirstClick()">
 <div id="splash" class="fixed inset-0 bg-white flex flex-col items-center justify-center z-[9999]">
     <h1 class="text-xl font-bold">ကြိုဆိုပါသည်</h1>
     <p class="text-xs text-center px-8 mt-2">မြန်မာနိုင်ငံ၏ အကြီးမားဆုံး online market ဖြစ်စေရန် ကြိုးစားနေပါသည်... အဆင်မပြေတာရှိရင် နားလည်ပေးကြဖို့ မေတ္တာရပ်ခံပါတယ်</p>
-    <button onclick="document.getElementById('splash').style.display='none'" class="mt-8 bg-black text-white px-6 py-2 rounded-full text-xs">Skip</button>
+  <button id="skipButton" class="mt-8 bg-black text-white px-6 py-2 rounded-full text-xs">Skip</button>
+
 </div>
     <h1>Amazon Products</h1>
     <div id="product-container" style="display: flex; flex-wrap: wrap; gap: 20px;"></div>
 
     <script>
+// Install Prompt အတွက် Variable
+let deferredPrompt;
+
+// Browser ကနေ Install လုပ်ဖို့ ခွင့်ပြုချက်တောင်းတဲ့အချိန် ဖမ်းယူခြင်း
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+});
+
+// Skip ခလုတ်ကို နှိပ်တဲ့အခါ အလုပ်လုပ်မယ်
+document.getElementById('skipButton').addEventListener('click', () => {
+    // ၁။ Splash screen ကို ပိတ်မယ်
+    document.getElementById('splash').style.display = 'none';
+
+    // ၂။ Install Prompt ကို ပေါ်လာစေမယ်
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            deferredPrompt = null;
+        });
+    }
+});
+
         // ၁။ CSV ၁၅ ခုလုံးကို Data ယူတဲ့ လုပ်ငန်းစဉ်
         async function loadAllProducts() {
             const container = document.getElementById('product-container');
