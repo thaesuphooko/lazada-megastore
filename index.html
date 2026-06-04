@@ -1265,6 +1265,11 @@ function cancelOrder() {
         document.getElementById('auth-btn').innerText = isLogin ? "Login" : "Register";
     }
 </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+</script>
 
 </body> 
 </html>
